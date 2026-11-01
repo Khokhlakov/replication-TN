@@ -4,3 +4,4 @@ __pycache__/
 runs/
 *.egg-info/
 .venv/
+topnettree/src/topnet/features/aux.py
