@@ -8,6 +8,10 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import os
+
+os.environ.setdefault("CUBLAS_WORKSPACE_CONFIG", ":4096:8")
+
 import joblib
 import numpy as np
 import torch
