@@ -1,0 +1,13 @@
+extends: default.yaml
+# Values copied from code/crossvalidation/crossvalidation_ab.py.
+# That script cross-validates a prebuilt feature matrix; it is not a record of the
+# 10x10-fold search the paper describes. Still treated as UNVERIFIED relative to the SI.
+gbdt:
+  n_estimators: 20000
+  learning_rate: 0.001
+  max_depth: 6
+  min_samples_split: 3
+  subsample: 0.4
+  max_features: sqrt
+  loss: squared_error
+  backend: sklearn

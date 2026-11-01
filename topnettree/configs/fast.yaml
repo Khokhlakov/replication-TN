@@ -1,0 +1,7 @@
+extends: default.yaml
+cnn:
+  epochs: 200
+gbdt:
+  n_estimators: 2000
+cv:
+  seeds: [0]

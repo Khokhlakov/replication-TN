@@ -1,0 +1,15 @@
+# !/bin/bash
+
+# Example run of predicition
+
+sh pre_setting.sh
+sh run_topnettree.sh 1AK4.pdb D A G 488 0
+mv *.ddg ../results
+
+# Crossvalidation, user could modifiy the repeating times by change argv of crossvalidation_*.py [iter_num]
+
+cd crossvalidation
+python crossvalidation_ab.py 50
+python crossvalidation_1131_v2.py 50
+
+mv *.txt ../../results

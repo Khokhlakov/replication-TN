@@ -1,0 +1,13 @@
+In the reproduciible run script, we include the following contents:
+
+1. Example of TopNetTree prediction of 1AK4 D A 488 G using topological and auxiliary features.
+User could read the readme file and modify the code in run.sh to change it to any example structure and mutation.
+The example will return a file called "1AK4_D_A_488_G.ddg" which gives the binding affinity change upon mutation.
+
+2. Cross validation of AB-bind 645 dataset.
+The script will run 50 times of 10-fold cross-validation and return the mean pearson correlation and RMSE result in "crossvalidation_abbind.txt".
+User could modify the iteration times in run.
+
+3. Cross validation of SKEMPI 1131 dataset.
+The script will run 50 times of 10-fold cross-validation and return the mean pearson correlation and RMSE result in "crossvalidation_skempi.txt".
+User could modify the iteration times in run.

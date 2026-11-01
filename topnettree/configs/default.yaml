@@ -1,0 +1,60 @@
+# Fully resolved training configuration. Every guessed value is marked UNVERIFIED.
+# The uploaded crossvalidation_ab.py uses a different GBDT (see legacy_ab_cv.yaml).
+
+seed: 0
+device: auto
+
+cnn:
+  in_ch: 108
+  bins: 48
+  drop1: 0.3
+  drop2: 0.3
+  drop3: 0.1
+  lr: 0.0001
+  adam_eps: 1.0e-7
+  batch_size: 8
+  epochs: 2000
+  loss: mse
+
+select:
+  n_keep: 300
+  n_estimators: null
+
+gbdt:
+  # UNVERIFIED: the paper SI does not state these. They are the AGENTS.md starting point.
+  n_estimators: 20000
+  learning_rate: 0.01
+  max_depth: 8
+  min_samples_split: 2
+  subsample: 0.7
+  max_features: sqrt
+  loss: squared_error
+  backend: sklearn
+
+cv:
+  mode: nested
+  splitter: kfold10
+  n_splits: 10
+  seeds: [0, 1, 2]
+  feature_set: cnn_aux
+
+tune:
+  # UNVERIFIED search ranges from the task brief. Inner folds of the training split only.
+  max_depth: [6, 7, 8]
+  subsample: [0.4, 0.5, 0.7]
+  n_estimators: [3000, 10000, 20000]
+  inner_splits: 5
+
+paths:
+  x_cnn: data/raw/X_unnormed.npy
+  x_aux: data/raw/X_aux.npy
+  importance_idx: data/raw/importance_idx.npy
+  labels: data/labels/ab_bind_s645.csv
+  antibodies: data/raw/antibodies.csv
+  antibodies_bfes: data/raw/antibodies_BFEs.csv
+
+h0:
+  cut: 12.0
+  interval: 0.25
+  n_bins: 48
+  min_persistence: 0.01
