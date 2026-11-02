@@ -268,7 +268,8 @@ def load_structure(path):
     return parse_cif(path) if str(path).endswith(".cif") else parse_pdb(path)
 
 
-def validate_rows(df, cols, structures):
+def validate_rows(df, cols, structures, cmap=None):
+    """cmap: {(pdb, abbind_chain): (rcsb_chain, resseq_offset)} or None."""
     rows = []
     for _, r in df.iterrows():
         pid = r["_pid"]
@@ -286,6 +287,10 @@ def validate_rows(df, cols, structures):
             out.update(status="BAD_RESID", found_resname="")
             rows.append(out)
             continue
+        if cmap:
+            m = cmap.get((pid, str(r[cols["chain"]]).strip()))
+            if m:
+                chains, resseq = [m[0]], resseq + m[1]
         status, found = "CHAIN_MISSING", ""
         for c in chains:
             if c not in s:
@@ -331,6 +336,62 @@ def offset_diagnostic(df, cols, rep, structures, max_off=30):
     return notes
 
 
+
+def suggest_chain_map(df, cols, structures, max_off=40, min_frac=0.9):
+    """
+    AB-Bind renamed antibody chains (H/L) and sometimes renumbered residues, so the raw RCSB
+    chain IDs often differ. For every (pdb, AB-Bind chain) group, try EVERY chain of the
+    downloaded structure with every constant offset and score the wild-type residue matches.
+    Returns a DataFrame; 'ties' lists other RCSB chains scoring the same (e.g. 2 Fab copies).
+    """
+    out = []
+    for (pid, ch), sub in df.groupby(["_pid", cols["chain"]]):
+        st = structures.get(pid)
+        if st is None:
+            continue
+        items = []
+        for _, r in sub.iterrows():
+            resseq, ic = row_resid(r, cols)
+            if resseq is not None:
+                items.append((resseq, ic, to_one_letter(r[cols["wt"]])))
+        n = len(items)
+        scores = []  # (hits, -abs(off), rcsb_chain, off)
+        for rc, resmap in st.items():
+            best = (-1, 0)
+            for off in range(-max_off, max_off + 1):
+                hit = sum(1 for (rs, ic, wt) in items
+                          if AA3TO1.get(resmap.get((rs + off, ic), ""), "?") == wt)
+                if (hit, -abs(off)) > (best[0], -abs(best[1])):
+                    best = (hit, off)
+            scores.append((best[0], -abs(best[1]), rc, best[1]))
+        if not scores:
+            continue
+        scores.sort(reverse=True)
+        hit, _, rc, off = scores[0]
+        ties = [x[2] for x in scores[1:] if x[0] == hit and x[3] == off]
+        ident = next((x[0] for x in scores if x[2] == str(ch) and x[3] == 0), 0)
+        out.append({"pdb": pid, "abbind_chain": ch, "rcsb_chain": rc, "offset": off,
+                    "matches": hit, "n_rows": n, "frac": round(hit / n, 3) if n else 0.0,
+                    "identity_frac": round(ident / n, 3) if n else 0.0,
+                    "ties": "".join(ties),
+                    "decision": "ACCEPT(review)" if n and hit / n >= min_frac else "NO_MATCH"})
+    return pd.DataFrame(out)
+
+
+def summarize(rep, notes=None):
+    statuses = ["OK", "WT_MISMATCH", "RESIDUE_MISSING", "CHAIN_MISSING", "BAD_RESID", "NO_STRUCTURE"]
+    summ = rep.groupby("pdb")["status"].value_counts().unstack(fill_value=0)
+    for c in statuses:
+        if c not in summ:
+            summ[c] = 0
+    summ = summ[statuses]
+    summ["n_rows"] = summ.sum(axis=1)
+    summ["frac_ok"] = (summ["OK"] / summ["n_rows"]).round(3)
+    if notes is not None:
+        summ["note"] = ["; ".join(v for (p, ch), v in notes.items() if p == pid) for pid in summ.index]
+    return summ
+
+
 # ----------------------------------------------------------------------------
 # main
 # ----------------------------------------------------------------------------
@@ -344,6 +405,11 @@ def main():
     ap.add_argument("--offline", action="store_true", help="do not download; validate existing files")
     ap.add_argument("--pdb-col"); ap.add_argument("--chain-col")
     ap.add_argument("--wt-col"); ap.add_argument("--resid-col"); ap.add_argument("--homology-col")
+    ap.add_argument("--suggest-chain-map", action="store_true",
+                    help="search all RCSB chains/offsets for each (pdb, chain) group, write "
+                         "chain_map_suggestions.csv and re-validate with the accepted suggestions (UNREVIEWED)")
+    ap.add_argument("--chain-map", default=None,
+                    help="reviewed CSV with columns pdb,abbind_chain,rcsb_chain,offset; re-validates with it")
     args = ap.parse_args()
 
     out = Path(args.outdir)
@@ -384,35 +450,27 @@ def main():
         print(f"[get] {pid}: {st}")
     pd.DataFrame(log).to_csv(out / "download_log.csv", index=False)
 
+    now = dt.datetime.now(dt.timezone.utc).replace(tzinfo=None).isoformat() + "Z"
     with open(out / "MANIFEST.txt", "w") as fh:
-        fh.write(f"# generated {dt.datetime.now(dt.timezone.utc).replace(tzinfo=None).isoformat()}Z from {args.labels}\n")
+        fh.write(f"# generated {now} from {args.labels}\n")
         for e in log:
             if e["sha256"]:
                 fh.write(f"{e['sha256']}  raw/{e['pdb']}.{e['format']}\n")
     (out / "manifest.json").write_text(json.dumps(
-        {"generated_utc": dt.datetime.now(dt.timezone.utc).replace(tzinfo=None).isoformat() + "Z", "source": "files.rcsb.org",
-         "entries": log}, indent=2))
+        {"generated_utc": now, "source": "files.rcsb.org", "entries": log}, indent=2))
 
     # 4 -- validate
     structures = {}
     for pid, p in paths.items():
-        s = load_structure(p)
-        if s is None:
+        st = load_structure(p)
+        if st is None:
             print(f"[warn] {pid}: .cif parsing needs biopython (pip install biopython); skipped")
             continue
-        structures[pid] = s
+        structures[pid] = st
     rep = validate_rows(df, cols, structures)
     rep.to_csv(out / "validation_rows.csv", index=False)
-
-    summ = rep.groupby("pdb")["status"].value_counts().unstack(fill_value=0)
-    for c in ["OK", "WT_MISMATCH", "RESIDUE_MISSING", "CHAIN_MISSING", "BAD_RESID", "NO_STRUCTURE"]:
-        if c not in summ:
-            summ[c] = 0
-    summ["n_rows"] = summ.sum(axis=1)
-    summ["frac_ok"] = (summ["OK"] / summ["n_rows"]).round(3)
     notes = offset_diagnostic(df, cols, rep, structures)
-    summ["note"] = [
-        "; ".join(v for (p, ch), v in notes.items() if p == pid) for pid in summ.index]
+    summ = summarize(rep, notes)
     summ.to_csv(out / "validation_summary.csv")
 
     n_ok = int((rep["status"] == "OK").sum())
@@ -423,9 +481,34 @@ def main():
           f"{int((rep['status'] == 'NO_STRUCTURE').sum())}")
     print("\nFiles written:", out / "MANIFEST.txt", out / "download_log.csv",
           out / "validation_rows.csv", out / "validation_summary.csv", sep="\n  ")
-    if n_ok < len(rep):
-        print("\nNEXT: read validation_summary.csv. Complexes with frac_ok < 1 need a numbering fix or the "
-              "AB-Bind prepared structure before any mutant building.")
+    if n_ok < int((rep["status"] != "NO_STRUCTURE").sum()):
+        print("\nNEXT: some rows with a structure failed. Rerun with --suggest-chain-map "
+              "(AB-Bind renamed antibody chains) or use the AB-Bind prepared structures.")
+
+    # 5 -- chain mapping (optional)
+    cmap = None
+    if args.suggest_chain_map:
+        sug = suggest_chain_map(df, cols, structures)
+        sug.to_csv(out / "chain_map_suggestions.csv", index=False)
+        print("\n================ CHAIN MAP SUGGESTIONS (review before use) ================")
+        print(sug.to_string(index=False))
+        acc = sug[sug["decision"].str.startswith("ACCEPT")]
+        cmap = {(r.pdb, str(r.abbind_chain)): (str(r.rcsb_chain), int(r.offset)) for r in acc.itertuples()}
+    if args.chain_map:
+        m = pd.read_csv(args.chain_map, dtype=str, keep_default_na=False)
+        cmap = {(r.pdb, r.abbind_chain): (r.rcsb_chain, int(r.offset)) for r in m.itertuples()}
+    if cmap is not None:
+        rep2 = validate_rows(df, cols, structures, cmap)
+        rep2.to_csv(out / "validation_rows_mapped.csv", index=False)
+        summ2 = summarize(rep2)
+        summ2.to_csv(out / "validation_summary_mapped.csv")
+        print("\n================ SUMMARY WITH CHAIN MAP ================")
+        print(summ2.to_string())
+        n2 = int((rep2["status"] == "OK").sum())
+        print(f"\nrows validated OK with chain map: {n2}/{len(rep2)}  "
+              f"(ceiling = {int((rep2['status'] != 'NO_STRUCTURE').sum())} rows that have a structure)")
+        print("The mapping is a SUGGESTION based on wild-type residue identity. Copies of the same chain tie "
+              "(see 'ties'); confirm against the AB-Bind prepared structures before building mutants.")
 
 
 if __name__ == "__main__":
