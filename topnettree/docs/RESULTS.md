@@ -1,22 +1,47 @@
 # Results
 
-No full S645 cross-validation has been run. The numbers below are the published targets. They are not claimed as reproductions.
+Nested 10-fold `cnn_aux` has been run with `configs/legacy_ab_cv.yaml` (2000 CNN epochs, 20000 trees, 3 seeds, no H1/H2). It misses the published gate. The aux-only log was not in the pasted output.
 
 | Quantity | Published | This package | Error | Gate | Milestone |
 |---|---|---|---|---|---|
-| 10-fold Pearson r | 0.65 | not run | — | ±0.05, nested only | M4 |
-| 10-fold RMSE (kcal/mol) | 1.57 | not run | — | report | M4 |
-| 10-fold r without 27 non-binders | 0.68 | not run | — | report | M4 |
-| 10-fold RMSE without non-binders | 1.06 | not run | — | report | M4 |
+| 10-fold Pearson r | 0.65 | 0.467 ± 0.049 | 0.183 | fail (outside ±0.05) | M4 |
+| 10-fold RMSE (kcal/mol) | 1.57 | 1.791 ± 0.067 | 0.221 | report | M4 |
+| 10-fold r without 27 non-binders | 0.68 | 0.480 ± 0.012 | 0.200 | report | M4 |
+| 10-fold RMSE without non-binders | 1.06 | 1.421 ± 0.025 | 0.361 | report | M4 |
 | Homology-model blind r | 0.55 | not run | — | report | M4 |
 | Leave-one-complex-out mean r | 0.51 | not run | — | report | M4 |
 
-## Why M4 was not scored
+## Fast 10-fold, one seed (`configs/fast.yaml`, CUDA server, 2026-11-01)
 
-- `X_h12` (756-d in the legacy script) is not in the capsule. Any model fit here is a **no-H12** ablation. The task allows that as a documented miss against 0.65, and it is not a pass.
-- The GBDT settings in `default.yaml` are unverified. The uploaded CV script uses a different set (`legacy_ab_cv.yaml`). Neither file is a record of the paper's 10×10-fold search.
-- Nested 10-fold CV refits the CNN for every fold (2000 epochs, batch 8). This machine has a CPU build of PyTorch (`torch 2.10.0+cpu`). That run was not started.
-- `leaky_original` is implemented and tested for leakage behavior. It is optimistic and is not a headline number. The nested-versus-leaky gap is therefore not yet a measured correlation gap.
+Runs: `runs/20261101T081918Z_nested_cnn_aux_kfold10` and `runs/20261101T082840Z_leaky_original_cnn_aux_kfold10`.
+
+Predicting the label mean would give RMSE 1.96 on all 645 rows and 1.40 on the 618 binders.
+
+| | Pearson r | RMSE | r without non-binders | RMSE without non-binders |
+|---|---|---|---|---|
+| Nested (headline) | 0.500 | 1.734 | 0.494 | 1.378 |
+| Leaky, labeled optimistic | 0.831 | 1.143 | 0.754 | 0.928 |
+| Gap (leaky − nested) | 0.332 | −0.590 | 0.260 | −0.450 |
+
+The nested result beats the null RMSE. The leaky result is far above the published 0.65 because the CNN and the feature ranking saw the test rows. It is not a TopNetTree score.
+
+## Full nested 10-fold (`configs/legacy_ab_cv.yaml`, 3 seeds, 2026-11-01)
+
+Runs: `runs/20261101T084813Z_nested_cnn_aux_kfold10` and `runs/20261101T084813Z_nested_cnn_kfold10`. Null RMSE is 1.96 on all rows and 1.40 on the 618 binders.
+
+| Feature set | Pearson r | RMSE | r without non-binders | RMSE without non-binders |
+|---|---|---|---|---|
+| `cnn_aux` | 0.467 ± 0.049 | 1.791 ± 0.067 | 0.480 ± 0.012 | 1.421 ± 0.025 |
+| `cnn` | 0.464 ± 0.047 | 1.786 ± 0.061 | 0.484 ± 0.017 | 1.396 ± 0.012 |
+| `aux` | log not pasted | | | |
+
+`cnn_aux` and `cnn` agree within the seed noise, so the shipped auxiliary block is not improving this fit. Binder RMSE does not beat predicting the mean (1.40). The longer protocol is also slightly worse than the 200-epoch nested run (r 0.500, RMSE 1.734). The miss against 0.65 is recorded as a failure of this no-H12 ablation, not hidden.
+
+## Still open
+
+- Homology-model blind test and leave-one-complex-out.
+- The aux-only row above.
+- `X_h12` is still absent, so none of these runs is TopNetTree.
 
 ## What did run
 
@@ -39,4 +64,4 @@ No full S645 cross-validation has been run. The numbers below are the published 
 | Panel rescoring of BA.1 | not run; needs per-complex features and a trained bundle |
 | Published panel vs itself | agreement metrics are tested; that is not a model score |
 
-Runtime per fold: not measured. Fill this table from `runs/<stamp>_*/environment.json` and `metrics.json` after `make cv-full` or `make cv-fast`.
+Runtime per fold: not measured. The fast pair finished; wall time was not recorded in `metrics.json`.
