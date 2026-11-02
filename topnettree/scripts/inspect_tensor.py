@@ -69,7 +69,17 @@ def main() -> None:
     same = np.all(aux[1:] == aux[:-1], axis=1)
     print(f"identical adjacent aux pairs: {int(same.sum())}")
     const = np.where(aux.std(axis=0) == 0)[0]
-    print(f"constant aux columns: {const.tolist()}")
+    print(f"constant aux columns: {const.tolist()} count {len(const)}")
+    from topnet.data import assert_label_tables
+    from topnet.config import load_config
+
+    _y, meta, _sup = assert_label_tables(load_config("configs/default.yaml"))
+    print("distinct X_aux rows per complex:")
+    for pdb, part in meta.groupby("pdb", sort=False):
+        rows = part["row_idx"].to_numpy()
+        block = aux[rows]
+        distinct = np.unique(block, axis=0).shape[0]
+        print(f"  {pdb} rows {len(rows)} distinct {distinct}")
     big = np.where(np.max(np.abs(aux), axis=0) > 1e6)[0]
     print(f"aux columns with |x|>1e6: {len(big)}; max {np.max(np.abs(aux)):.6e}")
 

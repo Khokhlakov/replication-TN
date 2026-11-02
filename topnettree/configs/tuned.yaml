@@ -1,0 +1,4 @@
+extends: fast_nested.yaml
+# No search has been run. tune_gbdt.py --protocol random_inner overwrites this file.
+# Until tune_status is complete or per_fold, the GBDT block is the fast_nested default.
+tune_status: not_run

@@ -1,0 +1,16 @@
+extends: legacy_ab_cv.yaml
+# 200-epoch nested runs. The tree defaults are the legacy_ab_cv.yaml values,
+# which are the baseline's tree, not a tuned result.
+cnn:
+  epochs: 200
+cv:
+  mode: nested
+  splitter: kfold10
+  n_splits: 10
+  seeds: [0, 1, 2, 3, 4]
+  feature_set: cnn_aux
+tune:
+  inner_splits: 3
+  n_trials: 12
+  max_estimators: 3000
+  cnn_option: A

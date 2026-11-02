@@ -63,18 +63,96 @@ def homology_blind_splits(is_homology: np.ndarray):
     yield train, test
 
 
+def homology_blind_strict_splits(meta: pd.DataFrame, drop_pdb):
+    """Train on crystal rows whose pdb is not a homology template. Test on HM rows.
+
+    Dropped template crystals are in neither split. ``drop_pdb`` comes from the config.
+    """
+    flag = meta["is_homology"].to_numpy().astype(bool)
+    pdb = meta["pdb"].astype(str).to_numpy()
+    dropped = np.isin(pdb, [str(item) for item in drop_pdb]) & ~flag
+    train = np.flatnonzero(~flag & ~dropped)
+    test = np.flatnonzero(flag)
+    if len(train) == 0 or len(test) == 0:
+        raise ValueError("homology_blind_strict produced an empty train or test split")
+    yield train, test
+
+
+def assert_dup_groups_intact(splits, dup_group: np.ndarray) -> None:
+    """A new fold scheme must keep every dup_group entirely in one side of the split."""
+    dup_group = np.asarray(dup_group)
+    for train, test in splits:
+        train = np.asarray(train)
+        test = np.asarray(test)
+        for group in set(dup_group.tolist()):
+            if int(group) < 0:
+                continue
+            members = np.flatnonzero(dup_group == group)
+            in_train = int(np.isin(members, train).sum())
+            in_test = int(np.isin(members, test).sum())
+            if in_train and in_test:
+                raise RuntimeError(f"dup_group {group} straddles train and test")
+            if in_train + in_test not in (0, len(members)):
+                raise RuntimeError(f"dup_group {group} is split by a row exclusion")
+
+
 def make_splits(splitter: str, n: int, meta: pd.DataFrame | None, cfg: dict, seed: int):
     if splitter == "kfold10":
         return kfold_splits(n, int(cfg["cv"]["n_splits"]), seed)
     if meta is None:
         raise ValueError(f"{splitter} needs the label metadata")
     if splitter == "loco":
-        return list(loco_splits(meta["complex_id"].to_numpy()))
-    if splitter == "homology_blind":
+        splits = list(loco_splits(meta["complex_id"].to_numpy()))
+    elif splitter == "loco_parent":
+        if "parent_pdb" not in meta.columns:
+            raise ValueError(
+                "loco_parent needs parent_pdb joined from the supplement on row_idx. Do not train on supplement ddg."
+            )
+        splits = list(loco_splits(meta["parent_pdb"].to_numpy()))
+    elif splitter == "homology_blind":
         if "is_homology" not in meta.columns:
             raise ValueError("homology_blind needs an is_homology column in the label table")
-        return list(homology_blind_splits(meta["is_homology"].to_numpy()))
-    raise ValueError(f"Unknown splitter {splitter}")
+        splits = list(homology_blind_splits(meta["is_homology"].to_numpy()))
+    elif splitter == "homology_blind_strict":
+        drop = cfg["cv"].get("drop_pdb")
+        if not drop:
+            raise ValueError("homology_blind_strict needs cv.drop_pdb in the config")
+        splits = list(homology_blind_strict_splits(meta, drop))
+    else:
+        raise ValueError(f"Unknown splitter {splitter}")
+    if splitter != "kfold10" and "dup_group" in meta.columns:
+        assert_dup_groups_intact(splits, meta["dup_group"].to_numpy())
+    return splits
+
+
+def restrict_splits(splits, keep: np.ndarray):
+    """Keep the original fold membership and drop rows outside ``keep`` from both sides."""
+    keep = np.asarray(keep, dtype=bool)
+    restricted = []
+    for train, test in splits:
+        train = np.asarray(train, dtype=np.int64)
+        test = np.asarray(test, dtype=np.int64)
+        train = train[keep[train]]
+        test = test[keep[test]]
+        if len(train) == 0 or len(test) == 0:
+            continue
+        restricted.append((train, test))
+    return restricted
+
+
+def config_for_fold(cfg: dict, seed: int, fold: int) -> dict:
+    """Apply one outer-fold's tuned tree, when ``gbdt_by_fold`` is present."""
+    table = cfg.get("gbdt_by_fold") or []
+    for row in table:
+        if int(row.get("seed", -1)) == int(seed) and int(row.get("fold", -1)) == int(fold):
+            local = {**cfg, "gbdt": dict(cfg["gbdt"]), "select": dict(cfg.get("select") or {})}
+            for key in ("n_estimators", "learning_rate", "max_depth", "min_samples_leaf", "subsample", "max_features"):
+                if key in row and row[key] is not None:
+                    local["gbdt"][key] = row[key]
+            if row.get("n_keep") is not None:
+                local["select"]["n_keep"] = int(row["n_keep"])
+            return local
+    return cfg
 
 
 def _slice(arr, idx):
@@ -94,12 +172,14 @@ def run_cv(
     cv_mode: str | None = None,
     feature_set: str | None = None,
     fit_log: FitLog | None = None,
+    row_keep: np.ndarray | None = None,
 ) -> dict:
     cv_mode = cv_mode or cfg["cv"]["mode"]
     feature_set = feature_set or cfg["cv"]["feature_set"]
-    if feature_set in ("topo_aux", "topo") and x_h12 is None:
+    h12_sets = ("topo_aux", "topo", "h12", "cnn_h12", "cnn_aux_h12", "h12_original")
+    if feature_set in h12_sets and x_h12 is None:
         raise FileNotFoundError(
-            f"{feature_set} needs X_h12. Refusing to rename an ablation to TopNetTree."
+            f"{feature_set} needs an H1/H2 matrix. Refusing to rename an ablation to TopNetTree."
         )
     if cv_mode not in ("nested", "leaky_original"):
         raise ValueError(cv_mode)
@@ -135,23 +215,26 @@ def run_cv(
 
     for seed in seeds:
         splits = make_splits(splitter, n, meta, cfg, seed)
+        if row_keep is not None:
+            splits = restrict_splits(splits, row_keep)
         pred = np.full(n, np.nan, dtype=np.float64)
         fold_of = np.full(n, -1, dtype=np.int64)
         for fold, (train_pos, test_pos) in enumerate(splits):
             train_pos = np.asarray(train_pos, dtype=np.int64)
             test_pos = np.asarray(test_pos, dtype=np.int64)
+            fold_cfg = config_for_fold(cfg, seed, fold)
             if cv_mode == "nested":
                 log.record("normalizer", train_pos, test_pos, seed, fold)
                 fold_norm = Normalizer().fit(_slice(x_cnn, train_pos), row_idx=_slice(row_idx, train_pos))
                 x_train = fold_norm.transform(_slice(x_cnn, train_pos))
                 x_test = fold_norm.transform(_slice(x_cnn, test_pos))
                 log.record("cnn", train_pos, test_pos, seed, fold)
-                model = train_cnn(x_train, y[train_pos], cfg, seed=seed + fold, device=device)
+                model = train_cnn(x_train, y[train_pos], fold_cfg, seed=seed + fold, device=device)
                 f_train = extract_features(model, x_train, device=device)
                 f_test = extract_features(model, x_test, device=device)
                 log.record("rank", train_pos, test_pos, seed, fold)
-                order = rank_cnn_features(f_train, y[train_pos], cfg, seed=seed + 17 + fold)
-                chosen = take_top(order, int(cfg["select"]["n_keep"]))
+                order = rank_cnn_features(f_train, y[train_pos], fold_cfg, seed=seed + 17 + fold)
+                chosen = take_top(order, int(fold_cfg["select"]["n_keep"]))
                 m_train = assemble_features(
                     f_train[:, chosen], _slice(x_aux, train_pos), _slice(x_h12, train_pos), feature_set
                 )
@@ -162,7 +245,7 @@ def run_cv(
                 m_train = base[train_pos]
                 m_test = base[test_pos]
             log.record("gbdt", train_pos, test_pos, seed, fold)
-            tree = make_gbdt(cfg, seed=seed + 100 + fold)
+            tree = make_gbdt(fold_cfg if cv_mode == "nested" else cfg, seed=seed + 100 + fold)
             tree.fit(m_train, y[train_pos])
             pred[test_pos] = tree.predict(m_test)
             fold_of[test_pos] = fold
@@ -182,13 +265,17 @@ def run_cv(
     nonbinder = None if meta is None else meta["is_nonbinder"].to_numpy()
     for seed in seeds:
         part = frame[frame["seed"] == seed]
-        # One prediction per row for kfold. loco and homology_blind also cover each row once.
-        y_true = part["y_true"].to_numpy()
-        y_pred = part["y_pred"].to_numpy()
+        # kfold scores every row. homology and a row subset leave some predictions empty.
+        finite = np.isfinite(part["y_pred"].to_numpy())
+        y_true = part["y_true"].to_numpy()[finite]
+        y_pred = part["y_pred"].to_numpy()[finite]
         if nonbinder is None:
             summaries.append({"seed": seed, **{f"all_{k}": v for k, v in _plain(y_true, y_pred).items()}})
         else:
-            both = metrics_with_nonbinders(y_true, y_pred, nonbinder)
+            row_ids = part["row_idx"].to_numpy()[finite]
+            lookup = pd.Series(np.asarray(nonbinder), index=meta["row_idx"].to_numpy())
+            flag = lookup.loc[row_ids].to_numpy()
+            both = metrics_with_nonbinders(y_true, y_pred, flag)
             summaries.append(
                 {
                     "seed": seed,
@@ -204,6 +291,10 @@ def run_cv(
     label = "optimistic" if cv_mode == "leaky_original" else "nested"
     if feature_set in ("cnn_aux", "cnn", "aux"):
         label = label + " no-H12"
+    elif feature_set == "h12_original":
+        label = label + " h12_original (columns of crossvalidation/X.npy, in-fold selection)"
+    elif feature_set in ("h12", "cnn_h12", "cnn_aux_h12"):
+        label = label + " regenerated H12 (not original)"
     return {
         "predictions": frame,
         "per_seed": summaries,

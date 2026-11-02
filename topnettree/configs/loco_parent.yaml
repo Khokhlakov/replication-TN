@@ -1,0 +1,9 @@
+extends: tuned.yaml
+# HM_x and x share parent_pdb, so this split does not train on the template of the held-out model.
+cnn:
+  epochs: 200
+cv:
+  mode: nested
+  splitter: loco_parent
+  seeds: [0]
+  feature_set: cnn_aux

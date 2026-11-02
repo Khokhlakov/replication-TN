@@ -1,0 +1,10 @@
+extends: tuned.yaml
+# Drops crystal rows whose pdb is a template of an HM entry. Those rows are in neither split.
+cnn:
+  epochs: 200
+cv:
+  mode: nested
+  splitter: homology_blind_strict
+  seeds: [0]
+  feature_set: cnn_aux
+  drop_pdb: [1KTZ, 1YY9, 3BN9, 2NYY, 2NZ9]

@@ -54,6 +54,32 @@ The reference `importance_idx.npy` puts most of its top 300 indices in bins 12-2
 - Auxiliary features are not regenerated. `mutation_aux` raises rather than invent a 707-d stand-in.
 - The legacy PDB reader uses `line[23:26]` for the residue number. Below 1000 that only drops a space. At or above 1000 it drops the thousands digit. The default reader keeps the full resSeq plus insertion code.
 
+## T4.1 per-complex auxiliary rows (2026-11-02)
+
+`scripts/inspect_tensor.py` now prints distinct `X_aux` rows per complex. Constant columns are 669 and 676 (two columns, not three). Distinct counts, from that run:
+
+| pdb | rows | distinct aux rows |
+|---|---|---|
+| 1DVF | 26 | 25 |
+| 1N8Z | 34 | 31 |
+| 2NYY | 28 | 20 |
+| 2NZ9 | 19 | 11 |
+| 3BDY | 34 | 30 |
+| 3BE1 | 34 | 31 |
+| 3BN9 | 35 | 29 |
+| HM_2NYY | 25 | 10 |
+| HM_2NZ9 | 16 | 9 |
+
+Every other complex has one distinct aux row per mutation row. The shortfalls are the duplicate experimental rows and the degenerate aux blocks already described. Death-count channels are non-negative. Persistence-count channels are non-negative. The nine DIFF channels in each block are signed (wild minus mutant) and are the only signed channels.
+
+## T4.2 structure check (2026-11-02)
+
+Primary files were copied from `../capsule-2202829/data/AB-Bind-Database/` to `data/structures/abbind/`. Checksums are in `data/structures/abbind/MANIFEST_abbind.txt`. All 645 rows matched chain, residue number, insertion code and wild-type name in those files. Excluded complexes: none. N = 645. `data/structures/raw` has no PDB files, so the RCSB arm was not run. `chain_map.csv` is not in the repo.
+
+## T4.3 H0 pilot (2026-11-02)
+
+Code-following settings (collapsed insertion code, JavaPlex-style quantization, 12 Å, all altlocs) on 1KTZ, 2JEL, 3BDY, 3BE1 and 3HFM, insertion-code rows excluded: 145 rows, exact integer match 0/145 on every WT channel block. Best cell agreement on a single row was 0.616 (mutation death). A continuous-MST rerun on 1KTZ alone was also 0/22 exact; its best block was binding persistence at 0.785 mean cell agreement. Gudhi was not installed, so the Rips cross-check did not run. This pilot fails. T4.4 through T4.7 were not run. Details are in `docs/RUNBOOK_NEXT.md`.
+
 ## Open point
 
-If a structure-level audit shows that `X_unnormed.npy` is not in `AB_645.csv` order, the label file has to be realigned before any reported correlation is meaningful. The `Y.npy` match is necessary evidence and not a proof about the CNN tensor by itself. The duplicate-mutation aux pairs are the additional check, and they agree.
+`Y.npy` matches `ddg_abbind` in order (G0 PASS). That is not a proof that `X_unnormed.npy` was rebuilt by the H0 port: the T4.3 pilot matched 0 of 145 WT channel blocks. The duplicate-mutation aux pairs still agree with the label table.

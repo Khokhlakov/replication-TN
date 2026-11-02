@@ -18,7 +18,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 import numpy as np
 
 from topnet.config import load_config
-from topnet.data import load_arrays, load_labels
+from topnet.data import assert_label_tables, load_arrays
 from topnet.pipeline import fit_pipeline, save_bundle
 from topnet.runs import start_run
 
@@ -35,12 +35,12 @@ def main(argv: list[str] | None = None) -> int:
         y = np.random.default_rng(int(cfg["seed"])).normal(size=len(x_cnn))
         meta_rows = np.arange(len(y))
     else:
-        y, meta = load_labels(cfg=cfg)
+        y, meta, _sup = assert_label_tables(cfg)
         meta_rows = meta["row_idx"].to_numpy()
     x_h12 = np.load(args.h12) if args.h12 else None
     feature_sets = ["cnn_aux", "cnn", "aux"]
     if x_h12 is not None:
-        feature_sets = ["topo_aux", "topo"] + feature_sets
+        feature_sets = ["cnn_aux_h12", "cnn_h12", "h12"] + feature_sets
     run_dir = start_run("final", cfg, synthetic=bool(args.synthetic))
     for feature_set in feature_sets:
         bundle = fit_pipeline(

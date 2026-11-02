@@ -1,0 +1,13 @@
+extends: legacy_ab_cv.yaml
+# Same tree, CNN epochs, seeds and kfold10 generator as the nested cnn_aux baseline.
+# cv.py builds folds with KFold(shuffle=True, random_state=seed), so the fold
+# membership matches a nested run that used the same seeds. The capsule script
+# does not set random_state, so these folds are not the capsule's folds.
+cv:
+  mode: leaky_original
+  splitter: kfold10
+  n_splits: 10
+  seeds: [0, 1, 2]
+  feature_set: cnn_aux
+cnn:
+  epochs: 2000

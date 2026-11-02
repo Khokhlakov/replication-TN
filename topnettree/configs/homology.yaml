@@ -1,0 +1,8 @@
+extends: tuned.yaml
+cnn:
+  epochs: 200
+cv:
+  mode: nested
+  splitter: homology_blind
+  seeds: [0]
+  feature_set: cnn_aux

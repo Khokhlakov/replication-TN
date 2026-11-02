@@ -23,6 +23,16 @@ from topnet.normalize import Normalizer, count_large
 from topnet.select import rank_cnn_features, take_top
 
 
+def _bundle_label(feature_set: str) -> str:
+    if feature_set in ("cnn_aux", "cnn", "aux"):
+        return "no-H12"
+    if feature_set == "h12_original":
+        return "h12_original (columns of crossvalidation/X.npy)"
+    if feature_set in ("h12", "cnn_h12", "cnn_aux_h12"):
+        return "regenerated H12 (not original)"
+    return "with-H12"
+
+
 def fit_pipeline(
     x_cnn: np.ndarray,
     y: np.ndarray,
@@ -68,7 +78,7 @@ def fit_pipeline(
         "manifest": used_manifest,
         "manifest_hash": manifest_hash(used_manifest),
         "includes_h12": x_h12 is not None and feature_set in ("topo_aux", "topo"),
-        "label": "no-H12" if feature_set in ("cnn_aux", "cnn", "aux") else "with-H12",
+        "label": _bundle_label(feature_set),
     }
 
 

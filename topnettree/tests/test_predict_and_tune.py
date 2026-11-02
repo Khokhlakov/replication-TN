@@ -66,3 +66,45 @@ def test_tune_stays_inside_the_training_rows(cfg, script_loader):
         assert set(event["train_idx"]).isdisjoint(outer_test)
         assert set(event["test_idx"]).isdisjoint(outer_test)
         assert set(event["train_idx"]).issubset(set(train_idx))
+
+
+def test_random_inner_fit_never_sees_the_outer_test(cfg, monkeypatch, script_loader):
+    from sklearn.ensemble import GradientBoostingRegressor
+
+    module = script_loader("tune_gbdt")
+    rng = np.random.default_rng(0)
+    x = rng.normal(size=(24, 48, 108)).astype(np.float32)
+    aux = rng.normal(size=(24, 4))
+    y = np.arange(24, dtype=np.float64)
+    outer_test = np.arange(6)
+    outer_train = np.arange(6, 24)
+    seen = []
+    real_fit = GradientBoostingRegressor.fit
+
+    def fit_spy(self, x_train, y_train, *args, **kwargs):
+        seen.extend(np.asarray(y_train, dtype=np.float64).tolist())
+        return real_fit(self, x_train, y_train, *args, **kwargs)
+
+    monkeypatch.setattr(GradientBoostingRegressor, "fit", fit_spy)
+    cfg = dict(cfg)
+    cfg["tune"] = {
+        "inner_splits": 3,
+        "n_trials": 1,
+        "max_estimators": 4,
+        "cnn_option": "A",
+        "random_space": {
+            "max_depth": [2],
+            "subsample": [1.0],
+            "learning_rate": [0.1],
+            "max_features": ["sqrt"],
+            "min_samples_leaf": [1],
+            "n_keep": [4],
+        },
+    }
+    cfg["cnn"]["epochs"] = 1
+    cfg["select"]["n_estimators"] = 3
+    winner, trials = module.random_search_outer(x, y, aux, outer_train, outer_test, cfg, seed=0)
+    assert trials
+    assert "n_estimators" in winner
+    assert set(seen).isdisjoint(set(outer_test.tolist()))
+    assert seen

@@ -135,6 +135,52 @@ def _missing_labels_error(path: Path) -> FileNotFoundError:
     )
 
 
+def assert_label_tables(cfg: dict | None = None, supplement: Path | None = None):
+    """Startup check for every new script.
+
+    Canonical ``ddg`` is the training target. The supplement is metadata.
+    Its ``ddg`` column is the opposite sign and is never a training target.
+    Residue identity uses ``resid_str`` (numeric ``resid`` plus ``icode``).
+    """
+    cfg = cfg or _default_config()
+    y, meta = load_labels(cfg=cfg)
+    path = Path(supplement) if supplement is not None else repo_supplement_path(cfg)
+    if not path.is_file():
+        raise FileNotFoundError(f"Missing metadata table {path}")
+    sup = pd.read_csv(
+        path,
+        dtype={"pdb": str, "chain": str, "wt": str, "mut": str, "resid_str": str, "icode": str},
+        keep_default_na=False,
+    )
+    if len(sup) != len(meta):
+        raise AssertionError(f"length {len(meta)} != supplement {len(sup)}")
+    if not np.array_equal(sup["row_idx"].to_numpy(), np.arange(len(meta))):
+        raise AssertionError(f"{path} row_idx is not 0..{len(meta) - 1} in order")
+    for column in ("pdb", "chain", "wt", "mut"):
+        left = meta[column].astype(str).str.casefold().to_numpy()
+        right = sup[column].astype(str).str.casefold().to_numpy()
+        if not np.array_equal(left, right):
+            mismatch = int(np.flatnonzero(left != right)[0])
+            raise AssertionError(
+                f"{column} differs at row_idx {mismatch}: {meta[column].iloc[mismatch]!r} vs {sup[column].iloc[mismatch]!r}"
+            )
+    resid = meta["resid"].astype(str).str.casefold().to_numpy()
+    resid_str = sup["resid_str"].astype(str).str.casefold().to_numpy()
+    if not np.array_equal(resid, resid_str):
+        mismatch = int(np.flatnonzero(resid != resid_str)[0])
+        raise AssertionError(
+            f"resid differs from resid_str at row_idx {mismatch}: {meta['resid'].iloc[mismatch]!r} vs {sup['resid_str'].iloc[mismatch]!r}"
+        )
+    if not np.allclose(y, sup["ddg_abbind"].to_numpy(dtype=np.float64)):
+        raise AssertionError("canonical ddg is not allclose to supplement ddg_abbind")
+    return y, meta, sup
+
+
+def repo_supplement_path(cfg: dict | None = None) -> Path:
+    cfg = cfg or _default_config()
+    return Path(cfg["_root"]) / "data" / "labels" / "ab_bind_s645_supplement.csv"
+
+
 def load_labels(path: Path | None = None, cfg: dict | None = None):
     """Return y (645,) float64 and the metadata frame. Never reorders rows."""
     cfg = cfg or _default_config()
