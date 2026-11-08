@@ -72,7 +72,7 @@ def main() -> None:
     print(f"\npublished: {PUBLISHED}\n")
     print(tab.sort_values("L1_gap").to_string(index=False))
     best = tab.sort_values("L1_gap").iloc[0]
-    print(f"\nclosest option: combine={best["combine"]}, discordance_thr={best["discordance_thr"]}, gap {int(best["L1_gap"])}")
+    print("\nclosest option: combine=%s, discordance_thr=%s, gap %d" % (best["combine"], best["discordance_thr"], int(best["L1_gap"])))
     if best["L1_gap"] == 0:
         print("EXACT MATCH. Adopt these options in 10_fetch_skempi.py.")
     else:

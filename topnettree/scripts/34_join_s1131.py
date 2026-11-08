@@ -81,16 +81,22 @@ def autodetect(table: np.ndarray) -> dict:
 
 
 def tokens_from_row(row: np.ndarray, m: dict):
-    """Returns (chain or None, wt, resid, mut) or None."""
+    """Returns (chain or None, wt, resid, mut) or None.
+
+    'L38G' (plain) also matches SKEMPI's wt+chain+resid+mut pattern (chain '3', residue '8'), so the two forms are
+    told apart explicitly: with a separate chain column the token is plain; without one, a token whose second
+    character is a letter is a SKEMPI token (LI45G), otherwise it is plain."""
     if "mut" in m:
         s = row[m["mut"]]
-        t = parse_skempi_token(s)
-        if t:
-            return t[1], t[0], t[2], t[3]
-        t = parse_plain_token(s)
-        if t:
-            chain = row[m["chain"]] if "chain" in m else None
-            return chain, t[0], t[1], t[2]
+        has_chain_col = "chain" in m
+        sk = parse_skempi_token(s)
+        pl = parse_plain_token(s)
+        if sk and not has_chain_col and (s[1].isalpha() or not pl):
+            return sk[1], sk[0], sk[2], sk[3]
+        if pl:
+            return (row[m["chain"]] if has_chain_col else None), pl[0], pl[1], pl[2]
+        if sk:
+            return sk[1], sk[0], sk[2], sk[3]
         return None
     if all(k in m for k in ("wt", "resid", "mutaa")):
         return (row[m["chain"]] if "chain" in m else None), row[m["wt"]], row[m["resid"]], row[m["mutaa"]]
@@ -158,12 +164,17 @@ def main() -> None:
     report = {"mapping": mapping, "best_scheme": scheme, "n_s1131": int(len(table)), "n_parsed": int(len(left)),
               "n_joined": int(len(joined)), "join_rate": float(len(joined) / len(table))}
     if len(joined) > 3:
-        report["pearson_y_ddg"] = float(stats.pearsonr(joined["y"], joined["ddg"])[0])
+        r_pos = float(stats.pearsonr(joined["y"], joined["ddg"])[0])
+        sign = 1.0 if r_pos >= 0 else -1.0  # -1: shipped Y is positive = tighter, opposite to the repo's ddg
+        yc = sign * joined["y"]
+        report["pearson_y_ddg"] = r_pos
+        report["pearson_negated"] = -r_pos
+        report["y_sign_vs_repo_ddg"] = "same (positive = weaker)" if sign > 0 else "opposite (Y positive = tighter): negate Y to get repo ddg"
         report["spearman_y_ddg"] = float(stats.spearmanr(joined["y"], joined["ddg"])[0])
-        report["pearson_negated"] = float(stats.pearsonr(-joined["y"], joined["ddg"])[0])
-        report["mean_abs_diff"] = float((joined["y"] - joined["ddg"]).abs().mean())
-        report["frac_abs_diff_lt_0.05"] = float(((joined["y"] - joined["ddg"]).abs() < 0.05).mean())
-    report["gate_pass"] = bool(report["join_rate"] >= 0.95 and report.get("pearson_y_ddg", 0) >= 0.95)
+        report["abs_pearson"] = abs(r_pos)
+        report["mean_abs_diff_after_sign"] = float((yc - joined["ddg"]).abs().mean())
+        report["frac_abs_diff_lt_0.05_after_sign"] = float(((yc - joined["ddg"]).abs() < 0.05).mean())
+    report["gate_pass"] = bool(report["join_rate"] >= 0.95 and report.get("abs_pearson", 0) >= 0.95)
     out = Path(args.out_dir)
     out.mkdir(parents=True, exist_ok=True)
     joined.to_csv(out / "s1131_joined.csv", index=False)
