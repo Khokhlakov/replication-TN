@@ -1,0 +1,4 @@
+resolved_id,label_contains,rbd_chain,antibody_chains,note
+7B27,,A,C,"nanobody is chain C; chains B and D do not touch the RBD (your contact analysis). Verify after the AAA:12 shift."
+7L7E,AZD8895,K,I+J,"RBD copy K has no shared partners; AZD8895 = I+J (your contact analysis)"
+7L7E,AZD1061,K,O+P,"RBD copy K; AZD1061 = O+P (your contact analysis)"
