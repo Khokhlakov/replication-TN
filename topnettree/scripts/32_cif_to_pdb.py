@@ -38,8 +38,3 @@ io.set_structure(model)
 io.save(str(out / f"{cif.stem}.pdb"))
 (out / f"{cif.stem}.chainmap.json").write_text(json.dumps({"original_to_new": mapping, "shifts": shifts}, indent=1))
 print(cif.stem, "->", out / f"{cif.stem}.pdb", mapping)
-EOF
-foreach f (6ZBP 7OAY 7OAP 7OAO)
-  python scripts/32_cif_to_pdb.py data/structures/antibody_rbd/$f.cif
-end
-# 7B27: replace <NEG_OFFSET> with the negative of the offset found in step 3
