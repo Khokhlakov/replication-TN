@@ -114,7 +114,7 @@ def main() -> None:
             rows.append(rec)
             continue
         rec.update(format=dest.suffix[1:], path=str(dest))
-        if dest.suffix == ".pdb":
+        if dest.suffix in (".pdb", ".cif"):
             chains = analyse_chains(dest)
             best = max(chains, key=lambda c: chains[c]["wt_match"], default=None)
             rec["chains_json"] = json.dumps(chains)
