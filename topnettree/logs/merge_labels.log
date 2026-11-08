@@ -1,0 +1,7 @@
+           rows  in_structure
+dataset                      
+chan2020   2223          2223
+skempi2    4173          4173
+starr2020  3802          3669
+dropped from starr2020: 133 rows; residues (first 15): ['331', '332', '527', '528', '529', '530', '531']
+wrote data/labels/reconstructed_labels.csv (10065 rows); SKEMPI rows overlapping AB-Bind S645: 170

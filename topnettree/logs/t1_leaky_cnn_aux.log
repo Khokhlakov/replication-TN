@@ -1,0 +1,3 @@
+optimistic no-H12
+{'pearson_r': {'mean': 0.9529794320802368, 'sd': 0.004823461318221176, 'n': 3}, 'rmse': {'mean': 0.6668155840329316, 'sd': 0.024693580511456287, 'n': 3}, 'spearman_rho': {'mean': 0.9129054572787879, 'sd': 0.0015182419316742792, 'n': 3}, 'mae': {'mean': 0.3928748596387943, 'sd': 0.005194619434918807, 'n': 3}, 'pearson_r_no_nonbinders': {'mean': 0.9195313186418345, 'sd': 0.008310482670183993, 'n': 3}, 'rmse_no_nonbinders': {'mean': 0.5617419493611365, 'sd': 0.023936372033055462, 'n': 3}}
+/scr1/scratch/mart3451/replication-TN/topnettree/runs/20261102T044416Z_leaky_original_cnn_aux_kfold10

@@ -1,0 +1,319 @@
+{
+  "local": {
+    "root": "/scr1/scratch/mart3451/replication-TN/topnettree",
+    "antibodies_csv": true,
+    "antibodies_bfes_csv": true,
+    "n_labels": 186,
+    "bfe_shape": [
+      15,
+      186
+    ],
+    "labels_match_bfe_header": true,
+    "ace2_sum": 2.6018,
+    "skempi_1131_files": {},
+    "dms_dir_files": []
+  },
+  "hosts": {
+    "https://life.bsc.es/pid/skempi2/": "ok",
+    "https://files.rcsb.org/": "ok",
+    "https://data.rcsb.org/": "ok",
+    "https://github.com/": "ok",
+    "https://raw.githubusercontent.com/": "ok",
+    "https://media.githubusercontent.com/": "ok"
+  },
+  "skempi": {
+    "csv_status": "ok",
+    "delimiter": ";",
+    "columns": [
+      "#Pdb",
+      "Mutation(s)_PDB",
+      "Mutation(s)_cleaned",
+      "iMutation_Location(s)",
+      "Hold_out_type",
+      "Hold_out_proteins",
+      "Affinity_mut (M)",
+      "Affinity_mut_parsed",
+      "Affinity_wt (M)",
+      "Affinity_wt_parsed",
+      "Reference",
+      "Protein 1",
+      "Protein 2",
+      "Temperature",
+      "kon_mut (M^(-1)s^(-1))",
+      "kon_mut_parsed",
+      "kon_wt (M^(-1)s^(-1))",
+      "kon_wt_parsed",
+      "koff_mut (s^(-1))",
+      "koff_mut_parsed",
+      "koff_wt (s^(-1))",
+      "koff_wt_parsed",
+      "dH_mut (kcal mol^(-1))",
+      "dH_wt (kcal mol^(-1))",
+      "dS_mut (cal mol^(-1) K^(-1))",
+      "dS_wt (cal mol^(-1) K^(-1))",
+      "Notes",
+      "Method",
+      "SKEMPI version"
+    ],
+    "first_row": [
+      "1CSE_E_I",
+      "LI45G",
+      "LI38G",
+      "COR",
+      "Pr/PI",
+      "Pr/PI",
+      "5.26E-11",
+      "5.26E-11",
+      "1.12E-12",
+      "1.12E-12",
+      "9048543",
+      "Subtilisin Carlsberg",
+      "Eglin c",
+      "294",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "IASP",
+      "1"
+    ],
+    "tgz_first_members": [
+      "./._PDBs",
+      "PDBs",
+      "PDBs/._3N0P.pdb",
+      "PDBs/3N0P.pdb",
+      "PDBs/._4GNK.pdb",
+      "PDBs/4GNK.pdb",
+      "PDBs/._4YFD.pdb",
+      "PDBs/4YFD.pdb",
+      "PDBs/._3Q8D.mapping",
+      "PDBs/3Q8D.mapping",
+      "PDBs/._1TM4.pdb",
+      "PDBs/1TM4.pdb"
+    ]
+  },
+  "starr_dms": {
+    "main": {
+      "branch": "master",
+      "raw": "git-lfs pointer, not data",
+      "media": "ok",
+      "header": "\"site_RBD\",\"site_SARS2\",\"wildtype\",\"mutant\",\"mutation\",\"mutation_RBD\",\"bind_lib1\",\"bind_lib2\",\"bind_avg\",\"expr_lib1\",\"expr_lib2\",\"expr_avg\"",
+      "first_row": "1,331,\"N\",\"A\",\"N331A\",\"N1A\",-0.05,-0.02,-0.03,-0.14,-0.08,-0.11"
+    },
+    "mavedb": {
+      "branch": "master",
+      "raw": "data",
+      "header": "\"hgvs_pro\",\"score\",\"average\",\"library\"",
+      "first_row": "\"p.Asn1Ala\",-0.05,-0.03,\"1\""
+    },
+    "sites": {
+      "branch": "master",
+      "raw": "data",
+      "header": "\"site_RBD\",\"amino_acid_SARS2\",\"site_SARS2\",\"amino_acid_SARS1\",\"site_SARS1\",\"chain_6M0J\",\"codon_SARS2\",\"amino_acid_RaTG13\",\"amino_acid_GD_Pangolin\",\"entropy\",\"Neff\",\"RBM\",\"disulfide\",\"NLGS\",\"sse\",\"SASA_bound\",\"SASA_unbound\",\"RSA_bound\",\"RSA_unbound\",\"SARS2_ACE2_contact\",\"SARS1_ACE2_contact\",\"SARS1_key_adaptation\",\"epitope_CR3022\",\"epitope_VHH72\",\"epitope_S230\",\"epitope_m396\",\"epitope_F26G19\",\"epitope_80R\",\"epitope_B38\",\"epitope_S309\",\"buried_downRBD\"",
+      "first_row": "1,\"N\",331,\"N\",318,NA,\"aat\",\"N\",\"N\",0,1,FALSE,NA,\"putative1\",NA,NA,NA,NA,NA,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,TRUE"
+    }
+  },
+  "rcsb": {
+    "6XDG": {
+      "title": "Complex of SARS-CoV-2 receptor binding domain with the Fab fragments of two neutralizing antibodies",
+      "entities": [
+        {
+          "entity": "1",
+          "description": "Spike protein S1",
+          "auth_chains": [
+            "E"
+          ]
+        },
+        {
+          "entity": "2",
+          "description": "REGN10933 antibody Fab fragment light chain",
+          "auth_chains": [
+            "D"
+          ]
+        },
+        {
+          "entity": "3",
+          "description": "REGN10933 antibody Fab fragment heavy chain",
+          "auth_chains": [
+            "B"
+          ]
+        },
+        {
+          "entity": "4",
+          "description": "REGN10987 antibody Fab fragment heavy chain",
+          "auth_chains": [
+            "C"
+          ]
+        },
+        {
+          "entity": "5",
+          "description": "REGN10987 antibody Fab fragment light chain",
+          "auth_chains": [
+            "A"
+          ]
+        }
+      ]
+    },
+    "7L7E": {
+      "title": "Crystal structure of SARS-CoV-2 spike RBD in complex with human monoclonal antibodies AZD8895 and AZD1061",
+      "entities": [
+        {
+          "entity": "1",
+          "description": "heavy chain of human monoclonal antibody AZD8895",
+          "auth_chains": [
+            "A",
+            "H",
+            "I",
+            "T"
+          ]
+        },
+        {
+          "entity": "2",
+          "description": "light chain of human monoclonal antibody Fab AZD8895",
+          "auth_chains": [
+            "B",
+            "J",
+            "L",
+            "U"
+          ]
+        },
+        {
+          "entity": "3",
+          "description": "heavy chain of human monoclonal antibody Fab AZD1061",
+          "auth_chains": [
+            "C",
+            "E",
+            "M",
+            "O"
+          ]
+        },
+        {
+          "entity": "4",
+          "description": "light chain of human monoclonal antibody Fab AZD1061",
+          "auth_chains": [
+            "D",
+            "F",
+            "N",
+            "P"
+          ]
+        },
+        {
+          "entity": "5",
+          "description": "Spike protein S1",
+          "auth_chains": [
+            "G",
+            "K",
+            "S",
+            "b"
+          ]
+        }
+      ]
+    },
+    "7L7D": {
+      "title": "Crystal structure of SARS-CoV-2 spike RBD in complex with human monoclonal antibody AZD8895",
+      "entities": [
+        {
+          "entity": "1",
+          "description": "heavy chain of human monoclonal antibody Fab AZD8895",
+          "auth_chains": [
+            "H"
+          ]
+        },
+        {
+          "entity": "2",
+          "description": "light chain of human monoclonal antibody Fab AZD8895",
+          "auth_chains": [
+            "L"
+          ]
+        },
+        {
+          "entity": "3",
+          "description": "Spike protein S1",
+          "auth_chains": [
+            "E"
+          ]
+        }
+      ]
+    },
+    "6M0J": {
+      "title": "Crystal structure of SARS-CoV-2 spike receptor-binding domain bound with ACE2",
+      "entities": [
+        {
+          "entity": "1",
+          "description": "Angiotensin-converting enzyme 2",
+          "auth_chains": [
+            "A"
+          ]
+        },
+        {
+          "entity": "2",
+          "description": "Spike protein S1",
+          "auth_chains": [
+            "E"
+          ]
+        }
+      ]
+    },
+    "7KMG": {
+      "title": "LY-CoV555 neutralizing antibody against SARS-CoV-2",
+      "entities": [
+        {
+          "entity": "1",
+          "description": "LY-CoV555 Fab heavy chain",
+          "auth_chains": [
+            "A",
+            "D"
+          ]
+        },
+        {
+          "entity": "2",
+          "description": "LY-CoV555 Fab light chain",
+          "auth_chains": [
+            "B",
+            "E"
+          ]
+        },
+        {
+          "entity": "3",
+          "description": "Spike protein S1",
+          "auth_chains": [
+            "C",
+            "F"
+          ]
+        }
+      ]
+    },
+    "1061": {
+      "status": "http 404"
+    },
+    "7T9L": {
+      "title": "Cryo-EM structure of SARS-CoV-2 Omicron spike protein in complex with human ACE2 (focused refinement of RBD and ACE2)",
+      "entities": [
+        {
+          "entity": "1",
+          "description": "Spike glycoprotein",
+          "auth_chains": [
+            "A"
+          ]
+        },
+        {
+          "entity": "2",
+          "description": "Processed angiotensin-converting enzyme 2",
+          "auth_chains": [
+            "D"
+          ]
+        }
+      ]
+    },
+    "files.rcsb.org": "ok"
+  }
+}

@@ -1,0 +1,20 @@
+Y[:6]   = [2.49 0.6  0.41 0.19 1.91 2.86]
+y[:6]   = [2.49 0.6  0.41 0.19 1.91 2.86]
+positions equal  Y==y : 645 / 645
+positions equal  Y==-y: 45 / 645
+same multiset: True | sign-flipped multiset: False
+crosslabel: n unique=640, first 20=[340.  78. 332. 442. 122. 584. 502. 243. 110. 149.  63. 207.  10. 461.
+ 182. 629. 265. 395. 323. 423.]
+shapes  X (645, 5888)  X_aux (645, 707)  X_unnormed(flat) (645, 5184)
+X constant columns: 0 of 5888
+X cols identical to a X_aux column: 0
+X cols identical to a X_unnormed column: 0
+X non-constant cols matching neither: 5888
+AB_645.csv (645, 7) ['#PDB', 'Partners(A_B)', 'Protein-1', 'Protein-2', 'Mutation', 'ddG(kcal/mol)', 'type']
+   #PDB Partners(A_B) Protein-1              Protein-2 Mutation  ddG(kcal/mol) type
+0  1AK4           A_D   huCyc-A  HIV-1 CAPSID (N-Term)  D:A488G           2.49    B
+1  1AK4           A_D   huCyc-A  HIV-1 CAPSID (N-Term)  D:A488V           0.60    B
+2  1AK4           A_D   huCyc-A  HIV-1 CAPSID (N-Term)  D:A492G           0.41    B
+antibodies.csv lines: 186 | BFEs shape (rows x cols): (15, 186)
+BFE header == antibodies.csv names (after PDB_): True
+entries whose prefix is not a valid PDB id: ['RN33_REGN10933', 'RN87_REGN10987']

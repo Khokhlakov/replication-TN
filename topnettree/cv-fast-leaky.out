@@ -1,0 +1,22 @@
+Traceback (most recent call last):
+  File "scripts/run_cv.py", line 78, in <module>
+    raise SystemExit(main())
+  File "scripts/run_cv.py", line 52, in main
+    result = run_cv(
+  File "/scr1/scratch/mart3451/replication-TN/topnettree/src/topnet/cv.py", line 124, in run_cv
+    model = train_cnn(x_norm, y, cfg, seed=seeds[0], device=device)
+  File "/scr1/scratch/mart3451/replication-TN/topnettree/src/topnet/cnn.py", line 159, in train_cnn
+    pred = model(xb)
+  File "/scr1/scratch/mart3451/replication-TN/topnettree/.venv/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/scr1/scratch/mart3451/replication-TN/topnettree/.venv/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1562, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/scr1/scratch/mart3451/replication-TN/topnettree/src/topnet/cnn.py", line 83, in forward
+    return self.fc(self.d3(self.features(x))).squeeze(-1)
+  File "/scr1/scratch/mart3451/replication-TN/topnettree/.venv/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/scr1/scratch/mart3451/replication-TN/topnettree/.venv/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1562, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/scr1/scratch/mart3451/replication-TN/topnettree/.venv/lib/python3.8/site-packages/torch/nn/modules/linear.py", line 117, in forward
+    return F.linear(input, self.weight, self.bias)
+RuntimeError: Deterministic behavior was enabled with either `torch.use_deterministic_algorithms(True)` or `at::Context::setDeterministicAlgorithms(true)`, but this operation is not deterministic because it uses CuBLAS and you have CUDA >= 10.2. To enable deterministic behavior in this case, you must set an environment variable before running your PyTorch application: CUBLAS_WORKSPACE_CONFIG=:4096:8 or CUBLAS_WORKSPACE_CONFIG=:16:8. For more information, go to https://docs.nvidia.com/cuda/cublas/index.html#results-reproducibility

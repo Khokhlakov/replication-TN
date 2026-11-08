@@ -1,0 +1,6 @@
+label,pdb,antibody_chains,rbd_chain,note
+REGN10933,6XDG,B+D,E,heavy B + light D
+REGN10987,6XDG,A+C,E,heavy C + light A (A under 5 contact pairs)
+REGN10933/10987,6XDG,A+B+C+D,E,cocktail column
+AZD1061,7L7E,O+P,K,copy K has no cross-copy contacts
+AZD8895/AZD1061,7L7E,I+J+O+P,K,combination column

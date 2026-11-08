@@ -1,4 +1,816 @@
 extends: fast_nested.yaml
-# No search has been run. tune_gbdt.py --protocol random_inner overwrites this file.
-# Until tune_status is complete or per_fold, the GBDT block is the fast_nested default.
-tune_status: not_run
+tune_status: per_fold
+select:
+  n_keep: 300
+  n_estimators: null
+gbdt:
+  n_estimators: 153
+  learning_rate: 0.01
+  max_depth: 3
+  min_samples_leaf: 5
+  min_samples_split: 2
+  subsample: 0.4
+  max_features: sqrt
+  loss: squared_error
+  backend: sklearn
+gbdt_by_fold:
+- max_depth: 3
+  subsample: 0.4
+  learning_rate: 0.01
+  max_features: sqrt
+  min_samples_leaf: 5
+  n_keep: 300
+  trial: 7
+  n_estimators: 153
+  rmse: 1.8002532822608324
+  rmse_se: 0.12464447568391153
+  cnn_option: A
+  max_estimators_fit: 3000
+  selection: min inner RMSE, simpler model within 1 SE
+  optimism: 'strict: CNN retrained inside each inner fold'
+  seed: 0
+  fold: 0
+- max_depth: 3
+  subsample: 0.5
+  learning_rate: 0.03
+  max_features: sqrt
+  min_samples_leaf: 3
+  n_keep: 300
+  trial: 10
+  n_estimators: 1534
+  rmse: 1.786896774810251
+  rmse_se: 0.10278918749735423
+  cnn_option: A
+  max_estimators_fit: 3000
+  selection: min inner RMSE, simpler model within 1 SE
+  optimism: 'strict: CNN retrained inside each inner fold'
+  seed: 0
+  fold: 1
+- max_depth: 3
+  subsample: 0.7
+  learning_rate: 0.03
+  max_features: 0.3
+  min_samples_leaf: 3
+  n_keep: 100
+  trial: 9
+  n_estimators: 46
+  rmse: 1.775742242235167
+  rmse_se: 0.11477433755790581
+  cnn_option: A
+  max_estimators_fit: 3000
+  selection: min inner RMSE, simpler model within 1 SE
+  optimism: 'strict: CNN retrained inside each inner fold'
+  seed: 0
+  fold: 2
+- max_depth: 3
+  subsample: 0.7
+  learning_rate: 0.03
+  max_features: sqrt
+  min_samples_leaf: 5
+  n_keep: 300
+  trial: 8
+  n_estimators: 234
+  rmse: 1.6609577452772053
+  rmse_se: 0.07585479540071112
+  cnn_option: A
+  max_estimators_fit: 3000
+  selection: min inner RMSE, simpler model within 1 SE
+  optimism: 'strict: CNN retrained inside each inner fold'
+  seed: 0
+  fold: 3
+- max_depth: 3
+  subsample: 0.7
+  learning_rate: 0.01
+  max_features: 0.3
+  min_samples_leaf: 5
+  n_keep: 100
+  trial: 6
+  n_estimators: 78
+  rmse: 1.8213568533588436
+  rmse_se: 0.07746495975992261
+  cnn_option: A
+  max_estimators_fit: 3000
+  selection: min inner RMSE, simpler model within 1 SE
+  optimism: 'strict: CNN retrained inside each inner fold'
+  seed: 0
+  fold: 4
+- max_depth: 3
+  subsample: 0.7
+  learning_rate: 0.03
+  max_features: 0.3
+  min_samples_leaf: 5
+  n_keep: 100
+  trial: 8
+  n_estimators: 40
+  rmse: 1.8103362627410833
+  rmse_se: 0.10481760581581069
+  cnn_option: A
+  max_estimators_fit: 3000
+  selection: min inner RMSE, simpler model within 1 SE
+  optimism: 'strict: CNN retrained inside each inner fold'
+  seed: 0
+  fold: 5
+- max_depth: 3
+  subsample: 0.5
+  learning_rate: 0.03
+  max_features: 0.3
+  min_samples_leaf: 5
+  n_keep: 300
+  trial: 2
+  n_estimators: 101
+  rmse: 1.7623221661160127
+  rmse_se: 0.043688859156595816
+  cnn_option: A
+  max_estimators_fit: 3000
+  selection: min inner RMSE, simpler model within 1 SE
+  optimism: 'strict: CNN retrained inside each inner fold'
+  seed: 0
+  fold: 6
+- max_depth: 3
+  subsample: 0.7
+  learning_rate: 0.03
+  max_features: sqrt
+  min_samples_leaf: 5
+  n_keep: 300
+  trial: 2
+  n_estimators: 43
+  rmse: 1.8431530083041032
+  rmse_se: 0.1458305270129773
+  cnn_option: A
+  max_estimators_fit: 3000
+  selection: min inner RMSE, simpler model within 1 SE
+  optimism: 'strict: CNN retrained inside each inner fold'
+  seed: 0
+  fold: 7
+- max_depth: 3
+  subsample: 0.7
+  learning_rate: 0.03
+  max_features: sqrt
+  min_samples_leaf: 3
+  n_keep: 100
+  trial: 9
+  n_estimators: 65
+  rmse: 1.7296244556970384
+  rmse_se: 0.028527365141454215
+  cnn_option: A
+  max_estimators_fit: 3000
+  selection: min inner RMSE, simpler model within 1 SE
+  optimism: 'strict: CNN retrained inside each inner fold'
+  seed: 0
+  fold: 8
+- max_depth: 3
+  subsample: 0.7
+  learning_rate: 0.03
+  max_features: sqrt
+  min_samples_leaf: 5
+  n_keep: 100
+  trial: 10
+  n_estimators: 472
+  rmse: 1.7907435957117306
+  rmse_se: 0.05079098611152181
+  cnn_option: A
+  max_estimators_fit: 3000
+  selection: min inner RMSE, simpler model within 1 SE
+  optimism: 'strict: CNN retrained inside each inner fold'
+  seed: 0
+  fold: 9
+- max_depth: 3
+  subsample: 0.7
+  learning_rate: 0.03
+  max_features: sqrt
+  min_samples_leaf: 5
+  n_keep: 300
+  trial: 10
+  n_estimators: 45
+  rmse: 1.829628796008848
+  rmse_se: 0.16054805068148797
+  cnn_option: A
+  max_estimators_fit: 3000
+  selection: min inner RMSE, simpler model within 1 SE
+  optimism: 'strict: CNN retrained inside each inner fold'
+  seed: 1
+  fold: 0
+- max_depth: 3
+  subsample: 0.5
+  learning_rate: 0.03
+  max_features: 0.3
+  min_samples_leaf: 5
+  n_keep: 300
+  trial: 2
+  n_estimators: 673
+  rmse: 1.7788800507008353
+  rmse_se: 0.08946650799334355
+  cnn_option: A
+  max_estimators_fit: 3000
+  selection: min inner RMSE, simpler model within 1 SE
+  optimism: 'strict: CNN retrained inside each inner fold'
+  seed: 1
+  fold: 1
+- max_depth: 3
+  subsample: 0.5
+  learning_rate: 0.03
+  max_features: sqrt
+  min_samples_leaf: 5
+  n_keep: 100
+  trial: 7
+  n_estimators: 34
+  rmse: 1.8201918648951239
+  rmse_se: 0.09858322432562536
+  cnn_option: A
+  max_estimators_fit: 3000
+  selection: min inner RMSE, simpler model within 1 SE
+  optimism: 'strict: CNN retrained inside each inner fold'
+  seed: 1
+  fold: 2
+- max_depth: 4
+  subsample: 0.4
+  learning_rate: 0.03
+  max_features: sqrt
+  min_samples_leaf: 5
+  n_keep: 300
+  trial: 1
+  n_estimators: 40
+  rmse: 1.8361099397907372
+  rmse_se: 0.07230439820984906
+  cnn_option: A
+  max_estimators_fit: 3000
+  selection: min inner RMSE, simpler model within 1 SE
+  optimism: 'strict: CNN retrained inside each inner fold'
+  seed: 1
+  fold: 3
+- max_depth: 3
+  subsample: 0.4
+  learning_rate: 0.03
+  max_features: sqrt
+  min_samples_leaf: 5
+  n_keep: 300
+  trial: 9
+  n_estimators: 323
+  rmse: 1.7809497127831382
+  rmse_se: 0.14374724157980637
+  cnn_option: A
+  max_estimators_fit: 3000
+  selection: min inner RMSE, simpler model within 1 SE
+  optimism: 'strict: CNN retrained inside each inner fold'
+  seed: 1
+  fold: 4
+- max_depth: 3
+  subsample: 0.5
+  learning_rate: 0.03
+  max_features: sqrt
+  min_samples_leaf: 5
+  n_keep: 300
+  trial: 5
+  n_estimators: 56
+  rmse: 1.7920962964084302
+  rmse_se: 0.10021246796959457
+  cnn_option: A
+  max_estimators_fit: 3000
+  selection: min inner RMSE, simpler model within 1 SE
+  optimism: 'strict: CNN retrained inside each inner fold'
+  seed: 1
+  fold: 5
+- max_depth: 3
+  subsample: 0.7
+  learning_rate: 0.03
+  max_features: sqrt
+  min_samples_leaf: 5
+  n_keep: 100
+  trial: 7
+  n_estimators: 2959
+  rmse: 1.558017580393108
+  rmse_se: 0.00828888815126149
+  cnn_option: A
+  max_estimators_fit: 3000
+  selection: min inner RMSE, simpler model within 1 SE
+  optimism: 'strict: CNN retrained inside each inner fold'
+  seed: 1
+  fold: 6
+- max_depth: 3
+  subsample: 0.5
+  learning_rate: 0.01
+  max_features: sqrt
+  min_samples_leaf: 3
+  n_keep: 100
+  trial: 8
+  n_estimators: 189
+  rmse: 1.7830399216497064
+  rmse_se: 0.08260734353332583
+  cnn_option: A
+  max_estimators_fit: 3000
+  selection: min inner RMSE, simpler model within 1 SE
+  optimism: 'strict: CNN retrained inside each inner fold'
+  seed: 1
+  fold: 7
+- max_depth: 3
+  subsample: 0.7
+  learning_rate: 0.03
+  max_features: sqrt
+  min_samples_leaf: 5
+  n_keep: 300
+  trial: 0
+  n_estimators: 652
+  rmse: 1.7656264128819297
+  rmse_se: 0.09990835110730797
+  cnn_option: A
+  max_estimators_fit: 3000
+  selection: min inner RMSE, simpler model within 1 SE
+  optimism: 'strict: CNN retrained inside each inner fold'
+  seed: 1
+  fold: 8
+- max_depth: 3
+  subsample: 0.7
+  learning_rate: 0.03
+  max_features: 0.3
+  min_samples_leaf: 1
+  n_keep: 300
+  trial: 4
+  n_estimators: 53
+  rmse: 1.8487101564551367
+  rmse_se: 0.040872978420402335
+  cnn_option: A
+  max_estimators_fit: 3000
+  selection: min inner RMSE, simpler model within 1 SE
+  optimism: 'strict: CNN retrained inside each inner fold'
+  seed: 1
+  fold: 9
+- max_depth: 3
+  subsample: 0.7
+  learning_rate: 0.01
+  max_features: sqrt
+  min_samples_leaf: 5
+  n_keep: 300
+  trial: 5
+  n_estimators: 120
+  rmse: 1.8253094778892187
+  rmse_se: 0.04078724796697772
+  cnn_option: A
+  max_estimators_fit: 3000
+  selection: min inner RMSE, simpler model within 1 SE
+  optimism: 'strict: CNN retrained inside each inner fold'
+  seed: 2
+  fold: 0
+- max_depth: 6
+  subsample: 0.4
+  learning_rate: 0.03
+  max_features: sqrt
+  min_samples_leaf: 5
+  n_keep: 300
+  trial: 6
+  n_estimators: 41
+  rmse: 1.7429100163640665
+  rmse_se: 0.05369993555541063
+  cnn_option: A
+  max_estimators_fit: 3000
+  selection: min inner RMSE, simpler model within 1 SE
+  optimism: 'strict: CNN retrained inside each inner fold'
+  seed: 2
+  fold: 1
+- max_depth: 3
+  subsample: 0.7
+  learning_rate: 0.01
+  max_features: 0.3
+  min_samples_leaf: 5
+  n_keep: 300
+  trial: 1
+  n_estimators: 219
+  rmse: 1.774552844001489
+  rmse_se: 0.17278264116555794
+  cnn_option: A
+  max_estimators_fit: 3000
+  selection: min inner RMSE, simpler model within 1 SE
+  optimism: 'strict: CNN retrained inside each inner fold'
+  seed: 2
+  fold: 2
+- max_depth: 3
+  subsample: 0.7
+  learning_rate: 0.03
+  max_features: sqrt
+  min_samples_leaf: 3
+  n_keep: 100
+  trial: 1
+  n_estimators: 2032
+  rmse: 1.6835178006080997
+  rmse_se: 0.06723687549885249
+  cnn_option: A
+  max_estimators_fit: 3000
+  selection: min inner RMSE, simpler model within 1 SE
+  optimism: 'strict: CNN retrained inside each inner fold'
+  seed: 2
+  fold: 3
+- max_depth: 3
+  subsample: 0.4
+  learning_rate: 0.03
+  max_features: 0.3
+  min_samples_leaf: 5
+  n_keep: 300
+  trial: 1
+  n_estimators: 60
+  rmse: 1.7207649968762306
+  rmse_se: 0.1242520594878331
+  cnn_option: A
+  max_estimators_fit: 3000
+  selection: min inner RMSE, simpler model within 1 SE
+  optimism: 'strict: CNN retrained inside each inner fold'
+  seed: 2
+  fold: 4
+- max_depth: 3
+  subsample: 0.7
+  learning_rate: 0.01
+  max_features: 0.3
+  min_samples_leaf: 3
+  n_keep: 300
+  trial: 0
+  n_estimators: 87
+  rmse: 1.85506347996827
+  rmse_se: 0.07816390770925218
+  cnn_option: A
+  max_estimators_fit: 3000
+  selection: min inner RMSE, simpler model within 1 SE
+  optimism: 'strict: CNN retrained inside each inner fold'
+  seed: 2
+  fold: 5
+- max_depth: 3
+  subsample: 0.4
+  learning_rate: 0.03
+  max_features: sqrt
+  min_samples_leaf: 5
+  n_keep: 300
+  trial: 0
+  n_estimators: 86
+  rmse: 1.7628132371597645
+  rmse_se: 0.19138544882701775
+  cnn_option: A
+  max_estimators_fit: 3000
+  selection: min inner RMSE, simpler model within 1 SE
+  optimism: 'strict: CNN retrained inside each inner fold'
+  seed: 2
+  fold: 6
+- max_depth: 3
+  subsample: 0.5
+  learning_rate: 0.03
+  max_features: sqrt
+  min_samples_leaf: 5
+  n_keep: 300
+  trial: 0
+  n_estimators: 199
+  rmse: 1.7495257478846886
+  rmse_se: 0.03978793083004671
+  cnn_option: A
+  max_estimators_fit: 3000
+  selection: min inner RMSE, simpler model within 1 SE
+  optimism: 'strict: CNN retrained inside each inner fold'
+  seed: 2
+  fold: 7
+- max_depth: 3
+  subsample: 0.7
+  learning_rate: 0.03
+  max_features: 0.3
+  min_samples_leaf: 5
+  n_keep: 300
+  trial: 8
+  n_estimators: 43
+  rmse: 1.8110211681419581
+  rmse_se: 0.0928532977871305
+  cnn_option: A
+  max_estimators_fit: 3000
+  selection: min inner RMSE, simpler model within 1 SE
+  optimism: 'strict: CNN retrained inside each inner fold'
+  seed: 2
+  fold: 8
+- max_depth: 3
+  subsample: 0.5
+  learning_rate: 0.01
+  max_features: 0.3
+  min_samples_leaf: 3
+  n_keep: 300
+  trial: 6
+  n_estimators: 238
+  rmse: 1.8084564445979598
+  rmse_se: 0.18547720879016844
+  cnn_option: A
+  max_estimators_fit: 3000
+  selection: min inner RMSE, simpler model within 1 SE
+  optimism: 'strict: CNN retrained inside each inner fold'
+  seed: 2
+  fold: 9
+- max_depth: 3
+  subsample: 0.4
+  learning_rate: 0.03
+  max_features: 0.3
+  min_samples_leaf: 3
+  n_keep: 300
+  trial: 10
+  n_estimators: 38
+  rmse: 1.8159726800115674
+  rmse_se: 0.11397862974964688
+  cnn_option: A
+  max_estimators_fit: 3000
+  selection: min inner RMSE, simpler model within 1 SE
+  optimism: 'strict: CNN retrained inside each inner fold'
+  seed: 3
+  fold: 0
+- max_depth: 3
+  subsample: 0.4
+  learning_rate: 0.03
+  max_features: sqrt
+  min_samples_leaf: 3
+  n_keep: 100
+  trial: 5
+  n_estimators: 26
+  rmse: 1.8447901727879972
+  rmse_se: 0.1735023525523377
+  cnn_option: A
+  max_estimators_fit: 3000
+  selection: min inner RMSE, simpler model within 1 SE
+  optimism: 'strict: CNN retrained inside each inner fold'
+  seed: 3
+  fold: 1
+- max_depth: 6
+  subsample: 0.4
+  learning_rate: 0.01
+  max_features: 0.3
+  min_samples_leaf: 5
+  n_keep: 100
+  trial: 8
+  n_estimators: 97
+  rmse: 1.803813600832349
+  rmse_se: 0.029067945830406814
+  cnn_option: A
+  max_estimators_fit: 3000
+  selection: min inner RMSE, simpler model within 1 SE
+  optimism: 'strict: CNN retrained inside each inner fold'
+  seed: 3
+  fold: 2
+- max_depth: 3
+  subsample: 0.4
+  learning_rate: 0.03
+  max_features: 0.3
+  min_samples_leaf: 5
+  n_keep: 100
+  trial: 9
+  n_estimators: 33
+  rmse: 1.8720018774456195
+  rmse_se: 0.08436402591115319
+  cnn_option: A
+  max_estimators_fit: 3000
+  selection: min inner RMSE, simpler model within 1 SE
+  optimism: 'strict: CNN retrained inside each inner fold'
+  seed: 3
+  fold: 3
+- max_depth: 3
+  subsample: 0.4
+  learning_rate: 0.03
+  max_features: sqrt
+  min_samples_leaf: 3
+  n_keep: 100
+  trial: 8
+  n_estimators: 76
+  rmse: 1.7653533982063907
+  rmse_se: 0.04844552253976589
+  cnn_option: A
+  max_estimators_fit: 3000
+  selection: min inner RMSE, simpler model within 1 SE
+  optimism: 'strict: CNN retrained inside each inner fold'
+  seed: 3
+  fold: 4
+- max_depth: 3
+  subsample: 0.4
+  learning_rate: 0.01
+  max_features: 0.3
+  min_samples_leaf: 5
+  n_keep: 300
+  trial: 2
+  n_estimators: 99
+  rmse: 1.8439378312202972
+  rmse_se: 0.021030114825571714
+  cnn_option: A
+  max_estimators_fit: 3000
+  selection: min inner RMSE, simpler model within 1 SE
+  optimism: 'strict: CNN retrained inside each inner fold'
+  seed: 3
+  fold: 5
+- max_depth: 3
+  subsample: 0.7
+  learning_rate: 0.01
+  max_features: sqrt
+  min_samples_leaf: 5
+  n_keep: 300
+  trial: 3
+  n_estimators: 159
+  rmse: 1.7095496713382972
+  rmse_se: 0.07775818084035836
+  cnn_option: A
+  max_estimators_fit: 3000
+  selection: min inner RMSE, simpler model within 1 SE
+  optimism: 'strict: CNN retrained inside each inner fold'
+  seed: 3
+  fold: 6
+- max_depth: 3
+  subsample: 0.5
+  learning_rate: 0.01
+  max_features: 0.3
+  min_samples_leaf: 5
+  n_keep: 300
+  trial: 4
+  n_estimators: 189
+  rmse: 1.7747488561345308
+  rmse_se: 0.07940725310889317
+  cnn_option: A
+  max_estimators_fit: 3000
+  selection: min inner RMSE, simpler model within 1 SE
+  optimism: 'strict: CNN retrained inside each inner fold'
+  seed: 3
+  fold: 7
+- max_depth: 4
+  subsample: 0.4
+  learning_rate: 0.01
+  max_features: 0.3
+  min_samples_leaf: 5
+  n_keep: 300
+  trial: 7
+  n_estimators: 134
+  rmse: 1.8041339978175166
+  rmse_se: 0.027866727368374398
+  cnn_option: A
+  max_estimators_fit: 3000
+  selection: min inner RMSE, simpler model within 1 SE
+  optimism: 'strict: CNN retrained inside each inner fold'
+  seed: 3
+  fold: 8
+- max_depth: 3
+  subsample: 0.7
+  learning_rate: 0.01
+  max_features: sqrt
+  min_samples_leaf: 5
+  n_keep: 300
+  trial: 9
+  n_estimators: 183
+  rmse: 1.7795298284796377
+  rmse_se: 0.027502464841798923
+  cnn_option: A
+  max_estimators_fit: 3000
+  selection: min inner RMSE, simpler model within 1 SE
+  optimism: 'strict: CNN retrained inside each inner fold'
+  seed: 3
+  fold: 9
+- max_depth: 3
+  subsample: 0.5
+  learning_rate: 0.03
+  max_features: 0.3
+  min_samples_leaf: 5
+  n_keep: 100
+  trial: 11
+  n_estimators: 74
+  rmse: 1.7391257841804622
+  rmse_se: 0.0665129211312169
+  cnn_option: A
+  max_estimators_fit: 3000
+  selection: min inner RMSE, simpler model within 1 SE
+  optimism: 'strict: CNN retrained inside each inner fold'
+  seed: 4
+  fold: 0
+- max_depth: 3
+  subsample: 0.4
+  learning_rate: 0.03
+  max_features: sqrt
+  min_samples_leaf: 5
+  n_keep: 100
+  trial: 7
+  n_estimators: 47
+  rmse: 1.7382976577263012
+  rmse_se: 0.09585225507133623
+  cnn_option: A
+  max_estimators_fit: 3000
+  selection: min inner RMSE, simpler model within 1 SE
+  optimism: 'strict: CNN retrained inside each inner fold'
+  seed: 4
+  fold: 1
+- max_depth: 3
+  subsample: 0.4
+  learning_rate: 0.03
+  max_features: 0.3
+  min_samples_leaf: 5
+  n_keep: 300
+  trial: 2
+  n_estimators: 289
+  rmse: 1.7013260052717936
+  rmse_se: 0.13173358363139312
+  cnn_option: A
+  max_estimators_fit: 3000
+  selection: min inner RMSE, simpler model within 1 SE
+  optimism: 'strict: CNN retrained inside each inner fold'
+  seed: 4
+  fold: 2
+- max_depth: 3
+  subsample: 0.4
+  learning_rate: 0.03
+  max_features: sqrt
+  min_samples_leaf: 5
+  n_keep: 300
+  trial: 0
+  n_estimators: 71
+  rmse: 1.7023069117290355
+  rmse_se: 0.08670810497424115
+  cnn_option: A
+  max_estimators_fit: 3000
+  selection: min inner RMSE, simpler model within 1 SE
+  optimism: 'strict: CNN retrained inside each inner fold'
+  seed: 4
+  fold: 3
+- max_depth: 3
+  subsample: 0.4
+  learning_rate: 0.01
+  max_features: 0.3
+  min_samples_leaf: 5
+  n_keep: 300
+  trial: 10
+  n_estimators: 96
+  rmse: 1.8366324983214979
+  rmse_se: 0.05729205052244138
+  cnn_option: A
+  max_estimators_fit: 3000
+  selection: min inner RMSE, simpler model within 1 SE
+  optimism: 'strict: CNN retrained inside each inner fold'
+  seed: 4
+  fold: 4
+- max_depth: 3
+  subsample: 0.5
+  learning_rate: 0.03
+  max_features: sqrt
+  min_samples_leaf: 5
+  n_keep: 300
+  trial: 2
+  n_estimators: 383
+  rmse: 1.7362107365243498
+  rmse_se: 0.05172989987150334
+  cnn_option: A
+  max_estimators_fit: 3000
+  selection: min inner RMSE, simpler model within 1 SE
+  optimism: 'strict: CNN retrained inside each inner fold'
+  seed: 4
+  fold: 5
+- max_depth: 3
+  subsample: 0.7
+  learning_rate: 0.01
+  max_features: 0.3
+  min_samples_leaf: 5
+  n_keep: 300
+  trial: 11
+  n_estimators: 100
+  rmse: 1.8794631042573602
+  rmse_se: 0.06516110094657108
+  cnn_option: A
+  max_estimators_fit: 3000
+  selection: min inner RMSE, simpler model within 1 SE
+  optimism: 'strict: CNN retrained inside each inner fold'
+  seed: 4
+  fold: 6
+- max_depth: 3
+  subsample: 0.5
+  learning_rate: 0.01
+  max_features: sqrt
+  min_samples_leaf: 5
+  n_keep: 100
+  trial: 4
+  n_estimators: 146
+  rmse: 1.7687063018268374
+  rmse_se: 0.16042508814394782
+  cnn_option: A
+  max_estimators_fit: 3000
+  selection: min inner RMSE, simpler model within 1 SE
+  optimism: 'strict: CNN retrained inside each inner fold'
+  seed: 4
+  fold: 7
+- max_depth: 3
+  subsample: 0.5
+  learning_rate: 0.03
+  max_features: sqrt
+  min_samples_leaf: 5
+  n_keep: 100
+  trial: 10
+  n_estimators: 36
+  rmse: 1.8729096029238141
+  rmse_se: 0.13409230576179518
+  cnn_option: A
+  max_estimators_fit: 3000
+  selection: min inner RMSE, simpler model within 1 SE
+  optimism: 'strict: CNN retrained inside each inner fold'
+  seed: 4
+  fold: 8
+- max_depth: 3
+  subsample: 0.5
+  learning_rate: 0.01
+  max_features: 0.3
+  min_samples_leaf: 3
+  n_keep: 300
+  trial: 3
+  n_estimators: 117
+  rmse: 1.8284775744535988
+  rmse_se: 0.10664639206444992
+  cnn_option: A
+  max_estimators_fit: 3000
+  selection: min inner RMSE, simpler model within 1 SE
+  optimism: 'strict: CNN retrained inside each inner fold'
+  seed: 4
+  fold: 9

@@ -1,0 +1,3 @@
+nested no-H12
+{'pearson_r': {'mean': 0.38798260235490756, 'sd': 0.019500845350997963, 'n': 2}, 'rmse': {'mean': 1.4420759901528433, 'sd': 0.06086376494319993, 'n': 2}, 'spearman_rho': {'mean': 0.31994563594776965, 'sd': 0.029673036895016137, 'n': 2}, 'mae': {'mean': 1.2499890125991586, 'sd': 0.07967586718301987, 'n': 2}, 'pearson_r_no_nonbinders': {'mean': 0.38798260235490756, 'sd': 0.019500845350997963, 'n': 2}, 'rmse_no_nonbinders': {'mean': 1.4420759901528433, 'sd': 0.06086376494319993, 'n': 2}}
+/scr1/scratch/mart3451/replication-TN/topnettree/runs/20261107T050001Z_nested_cnn_aux_homology_blind

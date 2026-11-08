@@ -1,0 +1,191 @@
+[labels] 645 rows; columns used: {'pdb': 'pdb', 'chain': 'chain', 'wt': 'wt', 'resid': 'resid', 'icode': 'icode'}; homology flag column: is_homology_model
+[ids] 24 RCSB-style entries -> pdb_ids.txt
+[ids] 5 non-RCSB / homology-flagged entries -> pdb_ids_nonstandard.txt: ['HM_1KTZ', 'HM_1YY9', 'HM_2NYY', 'HM_2NZ9', 'HM_3BN9']
+[ids]   HM_1KTZ: homology model, template 1KTZ chain A (TGF-beta; identity 76%)
+[ids]   HM_1YY9: homology model, template 1YY9 chains D->H, C->L (Hu-225 from Erbitux Fab; identity H 81%, L 80%)
+[ids]   HM_2NYY: homology model, template 2NYY chain A (BoNT/A2 from BoNT/A1; identity 90%)
+[ids]   HM_2NZ9: homology model, template 2NZ9 chain A (BoNT/A2 from BoNT/A1; identity 90%)
+[ids]   HM_3BN9: homology model, template 3BN9 chain A (Epithin from MT-SP1; identity 87%)
+[ids] rows per complex:
+_pid
+1AK4       16
+1BJ1       19
+1CZ8       19
+1DQJ       21
+1DVF       26
+1FFW        9
+1JRH        2
+1JTG        5
+1KTZ       22
+1MHP       68
+1MLC       11
+1N8Z       34
+1VFB       41
+1YY9        5
+2JEL       43
+2NYY       28
+2NZ9       19
+3BDY       34
+3BE1       34
+3BN9       35
+3HFM       22
+3K2M        7
+3NGB       11
+3NPS       27
+HM_1KTZ    22
+HM_1YY9    16
+HM_2NYY    25
+HM_2NZ9    16
+HM_3BN9     8
+[get] 1AK4: exists
+[get] 1BJ1: exists
+[get] 1CZ8: exists
+[get] 1DQJ: exists
+[get] 1DVF: exists
+[get] 1FFW: exists
+[get] 1JRH: exists
+[get] 1JTG: exists
+[get] 1KTZ: exists
+[get] 1MHP: exists
+[get] 1MLC: exists
+[get] 1N8Z: exists
+[get] 1VFB: exists
+[get] 1YY9: exists
+[get] 2JEL: exists
+[get] 2NYY: exists
+[get] 2NZ9: exists
+[get] 3BDY: exists
+[get] 3BE1: exists
+[get] 3BN9: exists
+[get] 3HFM: exists
+[get] 3K2M: exists
+[get] 3NGB: exists
+[get] 3NPS: exists
+
+================ SUMMARY ================
+status   OK  WT_MISMATCH  RESIDUE_MISSING  CHAIN_MISSING  BAD_RESID  NO_STRUCTURE  n_rows  frac_ok note
+pdb                                                                                                    
+1AK4     16            0                0              0          0             0      16    1.000     
+1BJ1     19            0                0              0          0             0      19    1.000     
+1CZ8     19            0                0              0          0             0      19    1.000     
+1DQJ     11            0                0             10          0             0      21    0.524     
+1DVF     22            4                0              0          0             0      26    0.846     
+1FFW      9            0                0              0          0             0       9    1.000     
+1JRH      2            0                0              0          0             0       2    1.000     
+1JTG      5            0                0              0          0             0       5    1.000     
+1KTZ     22            0                0              0          0             0      22    1.000     
+1MHP     68            0                0              0          0             0      68    1.000     
+1MLC      0            0                0             11          0             0      11    0.000     
+1N8Z      0            0                0             34          0             0      34    0.000     
+1VFB     12            0                0             29          0             0      41    0.293     
+1YY9      0            0                0              5          0             0       5    0.000     
+2JEL     43            0                0              0          0             0      43    1.000     
+2NYY     19            0                0              9          0             0      28    0.679     
+2NZ9     19            0                0              0          0             0      19    1.000     
+3BDY     34            0                0              0          0             0      34    1.000     
+3BE1     34            0                0              0          0             0      34    1.000     
+3BN9     27            0                0              8          0             0      35    0.771     
+3HFM     22            0                0              0          0             0      22    1.000     
+3K2M      7            0                0              0          0             0       7    1.000     
+3NGB     11            0                0              0          0             0      11    1.000     
+3NPS      1           25                1              0          0             0      27    0.037     
+HM_1KTZ   0            0                0              0          0            22      22    0.000     
+HM_1YY9   0            0                0              0          0            16      16    0.000     
+HM_2NYY   0            0                0              0          0            25      25    0.000     
+HM_2NZ9   0            0                0              0          0            16      16    0.000     
+HM_3BN9   0            0                0              0          0             8       8    0.000     
+
+rows validated OK: 422/645
+rows with no structure (homology models / failed downloads): 87
+
+Files written:
+  data/structures/MANIFEST.txt
+  data/structures/download_log.csv
+  data/structures/validation_rows.csv
+  data/structures/validation_summary.csv
+
+NEXT: some rows with a structure failed. Rerun with --suggest-chain-map (AB-Bind renamed antibody chains) or use the AB-Bind prepared structures.
+
+================ CHAIN MAP SUGGESTIONS (review before use) ================
+ pdb abbind_chain rcsb_chain  offset  matches  n_rows  frac  identity_frac ties       decision
+1AK4            D          D       0       16      16 1.000            1.0    C ACCEPT(review)
+1BJ1            V          W       0        2       2 1.000            1.0    V ACCEPT(review)
+1BJ1            W          W       0       17      17 1.000            1.0    V ACCEPT(review)
+1CZ8            V          W       0        2       2 1.000            1.0    V ACCEPT(review)
+1CZ8            W          W       0       17      17 1.000            1.0    V ACCEPT(review)
+1DQJ            C          C       0       11      11 1.000            1.0      ACCEPT(review)
+1DQJ            H          B       0        5       5 1.000            0.0      ACCEPT(review)
+1DQJ            L          A       0        5       5 1.000            0.0      ACCEPT(review)
+1DVF            A          A       0        7       7 1.000            1.0      ACCEPT(review)
+1DVF            B          B       0       10      10 1.000            1.0      ACCEPT(review)
+1DVF            C          C       0        1       1 1.000            1.0    A ACCEPT(review)
+1DVF            D          D       0        4       8 0.500            0.5            NO_MATCH
+1FFW            A          C       0        9       9 1.000            1.0    A ACCEPT(review)
+1JRH            I          I       0        2       2 1.000            1.0      ACCEPT(review)
+1JTG            A          C       0        4       4 1.000            1.0    A ACCEPT(review)
+1JTG            B          D       0        1       1 1.000            1.0    B ACCEPT(review)
+1KTZ            B          B       0       22      22 1.000            1.0      ACCEPT(review)
+1MHP            H          X       0       41      41 1.000            1.0    H ACCEPT(review)
+1MHP            L          Y       0       27      27 1.000            1.0    L ACCEPT(review)
+1MLC            H          D       0        8       8 1.000            0.0    B ACCEPT(review)
+1MLC            L          C       0        3       3 1.000            0.0    A ACCEPT(review)
+1N8Z            H          B       0        6      17 0.353            0.0            NO_MATCH
+1N8Z            L          A       0       17      17 1.000            0.0      ACCEPT(review)
+1VFB            C          C       0       12      12 1.000            1.0      ACCEPT(review)
+1VFB            H          B       0       18      18 1.000            0.0      ACCEPT(review)
+1VFB            L          A       0       11      11 1.000            0.0      ACCEPT(review)
+1YY9            H          D       0        2       2 1.000            0.0      ACCEPT(review)
+1YY9            L          C       0        3       3 1.000            0.0      ACCEPT(review)
+2JEL            P          P       0       43      43 1.000            1.0      ACCEPT(review)
+2NYY            A          A       0       19      19 1.000            1.0      ACCEPT(review)
+2NYY            H          D       0        5       5 1.000            0.0      ACCEPT(review)
+2NYY            L          C       0        4       4 1.000            0.0      ACCEPT(review)
+2NZ9            A          B       0       19      19 1.000            1.0    A ACCEPT(review)
+3BDY            H          H       0       17      17 1.000            1.0      ACCEPT(review)
+3BDY            L          L       0       17      17 1.000            1.0      ACCEPT(review)
+3BE1            H          H       0       17      17 1.000            1.0      ACCEPT(review)
+3BE1            L          L       0       17      17 1.000            1.0      ACCEPT(review)
+3BN9            A          B       0       27      27 1.000            1.0    A ACCEPT(review)
+3BN9            H          F       0        8       8 1.000            0.0    D ACCEPT(review)
+3HFM            H          H       0        7       7 1.000            1.0      ACCEPT(review)
+3HFM            L          L       0       10      10 1.000            1.0      ACCEPT(review)
+3HFM            Y          Y       0        5       5 1.000            1.0      ACCEPT(review)
+3K2M            D          D       0        7       7 1.000            1.0    C ACCEPT(review)
+3NGB            H          J       0       11      11 1.000            1.0  HEB ACCEPT(review)
+3NPS            A          A       5       10      27 0.370            0.0            NO_MATCH
+
+================ SUMMARY WITH CHAIN MAP ================
+status   OK  WT_MISMATCH  RESIDUE_MISSING  CHAIN_MISSING  BAD_RESID  NO_STRUCTURE  n_rows  frac_ok
+pdb                                                                                               
+1AK4     16            0                0              0          0             0      16    1.000
+1BJ1     19            0                0              0          0             0      19    1.000
+1CZ8     19            0                0              0          0             0      19    1.000
+1DQJ     21            0                0              0          0             0      21    1.000
+1DVF     22            4                0              0          0             0      26    0.846
+1FFW      9            0                0              0          0             0       9    1.000
+1JRH      2            0                0              0          0             0       2    1.000
+1JTG      5            0                0              0          0             0       5    1.000
+1KTZ     22            0                0              0          0             0      22    1.000
+1MHP     68            0                0              0          0             0      68    1.000
+1MLC     11            0                0              0          0             0      11    1.000
+1N8Z     17            0                0             17          0             0      34    0.500
+1VFB     41            0                0              0          0             0      41    1.000
+1YY9      5            0                0              0          0             0       5    1.000
+2JEL     43            0                0              0          0             0      43    1.000
+2NYY     28            0                0              0          0             0      28    1.000
+2NZ9     19            0                0              0          0             0      19    1.000
+3BDY     34            0                0              0          0             0      34    1.000
+3BE1     34            0                0              0          0             0      34    1.000
+3BN9     35            0                0              0          0             0      35    1.000
+3HFM     22            0                0              0          0             0      22    1.000
+3K2M      7            0                0              0          0             0       7    1.000
+3NGB     11            0                0              0          0             0      11    1.000
+3NPS      1           25                1              0          0             0      27    0.037
+HM_1KTZ   0            0                0              0          0            22      22    0.000
+HM_1YY9   0            0                0              0          0            16      16    0.000
+HM_2NYY   0            0                0              0          0            25      25    0.000
+HM_2NZ9   0            0                0              0          0            16      16    0.000
+HM_3BN9   0            0                0              0          0             8       8    0.000
+
+rows validated OK with chain map: 511/645  (ceiling = 558 rows that have a structure)
+The mapping is a SUGGESTION based on wild-type residue identity. Copies of the same chain tie (see 'ties'); confirm against the AB-Bind prepared structures before building mutants.

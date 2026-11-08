@@ -1,0 +1,39 @@
+{
+  "known": {
+    "shared12_sum": 2.4114999999999998,
+    "G446S": 0.0046,
+    "T478K": 0.9994,
+    "BA1_sum": 2.6018
+  },
+  "intervals_kcal_per_mol": {
+    "S371F+T376A+D405N+R408S": [
+      0.5635000000000003,
+      0.5735000000000001
+    ],
+    "S371F+D405N": [
+      0.45890000000000025,
+      0.46890000000000004
+    ],
+    "T376A+R408S": [
+      0.0946000000000003,
+      0.11459999999999987
+    ],
+    "L452R": [
+      0.5286810170636748,
+      0.562491665757393
+    ]
+  },
+  "consistency_checks": {
+    "infectivity_BA2_vs_original": [
+      19.589623249595995,
+      19.786502236370332,
+      "paper: about 20"
+    ],
+    "infectivity_BA2_vs_BA1": [
+      1.4523747857443652,
+      1.4669713950099283,
+      "paper: about 1.5"
+    ]
+  },
+  "note": "Intervals assume additivity of per-mutation ACE2 BFE (the paper's definition of accumulated BFE) and are widened only by two-decimal rounding of the printed sums and the ratio 4.2."
+}

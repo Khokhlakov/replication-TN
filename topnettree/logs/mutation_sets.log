@@ -1,0 +1,11 @@
+mutation table: 26 rows | BFE table (26, 186) | rows still missing: 11 ['R346K', 'K417T', 'L452R', 'L452Q', 'E484Q', 'E484K', 'F490S', 'S371F', 'T376A', 'D405N', 'R408S']
+
+ACE2 constraints on the missing mutations (kcal/mol, additive sums):
+  S371F+T376A+D405N+R408S    [+0.564, +0.574]
+  S371F+D405N                [+0.459, +0.469]
+  T376A+R408S                [+0.095, +0.115]
+  L452R                      [+0.529, +0.562]
+  infectivity_BA2_vs_original    19.59..19.79   (paper: about 20)
+  infectivity_BA2_vs_BA1         1.45..1.47   (paper: about 1.5)
+
+wrote data/mutation_sets/mutations_26.csv, variant_sets.csv, antibody_bfe_26x186.csv, ace2_constraints.json

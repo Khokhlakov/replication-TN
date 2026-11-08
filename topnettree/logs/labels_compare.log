@@ -1,0 +1,29 @@
+[xlsx] 1101 rows total, 32 PDB groups
+[S645] rows=645  complexes=29  homology-model rows=87  non-binders=27
+[S645] crystal-structure PDB IDs to download (24): ['1AK4', '1BJ1', '1CZ8', '1DQJ', '1DVF', '1FFW', '1JRH', '1JTG', '1KTZ', '1MHP', '1MLC', '1N8Z', '1VFB', '1YY9', '2JEL', '2NYY', '2NZ9', '3BDY', '3BE1', '3BN9', '3HFM', '3K2M', '3NGB', '3NPS']
+[S645] homology models (not on RCSB):
+   HM_1KTZ: 22 rows, chains ['B'], resid 27..125, template: TGF-beta (1KTZ) [A<-A], identity 76%
+   HM_1YY9: 16 rows, chains ['H', 'L'], resid 25..100, template: Erbitux Fab (1YY9) [H<-D, L<-C], identity H:81%, L:80%
+   HM_2NYY: 25 rows, chains ['A', 'H', 'L'], resid 28..1064, template: BoNT/A1 (2NYY) [A<-A], identity 90%
+   HM_2NZ9: 16 rows, chains ['A'], resid 902..1064, template: BoNT/A1 (2NZ9) [A<-A], identity 90%
+   HM_3BN9: 8 rows, chains ['H'], resid 28..100, template: MT-SP1 (3BN9) [A<-A], identity 87%
+[S645] rows with an insertion code: 22 (e.g. ['100A', '100A', '100A', '100A', '27A'])
+[S645] 6 rows belong to 3 duplicated (pdb, mutation) groups (same mutation listed more than once, different assays/values):
+ row_idx  pdb chain wt resid_str mut  ddg_abbind assay
+      79 1DVF     A  Y        49   A        1.64   SPR
+      80 1DVF     A  Y        49   A        1.75   SPR
+     229 1N8Z     H  Y      100A   F       -0.05   SPR
+     230 1N8Z     H  Y      100A   F        0.82   SPR
+     238 1N8Z     L  H        91   F       -0.43   SPR
+     239 1N8Z     L  H        91   F        0.03   SPR
+[S645] adjacent rows sharing a site: 111 (informational; the 36 identical X_aux pairs in AGENTS.md need not correspond to this)
+[out] wrote data/labels/ab_bind_s645_supplement.csv  (row order = workbook order; NOT yet verified against X_unnormed.npy)
+
+[compare] existing table: data/labels/ab_bind_s645.csv  rows=645  columns=['row_idx', 'pdb', 'chain', 'wt', 'resid', 'mut', 'ddg', 'is_nonbinder', 'complex_id', 'is_homology', 'ab_type', 'mutation']
+[compare] detected columns: {'pdb': 'pdb', 'chain': 'chain', 'wt': 'wt', 'resid': 'resid', 'mut': 'mut', 'ddg': 'ddg'}
+[compare] same row count: True  (645 vs 645)
+[compare] mutations only in existing table: 0   only in supplement: 0
+[compare] identical row ORDER with the workbook: True
+[compare] on 645 matched mutations: same sign/value 45, sign flipped 600, other 0
+   -> the existing table uses the AB-Bind convention (positive = weakened). AGENTS.md expects positive = strengthened, non-binders -8.
+[compare] non-binder labels in existing table: [8.0] (n=27)

@@ -1,0 +1,21 @@
+  20/186 processed
+  40/186 processed
+  60/186 processed
+  80/186 processed
+  100/186 processed
+  120/186 processed
+  140/186 processed
+  160/186 processed
+  180/186 processed
+
+manifest: data/structures/antibody_rbd/manifest.csv
+downloaded as .pdb: 178 | .cif only: 5 | unresolved or failed: 3
+entries where no chain matches at least 10 of 21 RBD sites (check numbering or chain): 0
+titles that do not look like SARS-CoV-2 spike/antibody entries (verify the ID):
+ col_index     label resolved_id title
+         2 REGN10933        RN33      
+         3 REGN10987        RN87      
+       147   AZD1061        1061      
+
+unresolved names written to data/raw/antibody_aliases.csv: ['REGN10933', 'REGN10987', 'AZD1061']
+Fill the 'pdb' column (parent entry) and 'antibody_chains', then rerun. Nothing was guessed.

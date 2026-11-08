@@ -1,0 +1,9 @@
+/scr1/scratch/mart3451/replication-TN/topnettree/.venv/lib/python3.8/site-packages/openpyxl/worksheet/_reader.py:329: UserWarning: Unknown extension is not supported and will be removed
+  warn(msg)
+rows read 2457: nonsynonymous 2340, nonsense 117; WT self rows dropped 117; substitutions kept 2223
+wild-type identity vs residues named in the Chan SM: 30/30 agree
+replicate correlation High 0.88, Low 0.92; High vs Low -0.82 (paper Fig. S2: R2 0.77 / 0.85 / 0.67)
+validated improving substitutions (Table S1/Fig. S3): mean High score +2.89 over 9 vs library mean -0.41
+censored at the -5 floor: High 3, Low 6 of 2223
+6M0J.pdb chain A: wild-type agreement at offset 0 = 1.000; best offset +0 gives 1.000
+wrote data/raw/dms/chan2020_tidy.csv (2223 rows) and chan2020_labels.csv; ddg proxy range -1.39..1.86 (arbitrary scale, see docstring)

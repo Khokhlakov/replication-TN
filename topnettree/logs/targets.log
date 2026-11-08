@@ -1,0 +1,37 @@
+thresholds: [-3.0, -2.7, -2.4, -2.1, -1.8, -1.5, -1.2, -0.9, -0.6, -0.3, 0.0]
+
+BA.1   (15 mutations): COMPLETE
+    fold 20.945 | ACE2 sum 2.6018
+    counts match paper: True (max abs error 0)
+    fold matches paper: True
+    ACE2 sum matches paper: True
+BA.2   (16 mutations): PARTIAL, missing ['S371F', 'T376A', 'D405N', 'R408S']
+    fold 15.044 | ACE2 sum 2.4115
+    counts lower bound respected: True; antibodies still to be pushed below each threshold: [0, 0, 1, 2, 5, 7, 9, 10, 12, 7, 0]
+    fold lower bound respected: True; mean negative BFE the missing rows must add: -0.589
+BA.3   (15 mutations): PARTIAL, missing ['S371F', 'D405N']
+    fold 15.787 | ACE2 sum 2.4161
+    counts lower bound respected: True; antibodies still to be pushed below each threshold: [0, 0, 1, 1, 1, 1, 0, 0, 1, 2, 0]
+    fold lower bound respected: True; mean negative BFE the missing rows must add: -0.137
+Delta  (2 mutations): PARTIAL, missing ['L452R']
+    fold 1.036
+    counts lower bound respected: True; antibodies still to be pushed below each threshold: [0, 0, 0, 5, 10, 16, 20, 31, 47, 67, 89]
+    fold lower bound respected: True; mean negative BFE the missing rows must add: -0.37
+Alpha  (1 mutations): COMPLETE
+    fold 1.292
+    fold matches paper: True
+Beta   (3 mutations): PARTIAL, missing ['E484K']
+    fold 2.513
+    fold lower bound respected: True; mean negative BFE the missing rows must add: -0.514
+Gamma  (3 mutations): PARTIAL, missing ['K417T', 'E484K']
+    fold 1.292
+    fold lower bound respected: True; mean negative BFE the missing rows must add: -1.202
+Theta  (3 mutations): PARTIAL, missing ['K417T', 'E484K']
+    fold 1.292
+Kappa  (2 mutations): no complete rows (missing ['L452R', 'E484Q'])
+Lambda (2 mutations): no complete rows (missing ['L452Q', 'F490S'])
+Mu     (3 mutations): PARTIAL, missing ['R346K', 'E484K']
+    fold 1.292
+    fold lower bound respected: True; mean negative BFE the missing rows must add: -0.577
+
+wrote data/mutation_sets/target_report.json

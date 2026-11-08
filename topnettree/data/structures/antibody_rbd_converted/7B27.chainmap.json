@@ -1,0 +1,11 @@
+{
+ "original_to_new": {
+  "AAA": "A",
+  "aba": "B",
+  "CCC": "C",
+  "DDD": "D"
+ },
+ "shifts": {
+  "AAA": 12
+ }
+}

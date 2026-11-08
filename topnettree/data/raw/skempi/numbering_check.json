@@ -1,0 +1,9 @@
+{
+  "n_checked": 4173,
+  "wt_match_rate": {
+    "clean": 1.0,
+    "pdb": 0.38126048406422236
+  },
+  "pdbs_missing": [],
+  "n_pdbs_missing": 0
+}

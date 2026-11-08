@@ -1,0 +1,54 @@
+[A] 36 identical adjacent X_aux pairs
+    expected (duplicate mutation entries): 3
+    same site, different mutant residue   : 0
+    same complex, different site          : 33
+    different complexes                   : 0
+    ... of which X_cnn also identical      : 6/36
+  i   pdb_i    mut_i   pdb_j    mut_j  duplicate_mutation  same_site  same_complex  X_cnn_identical
+ 79    1DVF   A:Y49A    1DVF   A:Y49A                True       True          True             True
+229    1N8Z H:Y100AF    1N8Z H:Y100AF                True       True          True             True
+238    1N8Z   L:H91F    1N8Z   L:H91F                True       True          True             True
+341    2NYY A:D1058A    2NYY A:D1062A               False      False          True            False
+342    2NYY A:D1062A    2NYY  A:E920A               False      False          True            False
+348    2NYY A:K1056A    2NYY  A:K903A               False      False          True            False
+349    2NYY  A:K903A    2NYY  A:K923A               False      False          True            False
+355    2NYY A:R1061A    2NYY A:R1294A               False      False          True            False
+369    2NZ9 A:D1058A    2NZ9 A:D1062A               False      False          True            False
+370    2NZ9 A:D1062A    2NZ9  A:E920A               False      False          True            False
+376    2NZ9 A:K1056A    2NZ9  A:K903A               False      False          True            False
+377    2NZ9  A:K903A    2NZ9  A:K923A               False      False          True            False
+383    2NZ9 A:R1061A    2NZ9 A:R1294A               False      False          True            False
+411    3BDY  L:P27CA    3BDY  L:R27DA               False      False          True             True
+457    3BN9  A:D60AA    3BN9  A:D60BA               False      False          True             True
+476    3BN9  A:R60CA    3BN9  A:R60FA               False      False          True             True
+596 HM_2NYY A:D1062A HM_2NYY  A:D902A               False      False          True            False
+597 HM_2NYY  A:D902A HM_2NYY  A:E920A               False      False          True            False
+598 HM_2NYY  A:E920A HM_2NYY  A:F953A               False      False          True            False
+599 HM_2NYY  A:F953A HM_2NYY  A:I917A               False      False          True            False
+600 HM_2NYY  A:I917A HM_2NYY  A:K915A               False      False          True            False
+601 HM_2NYY  A:K915A HM_2NYY  A:K955A               False      False          True            False
+602 HM_2NYY  A:K955A HM_2NYY  A:L919A               False      False          True            False
+603 HM_2NYY  A:L919A HM_2NYY  A:N918A               False      False          True            False
+604 HM_2NYY  A:N918A HM_2NYY  A:N957A               False      False          True            False
+605 HM_2NYY  A:N957A HM_2NYY A:P1063A               False      False          True            False
+606 HM_2NYY A:P1063A HM_2NYY A:R1061A               False      False          True            False
+607 HM_2NYY A:R1061A HM_2NYY A:R1064A               False      False          True            False
+608 HM_2NYY A:R1064A HM_2NYY  A:R903A               False      False          True            False
+609 HM_2NYY  A:R903A HM_2NYY  A:S954A               False      False          True            False
+610 HM_2NYY  A:S954A HM_2NYY  A:T923A               False      False          True            False
+621 HM_2NZ9 A:D1062A HM_2NZ9  A:D902A               False      False          True            False
+622 HM_2NZ9  A:D902A HM_2NZ9  A:E920A               False      False          True            False
+626 HM_2NZ9  A:K915A HM_2NZ9  A:K955A               False      False          True            False
+632 HM_2NZ9 A:R1061A HM_2NZ9 A:R1064A               False      False          True            False
+633 HM_2NZ9 A:R1064A HM_2NZ9  A:R903A               False      False          True            False
+    run lengths of identical aux rows: [2, 3, 16] (longest 16)
+[B:X_aux] complexes contiguous in table: True; boundaries=28
+    mean fraction of columns changed: at boundaries 0.895 vs inside complexes 0.668
+    of the 28 biggest changes, 12 are true boundaries (chance ~ 1.2)
+[B:X_cnn] complexes contiguous in table: True; boundaries=28
+    mean fraction of columns changed: at boundaries 0.479 vs inside complexes 0.220
+    of the 28 biggest changes, 11 are true boundaries (chance ~ 1.2)
+[C] seed=(0,): pooled r=0.484   within-complex r=0.328   n=645
+[C] seed=(1,): pooled r=0.411   within-complex r=0.252   n=645
+[C] seed=(2,): pooled r=0.505   within-complex r=0.349   n=645
+    within-complex r near 0 while pooled r is decent => rows are aligned only at complex level.

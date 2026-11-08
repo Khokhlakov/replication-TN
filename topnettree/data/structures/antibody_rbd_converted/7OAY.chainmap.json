@@ -1,0 +1,17 @@
+{
+ "original_to_new": {
+  "AAA": "A",
+  "BBB": "B",
+  "CCC": "C",
+  "DDD": "D",
+  "EEE": "E",
+  "FFF": "F",
+  "GGG": "G",
+  "HHH": "H",
+  "III": "I",
+  "JJJ": "J",
+  "KKK": "K",
+  "LLL": "L"
+ },
+ "shifts": {}
+}

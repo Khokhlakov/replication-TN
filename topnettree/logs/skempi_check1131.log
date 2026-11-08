@@ -1,0 +1,10 @@
+columns used: pdb='#Pdb' mut_pdb='Mutation(s)_PDB' mut_clean='Mutation(s)_cleaned' aff_mut='Affinity_mut_parsed' aff_wt='Affinity_wt_parsed' temp='Temperature'
+single-point measurements 4956 -> unique mutations 4187; 14 have repeated measurements spanning >= 2.0 kcal/mol (discarded); rows now 4173, complexes 317
+S4169 comparison | rows 4173 (published 4169) | complexes 317 (published 319) | tighter 895 (published 901) / weaker-or-neutral 3278 (published 3268)
+entries 7085 (SI: 7085) | with ddG 6798 | single-point rows after averaging 4173 | complexes 345 (SI: 319) | SI's 4,169 is the single-point subset (S4169).
+AB-Bind S645 overlap: 170 identical mutations, 623 rows on shared PDB ids. Exclude them from any train/test mix with S645.
+numbering check: {'n_checked': 4173, 'wt_match_rate': {'clean': 1.0, 'pdb': 0.38126048406422236}, 'pdbs_missing': [], 'n_pdbs_missing': 0}
+structure files follow the 'clean' numbering: use column resid_struct for feature generation.
+Y_skempi.npy: n=1131  exact-ish matches (+/-0.005) in SKEMPI2 singles: as-is 0.90, negated 0.67, control shift 0.86
+as-is >> negated means Y_skempi uses the same sign as ddg here; control should sit well below both.
+wrote data/raw/skempi/skempi_v2_entries.csv and skempi_v2_single_labels.csv
