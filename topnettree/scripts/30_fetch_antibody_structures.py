@@ -114,13 +114,15 @@ def main() -> None:
             rows.append(rec)
             continue
         rec.update(format=dest.suffix[1:], path=str(dest))
-        if dest.suffix in (".pdb", ".cif"):
+        if dest.suffix == ".pdb":
             chains = analyse_chains(dest)
             best = max(chains, key=lambda c: chains[c]["wt_match"], default=None)
             rec["chains_json"] = json.dumps(chains)
             rec["rbd_chain_guess"] = best or ""
             rec["rbd_wt_match"] = chains[best]["wt_match"] if best else 0
             rec["rbd_sites_present"] = chains[best]["sites_present"] if best else 0
+        else:
+            rec["rbd_chain_guess"] = "needs .cif reader"
         rows.append(rec)
         if (idx + 1) % 20 == 0:
             print(f"  {idx + 1}/{len(labels)} processed")
@@ -132,7 +134,7 @@ def main() -> None:
     print(f"\nmanifest: {out_dir / 'manifest.csv'}")
     print(f"downloaded as .pdb: {(man['format'] == 'pdb').sum()} | .cif only: {(man['format'] == 'cif').sum()} | "
           f"unresolved or failed: {(man['format'] == '').sum()}")
-    weak = man[man["format"].isin(["pdb", "cif"]) & (man["rbd_wt_match"] < 10)]
+    weak = man[(man["format"] == "pdb") & (man["rbd_wt_match"] < 10)]
     print(f"entries where no chain matches at least 10 of {len(SITES)} RBD sites (check numbering or chain): {len(weak)}")
     if len(weak):
         print(weak[["col_index", "label", "resolved_id", "rbd_wt_match", "rbd_sites_present"]].to_string(index=False))
