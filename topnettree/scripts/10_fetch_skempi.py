@@ -98,7 +98,10 @@ def load_entries(csv_path: Path) -> pd.DataFrame:
     return out
 
 
-def single_labels(entries: pd.DataFrame) -> pd.DataFrame:
+DISCORDANT_KCAL = 2.0  # mCSM-PPI2 / S4169 rule: average repeated measurements only if they differ by < 2.0 kcal/mol
+
+
+def single_labels(entries: pd.DataFrame, keep_discordant: bool = False) -> pd.DataFrame:
     rows = []
     for rec in entries[(entries["n_mut"] == 1) & entries["ddg"].notna()].itertuples():
         tok = parse_skempi_token(rec.mut_clean)
@@ -118,8 +121,16 @@ def single_labels(entries: pd.DataFrame) -> pd.DataFrame:
     grouped = frame.groupby(keys, sort=False)
     agg = grouped.agg(
         resid_pdb=("resid_pdb", "first"), ddg_mean=("ddg", "mean"), ddg_sd=("ddg", "std"),
+        ddg_min=("ddg", "min"), ddg_max=("ddg", "max"),
         n_meas=("ddg", "size"), partners=("partners", "first"), hold_out_type=("hold_out_type", "first"),
     ).reset_index()
+    agg["ddg_range"] = agg["ddg_max"] - agg["ddg_min"]
+    n_disc = int((agg["ddg_range"] >= DISCORDANT_KCAL).sum())
+    if not keep_discordant:
+        agg = agg[agg["ddg_range"] < DISCORDANT_KCAL].reset_index(drop=True)
+    print(f"single-point measurements {len(frame)} -> unique mutations {len(agg) + (0 if keep_discordant else n_disc)}; "
+          f"{n_disc} have repeated measurements spanning >= {DISCORDANT_KCAL} kcal/mol "
+          f"({'kept' if keep_discordant else 'discarded'}); rows now {len(agg)}, complexes {agg['pdb'].nunique()}")
     agg = agg.rename(columns={"ddg_mean": "ddg"})
     agg.insert(0, "row_idx", np.arange(len(agg)))
     agg["is_nonbinder"] = 0
@@ -128,6 +139,14 @@ def single_labels(entries: pd.DataFrame) -> pd.DataFrame:
     agg["dup_group"] = -1
     agg["bfe_change"] = -agg["ddg"]
     return agg
+
+
+def report_s4169(singles: pd.DataFrame) -> None:
+    """Compare with the published S4169 benchmark (TopNetTree, mCSM-PPI2): 4169 variants, 319 complexes,
+    901 that increase affinity and 3268 that decrease it."""
+    tighter = int((singles["ddg"] < 0).sum())  # repo sign: ddg < 0 = tighter binding
+    print(f"S4169 comparison | rows {len(singles)} (published 4169) | complexes {singles['pdb'].nunique()} (published 319) | "
+          f"tighter {tighter} (published 901) / weaker-or-neutral {len(singles) - tighter} (published 3268)")
 
 
 def flag_ab_bind_overlap(singles: pd.DataFrame, labels_csv: str) -> pd.DataFrame:
@@ -142,21 +161,33 @@ def flag_ab_bind_overlap(singles: pd.DataFrame, labels_csv: str) -> pd.DataFrame
 
 
 def get_structures(out_dir: Path, local: str | None) -> Path:
+    """Extract PDBs/<ID>.pdb and PDBs/<ID>.mapping. The archive also holds macOS AppleDouble members
+    ('PDBs/._3N0P.pdb'); those are resource-fork junk and are skipped."""
     pdb_dir = out_dir / "pdbs"
+    map_dir = out_dir / "mappings"
     pdb_dir.mkdir(parents=True, exist_ok=True)
+    map_dir.mkdir(parents=True, exist_ok=True)
     stream = open(local, "rb") if local else urllib.request.urlopen(urllib.request.Request(TGZ_URL, headers=UA), timeout=120)
-    seen, kept = [], 0
+    seen, kept, mapped, skipped = [], 0, 0, 0
     with stream as handle, tarfile.open(fileobj=handle, mode="r|gz") as tar:
         for member in tar:
             if len(seen) < 8:
                 seen.append(member.name)
-            if not member.isfile() or not member.name.lower().endswith(".pdb"):
+            base = Path(member.name).name
+            if not member.isfile():
                 continue
-            pid = Path(member.name).stem.upper()
-            data = tar.extractfile(member).read()
-            (pdb_dir / f"{pid}.pdb").write_bytes(data)
-            kept += 1
-    print(f"tar members (first 8): {seen}\nextracted {kept} .pdb files to {pdb_dir}")
+            if base.startswith("._"):
+                skipped += 1
+                continue
+            low = base.lower()
+            if low.endswith(".pdb"):
+                (pdb_dir / f"{Path(base).stem.upper()}.pdb").write_bytes(tar.extractfile(member).read())
+                kept += 1
+            elif low.endswith(".mapping"):
+                (map_dir / f"{Path(base).stem.upper()}.mapping").write_bytes(tar.extractfile(member).read())
+                mapped += 1
+    print(f"tar members (first 8): {seen}\nextracted {kept} .pdb and {mapped} .mapping files "
+          f"(skipped {skipped} AppleDouble '._' members) to {out_dir}")
     return pdb_dir
 
 
@@ -213,16 +244,18 @@ def main() -> None:
     ap.add_argument("--pdb-tgz-local")
     ap.add_argument("--ab-bind-labels", help="data/labels/ab_bind_s645.csv, to flag overlapping rows")
     ap.add_argument("--check-1131", help="path to Y_skempi.npy from the capsule")
+    ap.add_argument("--keep-discordant", action="store_true", help="keep mutations whose repeated measurements differ by >= 2 kcal/mol")
     args = ap.parse_args()
 
     out_dir = Path(args.out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
     entries = load_entries(get_csv(out_dir, args.csv_local))
     entries.to_csv(out_dir / "skempi_v2_entries.csv", index=False)
-    singles = single_labels(entries)
+    singles = single_labels(entries, keep_discordant=args.keep_discordant)
+    report_s4169(singles)
     print(f"entries {len(entries)} (SI: {SI_REFERENCE['entries']}) | with ddG {int(entries['ddg'].notna().sum())} | "
           f"single-point rows after averaging {len(singles)} | complexes {entries['pdb'].nunique()} (SI: {SI_REFERENCE['complexes']}) "
-          f"| SI quotes {SI_REFERENCE['single_or_element_count']} for the second figure; compare and decide the filter yourself.")
+          f"| SI's 4,169 is the single-point subset (S4169).")
     if args.ab_bind_labels:
         singles = flag_ab_bind_overlap(singles, args.ab_bind_labels)
     pdb_dir = out_dir / "pdbs"

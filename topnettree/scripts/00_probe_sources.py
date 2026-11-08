@@ -31,7 +31,7 @@ RCSB_ENTRY = "https://data.rcsb.org/rest/v1/core/entry/{pid}"
 RCSB_ENTITY = "https://data.rcsb.org/rest/v1/core/polymer_entity/{pid}/{eid}"
 RCSB_FILE = "https://files.rcsb.org/header/{pid}.pdb"
 HOSTS = [
-    "https://life.bsc.es/",
+    "https://life.bsc.es/pid/skempi2/",  # the site root times out (504); the SKEMPI pages and downloads respond
     "https://files.rcsb.org/",
     "https://data.rcsb.org/",
     "https://github.com/",
