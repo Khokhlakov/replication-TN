@@ -5,7 +5,7 @@ Run in two passes, because the layout of skempi_1131.npy (1131 x 6 byte strings)
 
   1) python scripts/34_join_s1131.py --s1131 CAPSULE/data/skempi_1131.npy --y CAPSULE/code/crossvalidation/Y_skempi.npy --inspect
      prints the first rows and, per column, what it looks like (PDB id? mutation token? single character?).
-  2) python scripts/34_join_s1131.py --s1131 ... --y ... [--map pdb=0 mut=3 chain=1]
+  2) python scripts/34_join_s1131.py --s1131 ... --y ... [--map pdb=0 chain=1 wt=2 resid=3 mutaa=4]
      joins on (pdb, wt, resid, mut) [+ chain when known], trying SKEMPI's cleaned and original numbering.
 
 --map overrides the auto-detection. Keys: pdb, mut, chain, wt, resid, mutaa (use mut for a combined token such as
@@ -38,6 +38,7 @@ from topnet.sources import parse_plain_token, parse_skempi_token  # noqa: E402
 PDB_RX = re.compile(r"^[0-9][A-Za-z0-9]{3}$")
 SK_RX = re.compile(r"^[A-Z][A-Za-z0-9]-?\d+[A-Za-z]?[A-Z]$")
 PL_RX = re.compile(r"^[A-Z]-?\d+[A-Za-z]?[A-Z]$")
+INT_RX = re.compile(r"^-?\d+[A-Za-z]?$")
 
 
 def decode(arr: np.ndarray) -> np.ndarray:
@@ -61,11 +62,14 @@ def column_profile(col: np.ndarray) -> dict:
     return {
         "n_unique": int(len(set(col))), "example": col[0], "pdb_like": frac(PDB_RX), "skempi_token": frac(SK_RX),
         "plain_token": frac(PL_RX), "single_char": float(np.mean([len(x) == 1 for x in col])),
-        "float_like": float(np.mean([isfloat(x) for x in col])), "n": n,
+        "float_like": float(np.mean([isfloat(x) for x in col])), "int_like": frac(INT_RX), "n": n,
     }
 
 
 def autodetect(table: np.ndarray) -> dict:
+    """Combined-token layout (LI45G / L45G in one column) first; otherwise the separate-column layout seen in the capsule:
+    [pdb, chain, wt, resid, mutaa, value]. In that layout the single-letter columns before the residue column are
+    (chain, wt) and the one after it is the mutant amino acid. The join rate is the check on this assumption."""
     prof = [column_profile(table[:, j]) for j in range(table.shape[1])]
     mapping: dict[str, int] = {}
     pdb = max(range(len(prof)), key=lambda j: prof[j]["pdb_like"])
@@ -74,9 +78,22 @@ def autodetect(table: np.ndarray) -> dict:
     tok = max(range(len(prof)), key=lambda j: max(prof[j]["skempi_token"], prof[j]["plain_token"]))
     if max(prof[tok]["skempi_token"], prof[tok]["plain_token"]) > 0.9 and tok != mapping.get("pdb"):
         mapping["mut"] = tok
-    chain = [j for j in range(len(prof)) if prof[j]["single_char"] > 0.95 and j not in mapping.values()]
-    if chain and prof[mapping.get("mut", 0)]["plain_token"] > 0.9:
-        mapping["chain"] = chain[0]
+        chain = [j for j in range(len(prof)) if prof[j]["single_char"] > 0.95 and j not in mapping.values()]
+        if chain and prof[mapping.get("mut", 0)]["plain_token"] > 0.9:
+            mapping["chain"] = chain[0]
+        return mapping
+    ints = [j for j in range(len(prof)) if prof[j]["int_like"] > 0.99 and j != mapping.get("pdb")]
+    if "pdb" in mapping and ints:
+        resid = ints[0]
+        singles = [j for j in range(len(prof)) if prof[j]["single_char"] > 0.95 and j != mapping["pdb"]]
+        before = [j for j in singles if j < resid]
+        after = [j for j in singles if j > resid]
+        if after and before:
+            mapping["resid"] = resid
+            mapping["mutaa"] = after[0]
+            mapping["wt"] = before[-1]
+            if len(before) >= 2:
+                mapping["chain"] = before[-2]
     return mapping
 
 

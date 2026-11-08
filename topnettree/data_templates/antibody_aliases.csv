@@ -1,4 +1,4 @@
-label,pdb,antibody_chains,note
-REGN10933,6XDG,"B,D","RN33 listed id. 6XDG: REGN10933 heavy chain B, light chain D; RBD chain E (RCSB entity listing in probe_report.json; Fig. 4 caption cites 6XDG)"
-REGN10987,6XDG,"C,A","RN87 listed id. 6XDG: REGN10987 heavy chain C, light chain A; RBD chain E (RCSB entity listing; Fig. 4 caption cites 6XDG)"
-AZD1061,7L7E,"C,D","1061 listed id (RCSB 404). 7L7E: AZD1061 heavy C/E/M/O, light D/F/N/P, RBD G/K/S/b in four copies. C,D with RBD G is a PROVISIONAL first copy; confirm the copy that contacts the RBD by distance (Fig. 4 caption cites 7L7E)"
+label,pdb,antibody_chains,rbd_chain,note
+REGN10933,6XDG,B+D,E,RN33 listed id; 6XDG REGN10933 heavy B light D; RBD chain E
+REGN10987,6XDG,C+A,E,RN87 listed id; 6XDG REGN10987 heavy C light A; RBD chain E
+AZD1061,7L7E,C+D,G,1061 listed id; 7L7E has four copies; C+D with RBD G is a provisional first copy to be checked by contacts
