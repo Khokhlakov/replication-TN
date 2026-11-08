@@ -1,6 +1,4 @@
 label,pdb,antibody_chains,rbd_chain,note
-REGN10933,6XDG,B+D,E,heavy B + light D
-REGN10987,6XDG,A+C,E,heavy C + light A (A under 5 contact pairs)
-REGN10933/10987,6XDG,A+B+C+D,E,cocktail column
-AZD1061,7L7E,O+P,K,copy K has no cross-copy contacts
-AZD8895/AZD1061,7L7E,I+J+O+P,K,combination column
+REGN10933,6XDG,B+D,E,RN33 listed id; 6XDG REGN10933 heavy B light D; RBD chain E
+REGN10987,6XDG,C+A,E,RN87 listed id; 6XDG REGN10987 heavy C light A; RBD chain E
+AZD1061,7L7E,C+D,G,1061 listed id; 7L7E has four copies; C+D with RBD G is a provisional first copy to be checked by contacts
