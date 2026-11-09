@@ -35,7 +35,7 @@ def present(df):
 
 def rd(path):
     return pd.read_csv(path, dtype=str, keep_default_na=False)
-
+ 
 
 sk = rd(SKEMPI / "skempi_v2_single_labels.csv")
 sk_out = pd.DataFrame({
