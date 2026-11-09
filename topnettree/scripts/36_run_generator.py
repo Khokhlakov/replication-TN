@@ -2,7 +2,7 @@
 """Steps 2 and 6. Run an external per-mutation feature generator over a table of rows. Resumable, parallel, logged.
 
 The generator is whatever your capsule script is (aux, H1/H2, H0). It is called once per row through a command template;
-this runner does not know its internals. Placeholders: {row} {pdb} {chain} {wt} {resid} {mut} {structure} {out}.
+this runner does not know its internals. Placeholders: {row} {pdb} {chain} {wt} {resid} {mut} {structure} {out}, plus any other column in the row table (for example {mutant}). {resid} is resid_struct when that column is present. {structure} is the row's structure column when it names a file.
 The command must write ONE vector for the row to {out} (.npy, or whitespace/comma text with --out-format txt).
 
     python scripts/36_run_generator.py \\
@@ -39,9 +39,16 @@ def run_row(k: int, rec: dict, args, out_dir: Path) -> dict:
     if structure and not Path(structure).is_file():
         return {"row": k, "status": "missing_structure", "seconds": 0.0, "stderr": structure}
     tmp = out_dir / "rows" / f"{k}.out"
-    fields = {"row": k, "pdb": rec.get("pdb", ""), "chain": rec.get("chain", rec.get("chain_s", "")), "wt": rec.get("wt", ""),
-              "resid": rec.get("resid_struct", rec.get("resid_s", rec.get("resid", ""))), "mut": rec.get("mut", ""),
-              "structure": structure, "out": str(tmp)}
+    fields = {key: "" if value is None else str(value) for key, value in rec.items()}
+    fields.update({
+        "row": str(k),
+        "chain": str(rec.get("chain") or rec.get("chain_s") or ""),
+        "wt": str(rec.get("wt", "")),
+        "resid": str(rec.get("resid_struct") or rec.get("resid_s") or rec.get("resid") or ""),
+        "mut": str(rec.get("mut", "")),
+        "structure": structure,
+        "out": str(tmp),
+    })
     argv = [tok.format(**fields) for tok in shlex.split(args.cmd)]
     t0 = time.time()
     try:
