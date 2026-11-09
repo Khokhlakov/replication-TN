@@ -40,6 +40,10 @@ ABLIKE = re.compile(r"heavy|light|\bfab\b|antibod|nanobod|\bvhh\b|\bvh\b|\bvl\b|
 SPIKE = re.compile(r"spike|\bs1\b|receptor.binding|\brbd\b|angiotensin|ace2", re.I)
 
 
+def is_spike(desc: str) -> bool:
+    return bool(SPIKE.search(desc)) and not (HEAVY.search(desc) or LIGHT.search(desc))
+
+
 def entity_chains(pid: str, cache: Path) -> dict:
     f = cache / f"{pid.upper()}.json"
     if f.is_file():
@@ -87,13 +91,13 @@ def main() -> None:
                 d = desc.get(c, "")
                 if not d:
                     flags.append(f"no_description:{c}")
-                elif SPIKE.search(d):
+                elif is_spike(d):
                     flags.append(f"selected_spike_or_receptor:{c}({d[:40]})")
         if r.file and Path(r.file).is_file() and r.rbd_chain:
             atoms = c31.heavy_atoms(r.file)
             core = [a for a in atoms.get(r.rbd_chain, []) if c31.in_window(a[0])]
             for c, d in desc.items():
-                if c in sel or c == r.rbd_chain or c not in atoms or not ABLIKE.search(d) or SPIKE.search(d):
+                if c in sel or c == r.rbd_chain or c not in atoms or not ABLIKE.search(d) or is_spike(d):
                     continue
                 p, _ = c31.contacts(core, atoms[c], 4.5)
                 if p >= args.omit_pairs:

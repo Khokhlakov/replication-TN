@@ -5,7 +5,8 @@ Why: 37b assigned each chain to an RBD copy one chain at a time, which can split
 RBD is assigned to the wrong copy or dropped) and 37 can also take spike chains as 'partners'. Here:
   1. candidates: chains whose RCSB description looks like an antibody (and not spike/RBD/ACE2); chains without a description
      only if they touch an RBD copy with >= --nodesc-pairs pairs;
-  2. units: candidates joined when they share >= --unit-pairs heavy-atom pairs (heavy-light interface);
+  2. units: heavy and light chains are paired one-to-one by their mutual contact (strongest first, >= --unit-pairs pairs), so two
+     neighbouring Fabs are never merged; nanobodies and unpaired chains are single-chain units;
   3. each unit goes to the RBD copy it touches most (pairs summed over its chains), kept if that total >= --min-unit;
   4. chosen RBD copy: largest total of its units, but the current copy is kept if within --keep-copy (0.95) of the best;
   5. antibody_chains: every chain of those units that touches the chosen copy with >= 1 pair (QC then needs --weak-pairs 1).
@@ -21,6 +22,7 @@ from __future__ import annotations
 import argparse
 import importlib.util
 import itertools
+import re
 import sys
 from pathlib import Path
 
@@ -41,6 +43,39 @@ s37 = load("s37", "37_freeze_complex_map.py")
 r37c = load("r37c", "37c_review_chains.py")
 c31 = s37.c31
 COLS = ["resolved_id", "label_contains", "rbd_chain", "antibody_chains", "note"]
+
+
+NANO = re.compile(r"nanobod|nonobody|\bvhh\b|sybody|single.domain|\bnb\d*\b|binder|\bvh\b", re.I)
+
+
+def role(desc: str) -> str:
+    if not desc:
+        return "?"
+    if NANO.search(desc):
+        return "N"
+    if r37c.HEAVY.search(desc) and not r37c.LIGHT.search(desc):
+        return "H"
+    if r37c.LIGHT.search(desc) and not r37c.HEAVY.search(desc):
+        return "L"
+    return "?"
+
+
+def pair_units(cand, desc, contact_fn, min_pairs):
+    """Fab = one heavy + one light chain, paired greedily by their mutual contact count (strongest pair first), so two
+    neighbouring Fabs are never merged. Chains described only as '<name> antibody' pair with another chain of the same
+    description. Nanobodies, undescribed chains and leftovers are single-chain units."""
+    eligible = []
+    for a, b in itertools.combinations(cand, 2):
+        ra, rb = role(desc.get(a, "")), role(desc.get(b, ""))
+        if {ra, rb} == {"H", "L"} or (ra == rb == "?" and desc.get(a) and desc.get(a) == desc.get(b)):
+            eligible.append((contact_fn(a, b), a, b))
+    used, units = set(), []
+    for n, a, b in sorted(eligible, reverse=True):
+        if n >= min_pairs and a not in used and b not in used:
+            units.append(sorted([a, b]))
+            used |= {a, b}
+    units += [[c] for c in cand if c not in used]
+    return units
 
 
 def components(chains, linked):
@@ -96,13 +131,11 @@ def main() -> None:
         cand = []
         for c in sorted(touching):
             d = desc.get(c, "")
-            if d and r37c.ABLIKE.search(d) and not r37c.SPIKE.search(d):
+            if d and r37c.ABLIKE.search(d) and not r37c.is_spike(d):
                 cand.append(c)
             elif not d and max(per_copy[rc].get(c, 0) for rc in per_copy) >= args.nodesc_pairs:
                 cand.append(c)
-        linked = [(a, b) for a, b in itertools.combinations(cand, 2)
-                  if c31.contacts(atoms[a], atoms[b], 4.5)[0] >= args.unit_pairs]
-        units = components(cand, linked)
+        units = pair_units(cand, desc, lambda a, b: c31.contacts(atoms[a], atoms[b], 4.5)[0], args.unit_pairs)
         owned = {rc: [] for rc in per_copy}
         text = []
         for u in units:
