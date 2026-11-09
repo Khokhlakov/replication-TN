@@ -49,9 +49,17 @@ def load_overrides(path: Path | None):
     return pd.read_csv(path, dtype=str, keep_default_na=False)
 
 
-def find_override(ov: pd.DataFrame, rid: str, label: str):
-    for r in ov.itertuples():
-        if r.resolved_id.upper() == rid.upper() and (not r.label_contains or r.label_contains.lower() in label.lower()):
+def find_override(ov: pd.DataFrame, rid: str, label: str, other_labels=()):
+    """Exact label match first. A substring match (label_contains inside the label) is accepted only if label_contains is
+    not itself the full label of another row of the same entry (so 'AZD1061' cannot capture 'AZD8895/AZD1061')."""
+    rows = [r for r in ov.itertuples() if r.resolved_id.upper() == rid.upper()]
+    for r in rows:
+        if r.label_contains and r.label_contains.lower() == label.lower():
+            return r
+    others = {x.lower() for x in other_labels}
+    for r in rows:
+        lc = r.label_contains.lower()
+        if not lc or (lc in label.lower() and lc not in others):
             return r
     return None
 
@@ -139,7 +147,8 @@ def main() -> None:
             f_rbd = al.get("rbd_chain") or None
             f_ab = al.get("antibody_chains", "").split("+") if al.get("antibody_chains") else None
             source = "alias"
-        o = find_override(ov, r["resolved_id"], r["label"])
+        o = find_override(ov, r["resolved_id"], r["label"],
+                          [t["label"] for t in todo if t["resolved_id"] == r["resolved_id"] and t["label"] != r["label"]])
         if o is not None:
             f_rbd = o.rbd_chain or f_rbd
             f_ab = o.antibody_chains.split("+") if o.antibody_chains else f_ab

@@ -4,8 +4,8 @@
 37/37b choose chains by geometry only. This adds the names: for every complex it lists the description of each selected
 antibody chain and flags
   heavy_light_mismatch      selected heavy-chain count differs from selected light-chain count (a Fab missing one chain)
-  omitted_in_contact        an antibody-like chain that touches the chosen RBD copy (>= 1 heavy-atom pair at 4.5 A) was not selected
-  selected_not_antibody     a selected chain whose description does not look like an antibody or nanobody (not checked for ACE2)
+  omitted_in_contact        an antibody-like chain that touches the chosen RBD copy (>= --omit-pairs heavy-atom pairs at 4.5 A) was not selected
+  selected_spike_or_receptor a selected chain described as spike/RBD/ACE2 (not checked for ACE2 or CTC labels)
   no_description            RCSB gave no description for a selected chain
 Entity listings are cached as JSON in --cache (one file per PDB id), so a rerun is offline.
 
@@ -34,7 +34,7 @@ spec.loader.exec_module(c31)
 
 ENTRY = "https://data.rcsb.org/rest/v1/core/entry/{pid}"
 ENTITY = "https://data.rcsb.org/rest/v1/core/polymer_entity/{pid}/{eid}"
-HEAVY = re.compile(r"heavy|\bvh\b|\bhc\b", re.I)
+HEAVY = re.compile(r"heavy|heigh|\bvh\b|\bhc\b", re.I)
 LIGHT = re.compile(r"light|\bvl\b|\blc\b|kappa|lambda", re.I)
 ABLIKE = re.compile(r"heavy|light|\bfab\b|antibod|nanobod|\bvhh\b|\bvh\b|\bvl\b|immunoglobulin|\bscfv\b|binder|sybody|\bigg", re.I)
 SPIKE = re.compile(r"spike|\bs1\b|receptor.binding|\brbd\b|angiotensin|ace2", re.I)
@@ -66,6 +66,7 @@ def main() -> None:
     ap.add_argument("--final", default="data/structures/antibody_rbd/complex_map_final.csv")
     ap.add_argument("--cache", default="data/raw/rcsb_entities")
     ap.add_argument("--out", default="data/structures/antibody_rbd/complex_chain_review.csv")
+    ap.add_argument("--omit-pairs", type=int, default=20, help="report an unselected antibody-like chain only if it touches the chosen RBD copy with at least this many pairs")
     args = ap.parse_args()
     final = pd.read_csv(args.final, dtype=str, keep_default_na=False)
     rows = []
@@ -80,13 +81,14 @@ def main() -> None:
         n_l = sum(bool(LIGHT.search(desc.get(c, ""))) for c in sel)
         if (n_h or n_l) and n_h != n_l:
             flags.append(f"heavy_light_mismatch:H={n_h},L={n_l}")
-        if r.label != "ACE2":
+        lab = r.label.lower()
+        if "ace2" not in lab and "ctc" not in lab:
             for c in sel:
                 d = desc.get(c, "")
                 if not d:
                     flags.append(f"no_description:{c}")
-                elif not ABLIKE.search(d):
-                    flags.append(f"selected_not_antibody:{c}({d[:40]})")
+                elif SPIKE.search(d):
+                    flags.append(f"selected_spike_or_receptor:{c}({d[:40]})")
         if r.file and Path(r.file).is_file() and r.rbd_chain:
             atoms = c31.heavy_atoms(r.file)
             core = [a for a in atoms.get(r.rbd_chain, []) if c31.in_window(a[0])]
@@ -94,7 +96,7 @@ def main() -> None:
                 if c in sel or c == r.rbd_chain or c not in atoms or not ABLIKE.search(d) or SPIKE.search(d):
                     continue
                 p, _ = c31.contacts(core, atoms[c], 4.5)
-                if p >= 1:
+                if p >= args.omit_pairs:
                     flags.append(f"omitted_in_contact:{c}({d[:35]},{p})")
         rows.append({"col_index": r.col_index, "label": r.label, "id": pid, "rbd": r.rbd_chain, "antibody_chains": r.ab_chains,
                      "selected": "; ".join(f"{c}={desc.get(c, '?')[:38]}" for c in sel), "flags": " | ".join(flags)})
