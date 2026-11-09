@@ -2,8 +2,17 @@
 """Build mutant PDBs with the capsule SCAP binary.
 
 One list line, ``chain,resid,three-letter``, then ``scap -ini 20 -min 4``.
+The list name has to contain ``_scap.list``; that is what scap.cpp accepts.
 profix runs only when --profix is passed. A missing binary or a failed row is
 recorded and no coordinate file is invented for that row.
+
+SCAP opens ``./jackal.dir`` and then the library path written in that file.
+The capsule copy names ``/home/phantom/Downloads/software/jackal_64bit``, which
+is not this machine. Each job gets its own ``jackal.dir`` in the work
+directory, with ``library:`` set to the capsule's ``jackal_64bit`` directory.
+The capsule file is not edited. The binary is copied into the work directory
+and marked executable, because the shipped file is often not executable and
+``ldd`` only reports that it is statically linked.
 
 The residue number is resid_struct: the number in the structure file named by
 the ``structure`` column.
@@ -35,6 +44,24 @@ def atom_lines(path: Path) -> list[str]:
     return lines
 
 
+def text_of(data: bytes | None) -> str:
+    return (data or b"").decode("utf-8", "replace").replace("\n", " | ")[-500:]
+
+
+def jackal_root(scap: Path) -> Path:
+    root = scap.resolve().parent.parent
+    if not (root / "library" / "tres").is_file():
+        raise RuntimeError(f"{root} has no library/tres; scap is not inside jackal_64bit/bin")
+    return root
+
+
+def write_jackal_dir(work: Path, library: Path) -> None:
+    (work / "jackal.dir").write_text(
+        f"pdb: .\nlibrary: {library}\nkey:XIANG2002\n",
+        encoding="utf-8",
+    )
+
+
 def build_one(rec: dict, scap: Path, profix: Path | None, work_root: Path) -> dict:
     dest = ROOT / rec["mutant"]
     if dest.is_file():
@@ -49,32 +76,39 @@ def build_one(rec: dict, scap: Path, profix: Path | None, work_root: Path) -> di
         shutil.rmtree(work)
     work.mkdir(parents=True)
     try:
+        library = jackal_root(scap)
         (work / "complex.pdb").write_text("".join(atom_lines(source)), encoding="utf-8")
         (work / "tmp_scap.list").write_text(
             f"{rec['chain']},{rec['resid_struct']},{AA1[rec['mut']]}\n", encoding="utf-8"
         )
+        write_jackal_dir(work, library)
+        local_scap = work / "scap"
+        shutil.copyfile(scap, local_scap)
+        local_scap.chmod(0o755)
         proc = subprocess.run(
-            [str(scap), "-ini", "20", "-min", "4", "complex.pdb", "tmp_scap.list"],
-            cwd=work, capture_output=True, text=True,
+            ["./scap", "-ini", "20", "-min", "4", "complex.pdb", "tmp_scap.list"],
+            cwd=work, capture_output=True,
         )
-        produced = work / "complex_scap.pdb"
-        if proc.returncode != 0 or not produced.is_file():
-            return {"mutant": rec["mutant"], "status": f"scap_exit_{proc.returncode}",
-                    "stderr": (proc.stderr or proc.stdout)[-300:].replace("\n", " | ")}
+        produced = next(iter(sorted(work.glob("*_scap.pdb"))), None)
+        detail = text_of(proc.stderr) or text_of(proc.stdout)
+        if proc.returncode != 0 or produced is None:
+            return {"mutant": rec["mutant"], "status": f"scap_exit_{proc.returncode}", "stderr": detail}
         if profix is not None:
             shutil.copyfile(produced, work / "complex.pdb")
-            repair = subprocess.run([str(profix), "-fix", "0", str(work / "complex.pdb")],
-                                    cwd=work, capture_output=True, text=True)
+            local_profix = work / "profix"
+            shutil.copyfile(profix, local_profix)
+            local_profix.chmod(0o755)
+            repair = subprocess.run(["./profix", "-fix", "0", "complex.pdb"], cwd=work, capture_output=True)
             fixed = work / "complex_fix.pdb"
             if repair.returncode != 0 or not fixed.is_file():
                 return {"mutant": rec["mutant"], "status": f"profix_exit_{repair.returncode}",
-                        "stderr": (repair.stderr or repair.stdout)[-300:].replace("\n", " | ")}
+                        "stderr": text_of(repair.stderr) or text_of(repair.stdout)}
             produced = fixed
         dest.parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(produced, dest)
-        return {"mutant": rec["mutant"], "status": "ok"}
+        return {"mutant": rec["mutant"], "status": "ok", "stderr": ""}
     except Exception as err:
-        return {"mutant": rec["mutant"], "status": "error", "stderr": str(err)[:300]}
+        return {"mutant": rec["mutant"], "status": "error", "stderr": f"{type(err).__name__}: {err}"[:500]}
     finally:
         shutil.rmtree(work, ignore_errors=True)
 
@@ -103,6 +137,10 @@ def main() -> None:
     pd.DataFrame(log).to_csv(out, index=False)
     counts = pd.Series([item["status"] for item in log]).value_counts().to_dict()
     print(counts)
+    failed = [item for item in log if item["status"] not in ("ok", "cached")]
+    if failed:
+        print(failed[0]["mutant"])
+        print(failed[0].get("stderr", ""))
     print(f"wrote {out}")
 
 
