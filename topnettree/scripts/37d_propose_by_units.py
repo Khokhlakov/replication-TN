@@ -106,6 +106,8 @@ def main() -> None:
     ap.add_argument("--min-unit", type=int, default=20)
     ap.add_argument("--nodesc-pairs", type=int, default=20)
     ap.add_argument("--keep-copy", type=float, default=0.95)
+    ap.add_argument("--verbose", action="store_true", help="print, for every processed row, each candidate chain with its contacts to every RBD copy "
+                    "and the unit pairing, even when no change is proposed")
     ap.add_argument("--write", action="store_true")
     ap.add_argument("--force", action="store_true")
     args = ap.parse_args()
@@ -151,6 +153,18 @@ def main() -> None:
         for u, _ in owned[chosen]:
             ab += [c for c in u if per_copy[chosen].get(c, 0) >= 1]
         ab = sorted(set(ab), key=lambda c: -per_copy[chosen].get(c, 0))
+        if args.verbose:
+            print(f"\n{r.label} ({r.resolved_id}): RBD copies {sorted(per_copy)}; current {r.rbd_chain}:{r.ab_chains}")
+            for c in cand:
+                row = {rc: per_copy[rc].get(c, 0) for rc in sorted(per_copy) if per_copy[rc].get(c, 0)}
+                print(f"  chain {c:>2s}  {desc.get(c, '(no description)')[:42]:42s} contacts per RBD copy {row}")
+            pairs = []
+            for a_, b_ in itertools.combinations(cand, 2):
+                n_ = c31.contacts(atoms[a_], atoms[b_], 4.5)[0]
+                if n_ >= 50:
+                    pairs.append(f"{a_}-{b_}:{n_}")
+            print(f"  chain-chain pairs >= 50: {' '.join(pairs) or 'none'}")
+            print(f"  units: {' '.join(text)}; unit totals per copy {score}; chosen copy {chosen}")
         cur = (r.rbd_chain, sorted(r.ab_chains.split("+")))
         new = (chosen, sorted(ab))
         if not ab or cur == new:
