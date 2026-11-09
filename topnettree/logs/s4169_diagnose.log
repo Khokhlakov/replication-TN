@@ -1,0 +1,37 @@
+measurements 4956; unique mutations 4187 (published 4169); after dropping repeats spanning >= 2.0: 4173
+
+1) sign split and exact zeros (published: tighter 901, weaker 3268)
+  all unique (no discard)  n=4187  ddg<0: 897  ddg==0 exactly: 141  |ddg|<0.01: 160  ddg<=0: 1038  ddg>0: 3149
+  discard >= 2.0           n=4173  ddg<0: 895  ddg==0 exactly: 141  |ddg|<0.01: 160  ddg<=0: 1036  ddg>0: 3137
+
+2) repeat counts per mutation: {1: 3682, 2: 387, 3: 70, 4: 23, 5: 8, 6: 6, 7: 1, 8: 1, 9: 2, 10: 4, 11: 1, 19: 2}
+
+3) discordant mutations (range >= 2.0): 14
+ pdb chain wt resid mut  n      rng                                                                                                                              values
+1JTG     A  E    85   A  2 5.365473                                                                                                                        +4.06, -1.31
+1BP3     A  E   170   A  2 3.321263                                                                                                                        +3.49, +0.17
+3MZG     A  H   167   A 19 3.140199 -0.69, +0.73, +1.67, +1.44, +1.48, +1.82, +1.63, +1.61, +1.53, +0.27, +0.78, +1.05, +1.71, +2.04, +2.20, +2.03, +2.45, +2.27, +2.21
+3NCB     A  A   167   H 19 3.140199 +0.69, -0.73, -1.67, -1.44, -1.48, -1.82, -1.63, -1.61, -1.53, -0.27, -0.78, -1.05, -1.71, -2.04, -2.20, -2.03, -2.45, -2.27, -2.21
+1FC2     C  I    27   A  2 3.089900                                                                                                                        +5.27, +2.18
+1AO7     A  E   166   A  4 2.988195                                                                                                          +3.86, +2.60, +0.88, +1.45
+3MZG     B  H   188   A  9 2.888576                                                                       -0.45, +1.06, +2.03, +1.93, +2.09, +2.44, +2.29, +2.34, +2.25
+3NCC     B  A   188   H  9 2.888576                                                                       +0.45, -1.06, -2.03, -1.93, -2.09, -2.44, -2.29, -2.34, -2.25
+1BP3     A  H    21   A  2 2.848398                                                                                                                        +2.67, -0.18
+3SE4     B  L    31   A  2 2.739085                                                                                                                        +2.73, -0.01
+1BP3     A  H    18   A  2 2.724204                                                                                                                        +2.91, +0.19
+3S9D     A  R    26   A  3 2.594978                                                                                                                 +3.68, +5.42, +6.28
+1LFD     A  K    39   A  4 2.017987                                                                                                          +1.80, +1.18, +2.40, +3.20
+4NKQ     B  D   176   A  3 2.012145                                                                                                                 +0.42, +1.68, +2.43
+
+   complexes that vanish when these are dropped: ['3NCB', '3NCC']
+   3NCB: 1 unique mutation(s) in total
+   3NCC: 1 unique mutation(s) in total
+
+4) mutations reported under more than one SKEMPI entry (different partners), merged by the grouping: 6
+ pdb chain wt resid mut  partners
+3SE4     B  P    27   A         2
+3SE4     B  P    27   L         2
+3SE4     B  L    31   A         2
+3SE4     B  M   130   A         2
+3SE4     B  K   134   A         2
+3SE4     B  K   134   R         2

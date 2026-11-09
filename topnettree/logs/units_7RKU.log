@@ -1,0 +1,13 @@
+
+C022 (7RKU): RBD copies ['A', 'B', 'C', 'D']; current B:J+L+K
+  chain  E  C022 Antibody Fab Heavy Chain              contacts per RBD copy {'D': 27}
+  chain  F  C022 Antibody Fab Light Chain              contacts per RBD copy {'A': 158}
+  chain  G  C022 Antibody Fab Heavy Chain              contacts per RBD copy {'A': 242, 'D': 58}
+  chain  H  C022 Antibody Fab Heavy Chain              contacts per RBD copy {'C': 31}
+  chain  I  C022 Antibody Fab Light Chain              contacts per RBD copy {'A': 58, 'D': 11}
+  chain  J  C022 Antibody Fab Heavy Chain              contacts per RBD copy {'B': 259, 'C': 60}
+  chain  K  C022 Antibody Fab Light Chain              contacts per RBD copy {'B': 53, 'C': 9}
+  chain  L  C022 Antibody Fab Light Chain              contacts per RBD copy {'B': 157}
+  chain-chain pairs >= 50: E-F:593 G-I:539 H-L:608 J-K:528
+  units: H+L->B:157 E+F->A:158 G+I->A:300 J+K->B:312; unit totals per copy {'A': 458, 'B': 469, 'C': 0, 'D': 0}; chosen copy B
+no changes proposed

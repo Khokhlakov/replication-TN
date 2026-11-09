@@ -1,91 +1,33 @@
-wrote data/structures/antibody_rbd/complex_map.csv: 186 rows, 186 with antibody chains, 89 flagged
- col_index             label resolved_id rbd_chain ab_chains                                                                   flags
-         0              ACE2        6M0J         E         A                                             partner_over_400_residues:A
-         1   REGN10933/10987        6XDG         E   A+B+C+D                                                          alias_override
-         2         REGN10933        6XDG         E       B+D                                                          alias_override
-         3         REGN10987        6XDG         E       A+C                                                          alias_override
-         4         LY-CoV016        7C01         B     C+L+D                      2_rbd_copies;partner_touches_several_rbd_copies:LD
-         5         LY-CoV555        7KMG         F   D+E+B+A                    2_rbd_copies;partner_touches_several_rbd_copies:ABDE
-         7              C135        7K8Z         A       H+L                                                            3_rbd_copies
-         8              C144        7K90         A     M+O+N                      3_rbd_copies;partner_touches_several_rbd_copies:MO
-        10              S309        6WPS         A       H+L                                                            3_rbd_copies
-        11            CC12.1        6XC2         Z       X+Y                                                            2_rbd_copies
-        13            CC12.3        6XC4         Z       X+Y                                                            2_rbd_copies
-        15              C105        6XCM         B       N+S                                                            3_rbd_copies
-        17           Fab 2-4        6XEY         B       F+G                                                            3_rbd_copies
-        18          CV07-270        6XKP         B     M+H+N                      2_rbd_copies;partner_touches_several_rbd_copies:HM
-        21     CR3022/H11-D4        6Z2M         A   D+B+C+L                      2_rbd_copies;partner_touches_several_rbd_copies:CL
-        22            H11-H4        6ZBP         A         B                                                      converted_from_cif
-        24              EY6Z        6ZER         D   C+F+G+B                      3_rbd_copies;partner_touches_several_rbd_copies:BC
-        25              Sb23        7A29         C         F                       3_rbd_copies;partner_touches_several_rbd_copies:F
-        28              BD23        7BYR         B         H                                                            3_rbd_copies
-        41          BD-368-2        7CHH         C       J+K                                                            3_rbd_copies
-        43               P17        7CWM         B     L+G+J                       3_rbd_copies;partner_touches_several_rbd_copies:L
-        44          P17/H014        7CWN         A   O+M+G+F                                                            3_rbd_copies
-        48             S2H13        7JV6         A       L+H                                                            3_rbd_copies
-        50              S304        7JW0         A       L+H                                                            3_rbd_copies
-        51         VH binder        7JWB         B         D                       3_rbd_copies;partner_touches_several_rbd_copies:D
-        53             S2M11        7K43         A     H+F+L                      3_rbd_copies;partner_touches_several_rbd_copies:HF
-        56              C002        7K8T         A       O+P                       3_rbd_copies;partner_touches_several_rbd_copies:P
-        57              C104        7K8U         A       L+H                       3_rbd_copies;partner_touches_several_rbd_copies:L
-        58              C110        7K8V         A       L+H                                                            3_rbd_copies
-        59              C119        7K8W         G       N+S                                                            3_rbd_copies
-        60              C121        7K8X         B     D+F+E                      3_rbd_copies;partner_touches_several_rbd_copies:EF
-        62           C1A-B12        7KFV         B       C+D                                                            3_rbd_copies
-        63            C1A-B3        7KFW         A     H+L+D                       3_rbd_copies;partner_touches_several_rbd_copies:D
-        68           VHH E/U        7KN5         A     C+E+D                       2_rbd_copies;partner_touches_several_rbd_copies:D
-        72            DH1047        7LD1         C       M+N                       3_rbd_copies;partner_touches_several_rbd_copies:N
-        73               7D6        7EAM         A       H+L                                                            2_rbd_copies
-        74           Fab 2-7        7LSS         B   A+H+L+C                                            partner_over_400_residues:AC
-        75            DH1041        7LAA         A   H+B+L+C                                            partner_over_400_residues:BC
-        76              1-57        7LS9         B       D+F                                                            3_rbd_copies
-        77       P5A-3C12_1B        7D0B         A         H                                                            3_rbd_copies
-        78           P5A-2G7        7CZW         A       H+L                                                            3_rbd_copies
-        79           P5A-1B8        7D00         A       H+K                                                            3_rbd_copies
-        80           P5A-3A1        7D0C         A       H+L                                                            3_rbd_copies
-        81       P5A-3C12_2B        7D0D         A         H                                                            3_rbd_copies
-        82           P5A-1B9        7CZX         A     H+N+K                       3_rbd_copies;partner_touches_several_rbd_copies:N
-        83       P5A-2F11_2B        7CZY         A       H+K                                                            3_rbd_copies
-        84        P5A-1B6_3B        7CZV         B       I+M                                                            3_rbd_copies
-        85       P5A-2F11_3B        7CZZ         A       H+K                                                            3_rbd_copies
-        86           P2B-1A1        7CZP         C       N+J                                                            3_rbd_copies
-        87          P2B-1A10        7CZQ         A       H+K                                                            3_rbd_copies
-        88           P5A-2G9        7CZT         A       L+H                                                            3_rbd_copies
-        89        P5A-1B6_2B        7CZU         A       H+K                                                            3_rbd_copies
-        90        P5A-1B8_2B        7CZR         A       H+K                                                            3_rbd_copies
-        91        P5A-1B8_3B        7CZS         A       H+K                                                            3_rbd_copies
-        92      COVOX-88/-45        7BEL         X   C+E+F+D                                                            2_rbd_copies
-        95    COVOX-384/S309        7BEP         C   G+D+F+I                                                            2_rbd_copies
-        96     COVOX-253/-75        7BEN         C   G+D+I+F                                                            2_rbd_copies
-        97 COVOX-253H55L/-75        7BEO         R   H+A+B+L                                                            2_rbd_copies
-       100     COVOX-253H55L        7NDA         C       H+L                       3_rbd_copies;partner_touches_several_rbd_copies:H
-       101    COVOX-253H165L        7NDB         B       H+L                                                            3_rbd_copies
-       102         COVOX-384        7ND8         B       H+L                                                            3_rbd_copies
-       103          COVOX-40        7ND6         B       H+L                                                            3_rbd_copies
-       104          COVOX-88        7ND4         B       F+G                                                            3_rbd_copies
-       105   CV05-163/CR3022        7LOP         Z W+X+Y+V+B                      2_rbd_copies;partner_touches_several_rbd_copies:WB
-       106              MW06        7DPM         F   D+H+E+G                      4_rbd_copies;partner_touches_several_rbd_copies:GH
-       107            910-30        7KS9         B       H+L                                                            3_rbd_copies
-       109      S2X259/S2H97        7M7W         R   H+E+L+F                       2_rbd_copies;partner_touches_several_rbd_copies:E
-       112            CV2-75        7M3I         C       A+B                                                            2_rbd_copies
-       117        LY-CoV1404        7MMO         C     A+B+E                      2_rbd_copies;partner_touches_several_rbd_copies:BE
-       118           P5A-1D2        7CHO         A       B+C                                                            2_rbd_copies
-       124            BD-623        7E7Y         R       A+B                                                            2_rbd_copies
-       125        FC08/hACE2        7DX4         E     A+H+L                                             partner_over_400_residues:A
-       126            NM1230        7B27         A         C                                                      converted_from_cif
-       133        Nanosota-1        7KM5         B       C+D                       2_rbd_copies;partner_touches_several_rbd_copies:D
-       138       Nanobody F2        7OAY         E   F+B+D+H converted_from_cif;6_rbd_copies;partner_touches_several_rbd_copies:BDFH
-       145   AZD8895/AZD1061        7L7E         K   I+J+O+P       4_rbd_copies;partner_touches_several_rbd_copies:CE;alias_override
-       147           AZD1061        7L7E         K       O+P       4_rbd_copies;partner_touches_several_rbd_copies:CE;alias_override
-       152    Nanobody H3 C1        7OAP         B       A+C                                                      converted_from_cif
-       153       Nanobody C5        7OAO         A         B                                                      converted_from_cif
-       155              S-B8        7KN3         A       H+L                       2_rbd_copies;partner_touches_several_rbd_copies:H
-       156              S-E6        7KN4         A       L+H                                                            2_rbd_copies
-       157    CV503/COVA1-16        7LQ7         A   P+H+L+Q                                                            3_rbd_copies
-       160           WCSL119        7MZH         A       B+C                                                            2_rbd_copies
-       161     WCSL129/PDI96        7MZK         A E+D+H+F+L                       2_rbd_copies;partner_touches_several_rbd_copies:D
-       162     WCSL129/PDI93        7MZJ         B D+M+N+C+E                       2_rbd_copies;partner_touches_several_rbd_copies:E
-       171              2B04        7K9H         B     H+L+M                      3_rbd_copies;partner_touches_several_rbd_copies:LM
-       175              C022        7RKU         B     J+L+K                      4_rbd_copies;partner_touches_several_rbd_copies:JK
-       176         N-612-056        7S0B         F       A+B                                                            2_rbd_copies
-       183           ION-360        7NP1         A     H+O+L                      4_rbd_copies;partner_touches_several_rbd_copies:LO
+wrote data/structures/antibody_rbd/complex_map_final.csv: 187 rows (1 extra), QC pass 161, fail 26
+rule counts: {'clean_copy': 157, 'max_contacts': 24, 'override': 6}
+
+QC failures (add rows to the overrides CSV, then rerun):
+ col_index           label resolved_id rbd_chain ab_chains  chosen_pairs                                             flags
+         3       REGN10987        6XDG         E       C+A            94                weak_antibody_chain:A;source:alias
+         4       LY-CoV016        7C01         B     C+L+D           498                      shared_partner_unresolved:DL
+         5       LY-CoV555        7KMG         F   D+E+B+A           285                    shared_partner_unresolved:ABDE
+         8            C144        7K90         A     M+O+N           341                      shared_partner_unresolved:MO
+        18        CV07-270        6XKP         B     M+H+N           386                      shared_partner_unresolved:HM
+        21   CR3022/H11-D4        6Z2M         A   D+B+C+L           556                      shared_partner_unresolved:CL
+        24            EY6Z        6ZER         D   C+F+G+B           428                      shared_partner_unresolved:BC
+        50            S304        7JW0         A       L+H            44                             low_total_contacts:44
+        51       VH binder        7JWB         B         D           455                       shared_partner_unresolved:D
+        53           S2M11        7K43         A     H+F+L           275                      shared_partner_unresolved:FH
+        56            C002        7K8T         A       O+P           262                       shared_partner_unresolved:P
+        57            C104        7K8U         A       L+H            42 shared_partner_unresolved:L;low_total_contacts:42
+        60            C121        7K8X         B     D+F+E           225                      shared_partner_unresolved:EF
+        68         VHH E/U        7KN5         A     C+E+D           655                       shared_partner_unresolved:D
+       100   COVOX-253H55L        7NDA         C       H+L           150                       shared_partner_unresolved:H
+       105 CV05-163/CR3022        7LOP         Z W+X+Y+V+B           567                      shared_partner_unresolved:BW
+       109    S2X259/S2H97        7M7W         R   H+E+L+F           592                       shared_partner_unresolved:E
+       117      LY-CoV1404        7MMO         C     A+B+E           270                      shared_partner_unresolved:BE
+       133      Nanosota-1        7KM5         B       C+D           440                       shared_partner_unresolved:D
+       138     Nanobody F2        7OAY         E   F+B+D+H           329                    shared_partner_unresolved:BDFH
+       155            S-B8        7KN3         A       H+L           355                       shared_partner_unresolved:H
+       161   WCSL129/PDI96        7MZK         A E+D+H+F+L           627                       shared_partner_unresolved:D
+       162   WCSL129/PDI93        7MZJ         B D+M+N+C+E           669                       shared_partner_unresolved:E
+       171            2B04        7K9H         B     H+L+M           288                      shared_partner_unresolved:LM
+       175            C022        7RKU         B     J+L+K           469                      shared_partner_unresolved:JK
+       183         ION-360        7NP1         A     H+O+L           407                      shared_partner_unresolved:LO
+
+GATE G3: FAIL (26 rows)

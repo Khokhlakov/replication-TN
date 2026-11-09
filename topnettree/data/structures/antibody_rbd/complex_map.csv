@@ -1,187 +1,187 @@
-col_index,label,resolved_id,file,rbd_chain,ab_chains,n_rbd_copies,contacts_json,flags
-0,ACE2,6M0J,data/structures/antibody_rbd/6M0J.pdb,E,A,1,"{""A"": 253}",partner_over_400_residues:A
-1,REGN10933/10987,6XDG,data/structures/antibody_rbd/6XDG.pdb,E,A+B+C+D,1,"{""D"": 24, ""B"": 221, ""C"": 90}",alias_override
-2,REGN10933,6XDG,data/structures/antibody_rbd/6XDG.pdb,E,B+D,1,"{""D"": 24, ""B"": 221, ""C"": 90}",alias_override
-3,REGN10987,6XDG,data/structures/antibody_rbd/6XDG.pdb,E,A+C,1,"{""D"": 24, ""B"": 221, ""C"": 90}",alias_override
-4,LY-CoV016,7C01,data/structures/antibody_rbd/7C01.pdb,B,C+L+D,2,"{""L"": 144, ""C"": 275, ""D"": 79}",2_rbd_copies;partner_touches_several_rbd_copies:LD
-5,LY-CoV555,7KMG,data/structures/antibody_rbd/7KMG.pdb,F,D+E+B+A,2,"{""A"": 14, ""B"": 48, ""D"": 147, ""E"": 76}",2_rbd_copies;partner_touches_several_rbd_copies:ABDE
-6,CT-P59,7CM4,data/structures/antibody_rbd/7CM4.pdb,A,H+L,1,"{""H"": 260, ""L"": 26}",
-7,C135,7K8Z,data/structures/antibody_rbd/7K8Z.pdb,A,H+L,3,"{""H"": 67, ""L"": 56}",3_rbd_copies
-8,C144,7K90,data/structures/antibody_rbd/7K90.pdb,A,M+O+N,3,"{""M"": 227, ""O"": 90, ""N"": 24}",3_rbd_copies;partner_touches_several_rbd_copies:MO
-9,CR3022,6W41,data/structures/antibody_rbd/6W41.pdb,C,H+L,1,"{""H"": 154, ""L"": 70}",
-10,S309,6WPS,data/structures/antibody_rbd/6WPS.pdb,A,H+L,3,"{""H"": 197, ""L"": 27}",3_rbd_copies
-11,CC12.1,6XC2,data/structures/antibody_rbd/6XC2.pdb,Z,X+Y,2,"{""Y"": 189, ""X"": 289}",2_rbd_copies
-12,CC12.1/CR3022,6XC3,data/structures/antibody_rbd/6XC3.pdb,C,B+H+A+L,1,"{""H"": 176, ""L"": 52, ""A"": 160, ""B"": 220}",
-13,CC12.3,6XC4,data/structures/antibody_rbd/6XC4.pdb,Z,X+Y,2,"{""X"": 229, ""Y"": 42}",2_rbd_copies
-14,CC12.3/CR3022,6XC7,data/structures/antibody_rbd/6XC7.pdb,A,C+H+L+D,1,"{""H"": 171, ""L"": 72, ""C"": 233, ""D"": 68}",
-15,C105,6XCM,data/structures/antibody_rbd/6XCM.pdb,B,N+S,3,"{""N"": 145, ""S"": 129}",3_rbd_copies
-16,CV30,6XE1,data/structures/antibody_rbd/6XE1.pdb,E,H+L,1,"{""H"": 223, ""L"": 63}",
-17,Fab 2-4,6XEY,data/structures/antibody_rbd/6XEY.pdb,B,F+G,3,"{""F"": 144, ""G"": 60}",3_rbd_copies
-18,CV07-270,6XKP,data/structures/antibody_rbd/6XKP.pdb,B,M+H+N,2,"{""H"": 97, ""M"": 272, ""N"": 17}",2_rbd_copies;partner_touches_several_rbd_copies:HM
-19,CV07-250,6XKQ,data/structures/antibody_rbd/6XKQ.pdb,A,H+L,1,"{""H"": 187, ""L"": 126}",
-20,H11-D4,6YZ5,data/structures/antibody_rbd/6YZ5.pdb,E,F,1,"{""F"": 236}",
-21,CR3022/H11-D4,6Z2M,data/structures/antibody_rbd/6Z2M.pdb,A,D+B+C+L,2,"{""B"": 210, ""C"": 74, ""L"": 53, ""D"": 219}",2_rbd_copies;partner_touches_several_rbd_copies:CL
-22,H11-H4,6ZBP,data/structures/antibody_rbd_converted/6ZBP.pdb,A,B,1,"{""B"": 224}",converted_from_cif
-23,EY6Z/Nb,6ZCZ,data/structures/antibody_rbd/6ZCZ.pdb,E,F+H+L,1,"{""F"": 240, ""H"": 165, ""L"": 135}",
-24,EY6Z,6ZER,data/structures/antibody_rbd/6ZER.pdb,D,C+F+G+B,3,"{""B"": 7, ""C"": 148, ""F"": 146, ""G"": 127}",3_rbd_copies;partner_touches_several_rbd_copies:BC
-25,Sb23,7A29,data/structures/antibody_rbd/7A29.pdb,C,F,3,"{""F"": 153}",3_rbd_copies;partner_touches_several_rbd_copies:F
-26,STE90-C11,7B3O,data/structures/antibody_rbd/7B3O.pdb,E,H+L,1,"{""L"": 130, ""H"": 216}",
-27,P2B-2F6,7BWJ,data/structures/antibody_rbd/7BWJ.pdb,E,H+L,1,"{""L"": 37, ""H"": 112}",
-28,BD23,7BYR,data/structures/antibody_rbd/7BYR.pdb,B,H,3,"{""H"": 179}",3_rbd_copies
-29,B38,7BZ5,data/structures/antibody_rbd/7BZ5.pdb,A,H+L,1,"{""H"": 233, ""L"": 144}",
-30,SR4,7C8V,data/structures/antibody_rbd/7C8V.pdb,B,A,1,"{""A"": 247}",
-31,MR17,7C8W,data/structures/antibody_rbd/7C8W.pdb,B,A,1,"{""A"": 348}",
-32,H014,7CAH,data/structures/antibody_rbd/7CAH.pdb,A,E+D,1,"{""D"": 87, ""E"": 138}",
-33,MR17-K99Y,7CAN,data/structures/antibody_rbd/7CAN.pdb,B,A,1,"{""A"": 323}",
-34,P2C-1F11,7CDI,data/structures/antibody_rbd/7CDI.pdb,E,H+L,1,"{""H"": 246, ""L"": 37}",
-35,P2C-1A3,7CDJ,data/structures/antibody_rbd/7CDJ.pdb,E,H+L,1,"{""H"": 216, ""L"": 77}",
-36,BD-604,7CH4,data/structures/antibody_rbd/7CH4.pdb,R,H+L,1,"{""H"": 224, ""L"": 67}",
-37,BD-629,7CH5,data/structures/antibody_rbd/7CH5.pdb,R,H+L,1,"{""H"": 270, ""L"": 53}",
-38,BD-236,7CHB,data/structures/antibody_rbd/7CHB.pdb,R,H+L,1,"{""H"": 237, ""L"": 95}",
-39,BD-236/BD-368-2,7CHE,data/structures/antibody_rbd/7CHE.pdb,R,H+A+L+B,1,"{""H"": 186, ""L"": 86, ""A"": 178, ""B"": 21}",
-40,BD-604/BD-368-2,7CHF,data/structures/antibody_rbd/7CHF.pdb,R,H+A+L+B,1,"{""H"": 219, ""L"": 87, ""A"": 183, ""B"": 27}",
-41,BD-368-2,7CHH,data/structures/antibody_rbd/7CHH.pdb,C,J+K,3,"{""J"": 164, ""K"": 19}",3_rbd_copies
-42,A fab,7CJF,data/structures/antibody_rbd/7CJF.pdb,C,A+B,1,"{""A"": 255, ""B"": 132}",
-43,P17,7CWM,data/structures/antibody_rbd/7CWM.pdb,B,L+G+J,3,"{""G"": 147, ""L"": 188, ""J"": 81}",3_rbd_copies;partner_touches_several_rbd_copies:L
-44,P17/H014,7CWN,data/structures/antibody_rbd/7CWN.pdb,A,O+M+G+F,3,"{""G"": 147, ""F"": 81, ""M"": 170, ""O"": 191}",3_rbd_copies
-45,COVA2-04,7JMO,data/structures/antibody_rbd/7JMO.pdb,A,H+L,1,"{""H"": 255, ""L"": 83}",
-46,COVA2-39,7JMP,data/structures/antibody_rbd/7JMP.pdb,A,H+L,1,"{""H"": 223, ""L"": 38}",
-47,COVA1-16,7JMW,data/structures/antibody_rbd/7JMW.pdb,A,H+L,1,"{""H"": 248, ""L"": 24}",
-48,S2H13,7JV6,data/structures/antibody_rbd/7JV6.pdb,A,L+H,3,"{""H"": 25, ""L"": 61}",3_rbd_copies
-49,S2A4,7JVA,data/structures/antibody_rbd/7JVA.pdb,A,H+L,1,"{""H"": 118, ""L"": 96}",
-50,S304,7JW0,data/structures/antibody_rbd/7JW0.pdb,A,L+H,3,"{""L"": 37, ""H"": 7}",3_rbd_copies
-51,VH binder,7JWB,data/structures/antibody_rbd/7JWB.pdb,B,D,3,"{""D"": 455}",3_rbd_copies;partner_touches_several_rbd_copies:D
-52,S309/S2H14/S304,7JX3,data/structures/antibody_rbd/7JX3.pdb,R,A+C+H+L+D+B,1,"{""B"": 22, ""A"": 212, ""D"": 95, ""C"": 195, ""L"": 114, ""H"": 138}",
-53,S2M11,7K43,data/structures/antibody_rbd/7K43.pdb,A,H+F+L,3,"{""H"": 202, ""L"": 6, ""F"": 67}",3_rbd_copies;partner_touches_several_rbd_copies:HF
-54,S2E12,7K45,data/structures/antibody_rbd/7K45.pdb,B,H+L,1,"{""H"": 94, ""L"": 44}",
-55,C102,7K8M,data/structures/antibody_rbd/7K8M.pdb,E,A+B,1,"{""A"": 275, ""B"": 62}",
-56,C002,7K8T,data/structures/antibody_rbd/7K8T.pdb,A,O+P,3,"{""O"": 212, ""P"": 50}",3_rbd_copies;partner_touches_several_rbd_copies:P
-57,C104,7K8U,data/structures/antibody_rbd/7K8U.pdb,A,L+H,3,"{""H"": 13, ""L"": 29}",3_rbd_copies;partner_touches_several_rbd_copies:L
-58,C110,7K8V,data/structures/antibody_rbd/7K8V.pdb,A,L+H,3,"{""H"": 41, ""L"": 54}",3_rbd_copies
-59,C119,7K8W,data/structures/antibody_rbd/7K8W.pdb,G,N+S,3,"{""N"": 153, ""S"": 82}",3_rbd_copies
-60,C121,7K8X,data/structures/antibody_rbd/7K8X.pdb,B,D+F+E,3,"{""D"": 195, ""E"": 14, ""F"": 16}",3_rbd_copies;partner_touches_several_rbd_copies:EF
-61,Fabs 298/52,7K9Z,data/structures/antibody_rbd/7K9Z.pdb,E,H+B+A+L,1,"{""H"": 154, ""L"": 64, ""A"": 94, ""B"": 96}",
-62,C1A-B12,7KFV,data/structures/antibody_rbd/7KFV.pdb,B,C+D,3,"{""C"": 256, ""D"": 118}",3_rbd_copies
-63,C1A-B3,7KFW,data/structures/antibody_rbd/7KFW.pdb,A,H+L+D,3,"{""D"": 6, ""H"": 254, ""L"": 115}",3_rbd_copies;partner_touches_several_rbd_copies:D
-64,C1A-C2,7KFX,data/structures/antibody_rbd/7KFX.pdb,A,H+L,1,"{""H"": 258, ""L"": 89}",
-65,C1A-F10,7KFY,data/structures/antibody_rbd/7KFY.pdb,A,H+L,1,"{""H"": 258, ""L"": 100}",
-66,LY-CoV488,7KMH,data/structures/antibody_rbd/7KMH.pdb,C,A+B,1,"{""A"": 241, ""B"": 72}",
-67,LY-CoV481,7KMI,data/structures/antibody_rbd/7KMI.pdb,C,A+B,1,"{""A"": 208, ""B"": 128}",
-68,VHH E/U,7KN5,data/structures/antibody_rbd/7KN5.pdb,A,C+E+D,2,"{""C"": 317, ""D"": 78, ""E"": 260}",2_rbd_copies;partner_touches_several_rbd_copies:D
-69,VHH V/Fab CC12.3,7KN6,data/structures/antibody_rbd/7KN6.pdb,A,C+H+L,1,"{""C"": 361, ""H"": 230, ""L"": 54}",
-70,VHH W/Fab CC12.3,7KN7,data/structures/antibody_rbd/7KN7.pdb,A,B+H+L,1,"{""B"": 250, ""H"": 223, ""L"": 39}",
-71,CR3014-C8/CR3022,7KZB,data/structures/antibody_rbd/7KZB.pdb,C,L+B+H+A,1,"{""H"": 64, ""L"": 173, ""A"": 39, ""B"": 140}",
-72,DH1047,7LD1,data/structures/antibody_rbd/7LD1.pdb,C,M+N,3,"{""M"": 187, ""N"": 103}",3_rbd_copies;partner_touches_several_rbd_copies:N
-73,7D6,7EAM,data/structures/antibody_rbd/7EAM.pdb,A,H+L,2,"{""H"": 154, ""L"": 46}",2_rbd_copies
-74,Fab 2-7,7LSS,data/structures/antibody_rbd/7LSS.pdb,B,A+H+L+C,1,"{""A"": 143, ""C"": 7, ""L"": 76, ""H"": 111}",partner_over_400_residues:AC
-75,DH1041,7LAA,data/structures/antibody_rbd/7LAA.pdb,A,H+B+L+C,1,"{""B"": 131, ""H"": 218, ""L"": 21, ""C"": 10}",partner_over_400_residues:BC
-76,1-57,7LS9,data/structures/antibody_rbd/7LS9.pdb,B,D+F,3,"{""D"": 185, ""F"": 45}",3_rbd_copies
-77,P5A-3C12_1B,7D0B,data/structures/antibody_rbd/7D0B.pdb,A,H,3,"{""H"": 78}",3_rbd_copies
-78,P5A-2G7,7CZW,data/structures/antibody_rbd/7CZW.pdb,A,H+L,3,"{""H"": 208, ""L"": 31}",3_rbd_copies
-79,P5A-1B8,7D00,data/structures/antibody_rbd/7D00.pdb,A,H+K,3,"{""H"": 169, ""K"": 74}",3_rbd_copies
-80,P5A-3A1,7D0C,data/structures/antibody_rbd/7D0C.pdb,A,H+L,3,"{""H"": 182, ""L"": 27}",3_rbd_copies
-81,P5A-3C12_2B,7D0D,data/structures/antibody_rbd/7D0D.pdb,A,H,3,"{""H"": 78}",3_rbd_copies
-82,P5A-1B9,7CZX,data/structures/antibody_rbd/7CZX.pdb,A,H+N+K,3,"{""H"": 161, ""K"": 52, ""N"": 76}",3_rbd_copies;partner_touches_several_rbd_copies:N
-83,P5A-2F11_2B,7CZY,data/structures/antibody_rbd/7CZY.pdb,A,H+K,3,"{""H"": 111, ""K"": 24}",3_rbd_copies
-84,P5A-1B6_3B,7CZV,data/structures/antibody_rbd/7CZV.pdb,B,I+M,3,"{""I"": 184, ""M"": 63}",3_rbd_copies
-85,P5A-2F11_3B,7CZZ,data/structures/antibody_rbd/7CZZ.pdb,A,H+K,3,"{""H"": 111, ""K"": 24}",3_rbd_copies
-86,P2B-1A1,7CZP,data/structures/antibody_rbd/7CZP.pdb,C,N+J,3,"{""J"": 70, ""N"": 189}",3_rbd_copies
-87,P2B-1A10,7CZQ,data/structures/antibody_rbd/7CZQ.pdb,A,H+K,3,"{""H"": 266, ""K"": 151}",3_rbd_copies
-88,P5A-2G9,7CZT,data/structures/antibody_rbd/7CZT.pdb,A,L+H,3,"{""H"": 95, ""L"": 161}",3_rbd_copies
-89,P5A-1B6_2B,7CZU,data/structures/antibody_rbd/7CZU.pdb,A,H+K,3,"{""H"": 183, ""K"": 63}",3_rbd_copies
-90,P5A-1B8_2B,7CZR,data/structures/antibody_rbd/7CZR.pdb,A,H+K,3,"{""H"": 169, ""K"": 74}",3_rbd_copies
-91,P5A-1B8_3B,7CZS,data/structures/antibody_rbd/7CZS.pdb,A,H+K,3,"{""H"": 169, ""K"": 74}",3_rbd_copies
-92,COVOX-88/-45,7BEL,data/structures/antibody_rbd/7BEL.pdb,X,C+E+F+D,2,"{""C"": 227, ""E"": 159, ""F"": 100, ""D"": 92}",2_rbd_copies
-93,COVOX-269 scFV,7BEM,data/structures/antibody_rbd/7BEM.pdb,E,H+L,1,"{""H"": 265, ""L"": 143}",
-94,COVOX-158,7BEJ,data/structures/antibody_rbd/7BEJ.pdb,E,H+L,1,"{""H"": 209, ""L"": 132}",
-95,COVOX-384/S309,7BEP,data/structures/antibody_rbd/7BEP.pdb,C,G+D+F+I,2,"{""D"": 139, ""F"": 73, ""G"": 200, ""I"": 29}",2_rbd_copies
-96,COVOX-253/-75,7BEN,data/structures/antibody_rbd/7BEN.pdb,C,G+D+I+F,2,"{""D"": 138, ""F"": 34, ""G"": 155, ""I"": 108}",2_rbd_copies
-97,COVOX-253H55L/-75,7BEO,data/structures/antibody_rbd/7BEO.pdb,R,H+A+B+L,2,"{""H"": 158, ""L"": 31, ""A"": 148, ""B"": 107}",2_rbd_copies
-98,COVOX-316,7BEH,data/structures/antibody_rbd/7BEH.pdb,E,H+L,1,"{""H"": 147, ""L"": 60}",
-99,COVOX-150,7BEI,data/structures/antibody_rbd/7BEI.pdb,E,H+L,1,"{""H"": 234, ""L"": 159}",
-100,COVOX-253H55L,7NDA,data/structures/antibody_rbd/7NDA.pdb,C,H+L,3,"{""H"": 140, ""L"": 10}",3_rbd_copies;partner_touches_several_rbd_copies:H
-101,COVOX-253H165L,7NDB,data/structures/antibody_rbd/7NDB.pdb,B,H+L,3,"{""H"": 48, ""L"": 13}",3_rbd_copies
-102,COVOX-384,7ND8,data/structures/antibody_rbd/7ND8.pdb,B,H+L,3,"{""H"": 133, ""L"": 38}",3_rbd_copies
-103,COVOX-40,7ND6,data/structures/antibody_rbd/7ND6.pdb,B,H+L,3,"{""H"": 210, ""L"": 150}",3_rbd_copies
-104,COVOX-88,7ND4,data/structures/antibody_rbd/7ND4.pdb,B,F+G,3,"{""F"": 137, ""G"": 65}",3_rbd_copies
-105,CV05-163/CR3022,7LOP,data/structures/antibody_rbd/7LOP.pdb,Z,W+X+Y+V+B,2,"{""W"": 197, ""V"": 41, ""B"": 37, ""X"": 149, ""Y"": 143}",2_rbd_copies;partner_touches_several_rbd_copies:WB
-106,MW06,7DPM,data/structures/antibody_rbd/7DPM.pdb,F,D+H+E+G,4,"{""D"": 214, ""E"": 52, ""G"": 23, ""H"": 183}",4_rbd_copies;partner_touches_several_rbd_copies:GH
-107,910-30,7KS9,data/structures/antibody_rbd/7KS9.pdb,B,H+L,3,"{""L"": 150, ""H"": 196}",3_rbd_copies
-108,2-51,7L5B,data/structures/antibody_rbd/7L5B.pdb,A,H+L,1,"{""H"": 158, ""L"": 74}",
-109,S2X259/S2H97,7M7W,data/structures/antibody_rbd/7M7W.pdb,R,H+E+L+F,2,"{""L"": 99, ""H"": 257, ""F"": 69, ""E"": 167}",2_rbd_copies;partner_touches_several_rbd_copies:E
-110,6D6,7EAN,data/structures/antibody_rbd/7EAN.pdb,A,H+L,1,"{""H"": 200, ""L"": 112}",
-111,47D1,7MF1,data/structures/antibody_rbd/7MF1.pdb,A,H,1,"{""H"": 249}",
-112,CV2-75,7M3I,data/structures/antibody_rbd/7M3I.pdb,C,A+B,2,"{""A"": 132, ""B"": 119}",2_rbd_copies
-113,3D11,7M7B,data/structures/antibody_rbd/7M7B.pdb,A,L+H,1,"{""H"": 107, ""L"": 112}",
-114,CV38-142/COVA1-16,7LM8,data/structures/antibody_rbd/7LM8.pdb,A,H+M+L+N,1,"{""H"": 246, ""L"": 47, ""M"": 145, ""N"": 36}",
-115,BG4-25/CR3022,7M6D,data/structures/antibody_rbd/7M6D.pdb,C,H+A+B+L,1,"{""A"": 165, ""B"": 61, ""H"": 236, ""L"": 46}",
-116,MW05,7DK0,data/structures/antibody_rbd/7DK0.pdb,C,A+B,1,"{""A"": 266, ""B"": 54}",
-117,LY-CoV1404,7MMO,data/structures/antibody_rbd/7MMO.pdb,C,A+B+E,2,"{""A"": 133, ""B"": 110, ""E"": 27}",2_rbd_copies;partner_touches_several_rbd_copies:BE
-118,P5A-1D2,7CHO,data/structures/antibody_rbd/7CHO.pdb,A,B+C,2,"{""B"": 296, ""C"": 38}",2_rbd_copies
-119,P22A-1D1,7CHS,data/structures/antibody_rbd/7CHS.pdb,E,H+L,1,"{""H"": 251, ""L"": 113}",
-120,P5A-3C8,7CHP,data/structures/antibody_rbd/7CHP.pdb,E,H+L,1,"{""H"": 239, ""L"": 173}",
-121,MW01,7DJZ,data/structures/antibody_rbd/7DJZ.pdb,C,A+B,1,"{""A"": 197, ""B"": 107}",
-122,COVOX-222/EY6A,7NX6,data/structures/antibody_rbd/7NX6.pdb,E,A+H+L+B,1,"{""H"": 163, ""L"": 129, ""A"": 222, ""B"": 119}",
-123,BD-508,7E86,data/structures/antibody_rbd/7E86.pdb,C,A+B,1,"{""A"": 253, ""B"": 138}",
-124,BD-623,7E7Y,data/structures/antibody_rbd/7E7Y.pdb,R,A+B,2,"{""A"": 199, ""B"": 40}",2_rbd_copies
-125,FC08/hACE2,7DX4,data/structures/antibody_rbd/7DX4.pdb,E,A+H+L,1,"{""A"": 258, ""H"": 139, ""L"": 110}",partner_over_400_residues:A
-126,NM1230,7B27,data/structures/antibody_rbd_converted/7B27.pdb,A,C,1,"{""C"": 272}",converted_from_cif
-127,S2E12/S309/S304,7R6X,data/structures/antibody_rbd/7R6X.pdb,R,A+C+L+H+D+B,1,"{""L"": 128, ""H"": 126, ""B"": 10, ""A"": 214, ""D"": 35, ""C"": 156}",
-128,REGN10985/0989,7M42,data/structures/antibody_rbd/7M42.pdb,E,B+D+C+A,1,"{""A"": 33, ""B"": 151, ""C"": 50, ""D"": 98}",
-129,A23-58.1,7LRS,data/structures/antibody_rbd/7LRS.pdb,C,D+E,1,"{""D"": 56, ""E"": 8}",
-130,S2X35/S309,7R6W,data/structures/antibody_rbd/7R6W.pdb,R,H+A+L+B,1,"{""B"": 19, ""A"": 200, ""L"": 78, ""H"": 295}",
-131,B1-182.1,7MLZ,data/structures/antibody_rbd/7MLZ.pdb,A,H+L,1,"{""H"": 111, ""L"": 57}",
-132,COVOX-222/-278,7OR9,data/structures/antibody_rbd/7OR9.pdb,E,A+L+B+H,1,"{""A"": 225, ""B"": 118, ""H"": 94, ""L"": 160}",
-133,Nanosota-1,7KM5,data/structures/antibody_rbd/7KM5.pdb,B,C+D,2,"{""C"": 263, ""D"": 177}",2_rbd_copies;partner_touches_several_rbd_copies:D
-134,NB21,7N9A,data/structures/antibody_rbd/7N9A.pdb,E,A,1,"{""A"": 196}",
-135,C098,7N3I,data/structures/antibody_rbd/7N3I.pdb,C,H+L,1,"{""H"": 262, ""L"": 85}",
-136,ChAb-45,7F63,data/structures/antibody_rbd/7F63.pdb,A,H+L,1,"{""H"": 136, ""L"": 43}",
-137,ChAb-25,7F62,data/structures/antibody_rbd/7F62.pdb,A,L+H,1,"{""H"": 82, ""L"": 134}",
-138,Nanobody F2,7OAY,data/structures/antibody_rbd_converted/7OAY.pdb,E,F+B+D+H,6,"{""B"": 20, ""D"": 20, ""F"": 282, ""H"": 7}",converted_from_cif;6_rbd_copies;partner_touches_several_rbd_copies:BDFH
-139,Nb21 Nb105,7MDW,data/structures/antibody_rbd/7MDW.pdb,R,B+A,1,"{""A"": 157, ""B"": 195}",
-140,Nb17 Nb105,7ME7,data/structures/antibody_rbd/7ME7.pdb,R,A+B,1,"{""A"": 167, ""B"": 118}",
-141,Nb21 Nb36,7MEJ,data/structures/antibody_rbd/7MEJ.pdb,R,A+B,1,"{""A"": 85, ""B"": 79}",
-142,S2X259,7RAL,data/structures/antibody_rbd/7RAL.pdb,B,H+L,1,"{""H"": 229, ""L"": 101}",
-143,C099/CR3022,7R8L,data/structures/antibody_rbd/7R8L.pdb,E,H+C+L+D,1,"{""H"": 235, ""L"": 104, ""C"": 176, ""D"": 67}",
-144,NT-193,7E5O,data/structures/antibody_rbd/7E5O.pdb,A,L+H,1,"{""H"": 160, ""L"": 183}",
-145,AZD8895/AZD1061,7L7E,data/structures/antibody_rbd/7L7E.pdb,K,I+J+O+P,4,"{""A"": 119, ""B"": 42, ""C"": 66, ""E"": 131, ""F"": 96}",4_rbd_copies;partner_touches_several_rbd_copies:CE;alias_override
-146,AZD8895,7L7D,data/structures/antibody_rbd/7L7D.pdb,E,H+L,1,"{""H"": 142, ""L"": 49}",
-147,AZD1061,7L7E,data/structures/antibody_rbd/7L7E.pdb,K,O+P,4,"{""A"": 119, ""B"": 42, ""C"": 66, ""E"": 131, ""F"": 96}",4_rbd_copies;partner_touches_several_rbd_copies:CE;alias_override
-148,Ab4,7E39,data/structures/antibody_rbd/7E39.pdb,A,C+B,1,"{""B"": 73, ""C"": 153}",
-149,Ab5,7E3B,data/structures/antibody_rbd/7E3B.pdb,A,B+C,1,"{""B"": 236, ""C"": 24}",
-150,Ab1,7E3C,data/structures/antibody_rbd/7E3C.pdb,A,B+C,1,"{""C"": 88, ""B"": 169}",
-151,Re5D06/Re9F06,7OLZ,data/structures/antibody_rbd/7OLZ.pdb,A,C+B,1,"{""C"": 388, ""B"": 242}",
-152,Nanobody H3 C1,7OAP,data/structures/antibody_rbd_converted/7OAP.pdb,B,A+C,1,"{""A"": 290, ""C"": 228}",converted_from_cif
-153,Nanobody C5,7OAO,data/structures/antibody_rbd_converted/7OAO.pdb,A,B,1,"{""B"": 252}",converted_from_cif
-154,nCoV617,7E3O,data/structures/antibody_rbd/7E3O.pdb,R,H+L,1,"{""L"": 111, ""H"": 217}",
-155,S-B8,7KN3,data/structures/antibody_rbd/7KN3.pdb,A,H+L,2,"{""H"": 273, ""L"": 82}",2_rbd_copies;partner_touches_several_rbd_copies:H
-156,S-E6,7KN4,data/structures/antibody_rbd/7KN4.pdb,A,L+H,2,"{""H"": 87, ""L"": 171}",2_rbd_copies
-157,CV503/COVA1-16,7LQ7,data/structures/antibody_rbd/7LQ7.pdb,A,P+H+L+Q,3,"{""L"": 74, ""P"": 235, ""H"": 133, ""Q"": 53}",3_rbd_copies
-158,FD20,7CYV,data/structures/antibody_rbd/7CYV.pdb,B,H,1,"{""H"": 218}",
-159,WCSL129,7MZI,data/structures/antibody_rbd/7MZI.pdb,A,L+H,1,"{""L"": 199, ""H"": 95}",
-160,WCSL119,7MZH,data/structures/antibody_rbd/7MZH.pdb,A,B+C,2,"{""B"": 128, ""C"": 103}",2_rbd_copies
-161,WCSL129/PDI96,7MZK,data/structures/antibody_rbd/7MZK.pdb,A,E+D+H+F+L,2,"{""E"": 185, ""F"": 99, ""H"": 125, ""L"": 61, ""D"": 157}",2_rbd_copies;partner_touches_several_rbd_copies:D
-162,WCSL129/PDI93,7MZJ,data/structures/antibody_rbd/7MZJ.pdb,B,D+M+N+C+E,2,"{""D"": 201, ""C"": 107, ""E"": 77, ""N"": 140, ""M"": 144}",2_rbd_copies;partner_touches_several_rbd_copies:E
-163,PDI42,7MZG,data/structures/antibody_rbd/7MZG.pdb,A,H+L,1,"{""H"": 243, ""L"": 85}",
-164,PDI37,7MZF,data/structures/antibody_rbd/7MZF.pdb,A,H+L,1,"{""H"": 252, ""L"": 89}",
-165,PDI215,7MZM,data/structures/antibody_rbd/7MZM.pdb,A,H,1,"{""H"": 403}",
-166,PDI210,7MZL,data/structures/antibody_rbd/7MZL.pdb,A,H+L,1,"{""H"": 232, ""L"": 79}",
-167,PDI231,7MZN,data/structures/antibody_rbd/7MZN.pdb,A,H+L,1,"{""H"": 274, ""L"": 103}",
-168,WRAIR-2173,7N4J,data/structures/antibody_rbd/7N4J.pdb,A,H+L,1,"{""H"": 197, ""L"": 65}",
-169,WRAIR-2057,7N4I,data/structures/antibody_rbd/7N4I.pdb,C,H+L,1,"{""H"": 189, ""L"": 66}",
-170,2H04,7K9K,data/structures/antibody_rbd/7K9K.pdb,A,H+L,1,"{""H"": 105, ""L"": 78}",
-171,2B04,7K9H,data/structures/antibody_rbd/7K9H.pdb,B,H+L+M,3,"{""H"": 262, ""L"": 20, ""M"": 6}",3_rbd_copies;partner_touches_several_rbd_copies:LM
-172,K-874,7FG3,data/structures/antibody_rbd/7FG3.pdb,A,D,1,"{""D"": 142}",
-173,K-874A,7FG2,data/structures/antibody_rbd/7FG2.pdb,A,D,1,"{""D"": 123}",
-174,CoV11,7S4S,data/structures/antibody_rbd/7S4S.pdb,A,H+L,1,"{""H"": 283, ""L"": 81}",
-175,C022,7RKU,data/structures/antibody_rbd/7RKU.pdb,B,J+L+K,4,"{""J"": 259, ""K"": 53, ""L"": 157}",4_rbd_copies;partner_touches_several_rbd_copies:JK
-176,N-612-056,7S0B,data/structures/antibody_rbd/7S0B.pdb,F,A+B,2,"{""A"": 174, ""B"": 81}",2_rbd_copies
-177,GH12-Fab,7D6I,data/structures/antibody_rbd/7D6I.pdb,A,C+B,1,"{""B"": 77, ""C"": 108}",
-178,PDI222,7RR0,data/structures/antibody_rbd/7RR0.pdb,A,B+C,1,"{""B"": 136, ""C"": 24}",
-179,P5C3,7PHG,data/structures/antibody_rbd/7PHG.pdb,A,H+L,1,"{""H"": 211, ""L"": 60}",
-180,WRAIR-2125,7N4L,data/structures/antibody_rbd/7N4L.pdb,A,H+L,1,"{""H"": 63, ""L"": 60}",
-181,WRAIR-2151,7N4M,data/structures/antibody_rbd/7N4M.pdb,A,L+H,1,"{""H"": 84, ""L"": 110}",
-182,scFv E4,7VMU,data/structures/antibody_rbd/7VMU.pdb,B,A,1,"{""A"": 347}",
-183,ION-360,7NP1,data/structures/antibody_rbd/7NP1.pdb,A,H+O+L,4,"{""H"": 226, ""L"": 38, ""O"": 143}",4_rbd_copies;partner_touches_several_rbd_copies:LO
-184,ION-300,7BNV,data/structures/antibody_rbd/7BNV.pdb,A,H,1,"{""H"": 237}",
-185,C1C-A3,7SN2,data/structures/antibody_rbd/7SN2.pdb,A,H+L,1,"{""H"": 188, ""L"": 93}",
+col_index,label,resolved_id,file
+0,ACE2,6M0J,data/structures/antibody_rbd/6M0J.pdb
+1,REGN10933/10987,6XDG,data/structures/antibody_rbd/6XDG.pdb
+2,REGN10933,6XDG,data/structures/antibody_rbd/6XDG.pdb
+3,REGN10987,6XDG,data/structures/antibody_rbd/6XDG.pdb
+4,LY-CoV016,7C01,data/structures/antibody_rbd/7C01.pdb
+5,LY-CoV555,7KMG,data/structures/antibody_rbd/7KMG.pdb
+6,CT-P59,7CM4,data/structures/antibody_rbd/7CM4.pdb
+7,C135,7K8Z,data/structures/antibody_rbd/7K8Z.pdb
+8,C144,7K90,data/structures/antibody_rbd/7K90.pdb
+9,CR3022,6W41,data/structures/antibody_rbd/6W41.pdb
+10,S309,6WPS,data/structures/antibody_rbd/6WPS.pdb
+11,CC12.1,6XC2,data/structures/antibody_rbd/6XC2.pdb
+12,CC12.1/CR3022,6XC3,data/structures/antibody_rbd/6XC3.pdb
+13,CC12.3,6XC4,data/structures/antibody_rbd/6XC4.pdb
+14,CC12.3/CR3022,6XC7,data/structures/antibody_rbd/6XC7.pdb
+15,C105,6XCM,data/structures/antibody_rbd/6XCM.pdb
+16,CV30,6XE1,data/structures/antibody_rbd/6XE1.pdb
+17,Fab 2-4,6XEY,data/structures/antibody_rbd/6XEY.pdb
+18,CV07-270,6XKP,data/structures/antibody_rbd/6XKP.pdb
+19,CV07-250,6XKQ,data/structures/antibody_rbd/6XKQ.pdb
+20,H11-D4,6YZ5,data/structures/antibody_rbd/6YZ5.pdb
+21,CR3022/H11-D4,6Z2M,data/structures/antibody_rbd/6Z2M.pdb
+22,H11-H4,6ZBP,data/structures/antibody_rbd_converted/6ZBP.pdb
+23,EY6Z/Nb,6ZCZ,data/structures/antibody_rbd/6ZCZ.pdb
+24,EY6Z,6ZER,data/structures/antibody_rbd/6ZER.pdb
+25,Sb23,7A29,data/structures/antibody_rbd/7A29.pdb
+26,STE90-C11,7B3O,data/structures/antibody_rbd/7B3O.pdb
+27,P2B-2F6,7BWJ,data/structures/antibody_rbd/7BWJ.pdb
+28,BD23,7BYR,data/structures/antibody_rbd/7BYR.pdb
+29,B38,7BZ5,data/structures/antibody_rbd/7BZ5.pdb
+30,SR4,7C8V,data/structures/antibody_rbd/7C8V.pdb
+31,MR17,7C8W,data/structures/antibody_rbd/7C8W.pdb
+32,H014,7CAH,data/structures/antibody_rbd/7CAH.pdb
+33,MR17-K99Y,7CAN,data/structures/antibody_rbd/7CAN.pdb
+34,P2C-1F11,7CDI,data/structures/antibody_rbd/7CDI.pdb
+35,P2C-1A3,7CDJ,data/structures/antibody_rbd/7CDJ.pdb
+36,BD-604,7CH4,data/structures/antibody_rbd/7CH4.pdb
+37,BD-629,7CH5,data/structures/antibody_rbd/7CH5.pdb
+38,BD-236,7CHB,data/structures/antibody_rbd/7CHB.pdb
+39,BD-236/BD-368-2,7CHE,data/structures/antibody_rbd/7CHE.pdb
+40,BD-604/BD-368-2,7CHF,data/structures/antibody_rbd/7CHF.pdb
+41,BD-368-2,7CHH,data/structures/antibody_rbd/7CHH.pdb
+42,A fab,7CJF,data/structures/antibody_rbd/7CJF.pdb
+43,P17,7CWM,data/structures/antibody_rbd/7CWM.pdb
+44,P17/H014,7CWN,data/structures/antibody_rbd/7CWN.pdb
+45,COVA2-04,7JMO,data/structures/antibody_rbd/7JMO.pdb
+46,COVA2-39,7JMP,data/structures/antibody_rbd/7JMP.pdb
+47,COVA1-16,7JMW,data/structures/antibody_rbd/7JMW.pdb
+48,S2H13,7JV6,data/structures/antibody_rbd/7JV6.pdb
+49,S2A4,7JVA,data/structures/antibody_rbd/7JVA.pdb
+50,S304,7JW0,data/structures/antibody_rbd/7JW0.pdb
+51,VH binder,7JWB,data/structures/antibody_rbd/7JWB.pdb
+52,S309/S2H14/S304,7JX3,data/structures/antibody_rbd/7JX3.pdb
+53,S2M11,7K43,data/structures/antibody_rbd/7K43.pdb
+54,S2E12,7K45,data/structures/antibody_rbd/7K45.pdb
+55,C102,7K8M,data/structures/antibody_rbd/7K8M.pdb
+56,C002,7K8T,data/structures/antibody_rbd/7K8T.pdb
+57,C104,7K8U,data/structures/antibody_rbd/7K8U.pdb
+58,C110,7K8V,data/structures/antibody_rbd/7K8V.pdb
+59,C119,7K8W,data/structures/antibody_rbd/7K8W.pdb
+60,C121,7K8X,data/structures/antibody_rbd/7K8X.pdb
+61,Fabs 298/52,7K9Z,data/structures/antibody_rbd/7K9Z.pdb
+62,C1A-B12,7KFV,data/structures/antibody_rbd/7KFV.pdb
+63,C1A-B3,7KFW,data/structures/antibody_rbd/7KFW.pdb
+64,C1A-C2,7KFX,data/structures/antibody_rbd/7KFX.pdb
+65,C1A-F10,7KFY,data/structures/antibody_rbd/7KFY.pdb
+66,LY-CoV488,7KMH,data/structures/antibody_rbd/7KMH.pdb
+67,LY-CoV481,7KMI,data/structures/antibody_rbd/7KMI.pdb
+68,VHH E/U,7KN5,data/structures/antibody_rbd/7KN5.pdb
+69,VHH V/Fab CC12.3,7KN6,data/structures/antibody_rbd/7KN6.pdb
+70,VHH W/Fab CC12.3,7KN7,data/structures/antibody_rbd/7KN7.pdb
+71,CR3014-C8/CR3022,7KZB,data/structures/antibody_rbd/7KZB.pdb
+72,DH1047,7LD1,data/structures/antibody_rbd/7LD1.pdb
+73,7D6,7EAM,data/structures/antibody_rbd/7EAM.pdb
+74,Fab 2-7,7LSS,data/structures/antibody_rbd/7LSS.pdb
+75,DH1041,7LAA,data/structures/antibody_rbd/7LAA.pdb
+76,1-57,7LS9,data/structures/antibody_rbd/7LS9.pdb
+77,P5A-3C12_1B,7D0B,data/structures/antibody_rbd/7D0B.pdb
+78,P5A-2G7,7CZW,data/structures/antibody_rbd/7CZW.pdb
+79,P5A-1B8,7D00,data/structures/antibody_rbd/7D00.pdb
+80,P5A-3A1,7D0C,data/structures/antibody_rbd/7D0C.pdb
+81,P5A-3C12_2B,7D0D,data/structures/antibody_rbd/7D0D.pdb
+82,P5A-1B9,7CZX,data/structures/antibody_rbd/7CZX.pdb
+83,P5A-2F11_2B,7CZY,data/structures/antibody_rbd/7CZY.pdb
+84,P5A-1B6_3B,7CZV,data/structures/antibody_rbd/7CZV.pdb
+85,P5A-2F11_3B,7CZZ,data/structures/antibody_rbd/7CZZ.pdb
+86,P2B-1A1,7CZP,data/structures/antibody_rbd/7CZP.pdb
+87,P2B-1A10,7CZQ,data/structures/antibody_rbd/7CZQ.pdb
+88,P5A-2G9,7CZT,data/structures/antibody_rbd/7CZT.pdb
+89,P5A-1B6_2B,7CZU,data/structures/antibody_rbd/7CZU.pdb
+90,P5A-1B8_2B,7CZR,data/structures/antibody_rbd/7CZR.pdb
+91,P5A-1B8_3B,7CZS,data/structures/antibody_rbd/7CZS.pdb
+92,COVOX-88/-45,7BEL,data/structures/antibody_rbd/7BEL.pdb
+93,COVOX-269 scFV,7BEM,data/structures/antibody_rbd/7BEM.pdb
+94,COVOX-158,7BEJ,data/structures/antibody_rbd/7BEJ.pdb
+95,COVOX-384/S309,7BEP,data/structures/antibody_rbd/7BEP.pdb
+96,COVOX-253/-75,7BEN,data/structures/antibody_rbd/7BEN.pdb
+97,COVOX-253H55L/-75,7BEO,data/structures/antibody_rbd/7BEO.pdb
+98,COVOX-316,7BEH,data/structures/antibody_rbd/7BEH.pdb
+99,COVOX-150,7BEI,data/structures/antibody_rbd/7BEI.pdb
+100,COVOX-253H55L,7NDA,data/structures/antibody_rbd/7NDA.pdb
+101,COVOX-253H165L,7NDB,data/structures/antibody_rbd/7NDB.pdb
+102,COVOX-384,7ND8,data/structures/antibody_rbd/7ND8.pdb
+103,COVOX-40,7ND6,data/structures/antibody_rbd/7ND6.pdb
+104,COVOX-88,7ND4,data/structures/antibody_rbd/7ND4.pdb
+105,CV05-163/CR3022,7LOP,data/structures/antibody_rbd/7LOP.pdb
+106,MW06,7DPM,data/structures/antibody_rbd/7DPM.pdb
+107,910-30,7KS9,data/structures/antibody_rbd/7KS9.pdb
+108,2-51,7L5B,data/structures/antibody_rbd/7L5B.pdb
+109,S2X259/S2H97,7M7W,data/structures/antibody_rbd/7M7W.pdb
+110,6D6,7EAN,data/structures/antibody_rbd/7EAN.pdb
+111,47D1,7MF1,data/structures/antibody_rbd/7MF1.pdb
+112,CV2-75,7M3I,data/structures/antibody_rbd/7M3I.pdb
+113,3D11,7M7B,data/structures/antibody_rbd/7M7B.pdb
+114,CV38-142/COVA1-16,7LM8,data/structures/antibody_rbd/7LM8.pdb
+115,BG4-25/CR3022,7M6D,data/structures/antibody_rbd/7M6D.pdb
+116,MW05,7DK0,data/structures/antibody_rbd/7DK0.pdb
+117,LY-CoV1404,7MMO,data/structures/antibody_rbd/7MMO.pdb
+118,P5A-1D2,7CHO,data/structures/antibody_rbd/7CHO.pdb
+119,P22A-1D1,7CHS,data/structures/antibody_rbd/7CHS.pdb
+120,P5A-3C8,7CHP,data/structures/antibody_rbd/7CHP.pdb
+121,MW01,7DJZ,data/structures/antibody_rbd/7DJZ.pdb
+122,COVOX-222/EY6A,7NX6,data/structures/antibody_rbd/7NX6.pdb
+123,BD-508,7E86,data/structures/antibody_rbd/7E86.pdb
+124,BD-623,7E7Y,data/structures/antibody_rbd/7E7Y.pdb
+125,FC08/hACE2,7DX4,data/structures/antibody_rbd/7DX4.pdb
+126,NM1230,7B27,data/structures/antibody_rbd_converted/7B27.pdb
+127,S2E12/S309/S304,7R6X,data/structures/antibody_rbd/7R6X.pdb
+128,REGN10985/0989,7M42,data/structures/antibody_rbd/7M42.pdb
+129,A23-58.1,7LRS,data/structures/antibody_rbd/7LRS.pdb
+130,S2X35/S309,7R6W,data/structures/antibody_rbd/7R6W.pdb
+131,B1-182.1,7MLZ,data/structures/antibody_rbd/7MLZ.pdb
+132,COVOX-222/-278,7OR9,data/structures/antibody_rbd/7OR9.pdb
+133,Nanosota-1,7KM5,data/structures/antibody_rbd/7KM5.pdb
+134,NB21,7N9A,data/structures/antibody_rbd/7N9A.pdb
+135,C098,7N3I,data/structures/antibody_rbd/7N3I.pdb
+136,ChAb-45,7F63,data/structures/antibody_rbd/7F63.pdb
+137,ChAb-25,7F62,data/structures/antibody_rbd/7F62.pdb
+138,Nanobody F2,7OAY,data/structures/antibody_rbd_converted/7OAY.pdb
+139,Nb21 Nb105,7MDW,data/structures/antibody_rbd/7MDW.pdb
+140,Nb17 Nb105,7ME7,data/structures/antibody_rbd/7ME7.pdb
+141,Nb21 Nb36,7MEJ,data/structures/antibody_rbd/7MEJ.pdb
+142,S2X259,7RAL,data/structures/antibody_rbd/7RAL.pdb
+143,C099/CR3022,7R8L,data/structures/antibody_rbd/7R8L.pdb
+144,NT-193,7E5O,data/structures/antibody_rbd/7E5O.pdb
+145,AZD8895/AZD1061,7L7E,data/structures/antibody_rbd/7L7E.pdb
+146,AZD8895,7L7D,data/structures/antibody_rbd/7L7D.pdb
+147,AZD1061,7L7E,data/structures/antibody_rbd/7L7E.pdb
+148,Ab4,7E39,data/structures/antibody_rbd/7E39.pdb
+149,Ab5,7E3B,data/structures/antibody_rbd/7E3B.pdb
+150,Ab1,7E3C,data/structures/antibody_rbd/7E3C.pdb
+151,Re5D06/Re9F06,7OLZ,data/structures/antibody_rbd/7OLZ.pdb
+152,Nanobody H3 C1,7OAP,data/structures/antibody_rbd_converted/7OAP.pdb
+153,Nanobody C5,7OAO,data/structures/antibody_rbd_converted/7OAO.pdb
+154,nCoV617,7E3O,data/structures/antibody_rbd/7E3O.pdb
+155,S-B8,7KN3,data/structures/antibody_rbd/7KN3.pdb
+156,S-E6,7KN4,data/structures/antibody_rbd/7KN4.pdb
+157,CV503/COVA1-16,7LQ7,data/structures/antibody_rbd/7LQ7.pdb
+158,FD20,7CYV,data/structures/antibody_rbd/7CYV.pdb
+159,WCSL129,7MZI,data/structures/antibody_rbd/7MZI.pdb
+160,WCSL119,7MZH,data/structures/antibody_rbd/7MZH.pdb
+161,WCSL129/PDI96,7MZK,data/structures/antibody_rbd/7MZK.pdb
+162,WCSL129/PDI93,7MZJ,data/structures/antibody_rbd/7MZJ.pdb
+163,PDI42,7MZG,data/structures/antibody_rbd/7MZG.pdb
+164,PDI37,7MZF,data/structures/antibody_rbd/7MZF.pdb
+165,PDI215,7MZM,data/structures/antibody_rbd/7MZM.pdb
+166,PDI210,7MZL,data/structures/antibody_rbd/7MZL.pdb
+167,PDI231,7MZN,data/structures/antibody_rbd/7MZN.pdb
+168,WRAIR-2173,7N4J,data/structures/antibody_rbd/7N4J.pdb
+169,WRAIR-2057,7N4I,data/structures/antibody_rbd/7N4I.pdb
+170,2H04,7K9K,data/structures/antibody_rbd/7K9K.pdb
+171,2B04,7K9H,data/structures/antibody_rbd/7K9H.pdb
+172,K-874,7FG3,data/structures/antibody_rbd/7FG3.pdb
+173,K-874A,7FG2,data/structures/antibody_rbd/7FG2.pdb
+174,CoV11,7S4S,data/structures/antibody_rbd/7S4S.pdb
+175,C022,7RKU,data/structures/antibody_rbd/7RKU.pdb
+176,N-612-056,7S0B,data/structures/antibody_rbd/7S0B.pdb
+177,GH12-Fab,7D6I,data/structures/antibody_rbd/7D6I.pdb
+178,PDI222,7RR0,data/structures/antibody_rbd/7RR0.pdb
+179,P5C3,7PHG,data/structures/antibody_rbd/7PHG.pdb
+180,WRAIR-2125,7N4L,data/structures/antibody_rbd/7N4L.pdb
+181,WRAIR-2151,7N4M,data/structures/antibody_rbd/7N4M.pdb
+182,scFv E4,7VMU,data/structures/antibody_rbd/7VMU.pdb
+183,ION-360,7NP1,data/structures/antibody_rbd/7NP1.pdb
+184,ION-300,7BNV,data/structures/antibody_rbd/7BNV.pdb
+185,C1C-A3,7SN2,data/structures/antibody_rbd/7SN2.pdb

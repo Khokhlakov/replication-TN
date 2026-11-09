@@ -1,0 +1,40 @@
+a) numbering checks
+  Starr vs 6M0J chain E: 0.965 (3802 rows)
+  Chan  vs 6M0J chain A: 1.000 (2223 rows)
+
+b) Linsky 2020
+  data files in data/raw/dms/linsky2020: none
+  7KL9.pdb chain A: 75/75 Linsky positions present; missing []
+  paper mutation sites covered by Linsky's scanned positions: [405, 408, 417, 440, 446, 452, 477, 478, 484, 490, 493, 496, 498, 501, 505]
+  paper mutation sites NOT covered: [339, 346, 371, 373, 375, 376]
+
+c) Starr measurement vs shipped ACE2 BFE for the paper's mutations (plausibility check only)
+mutation  starr_bfe_change  shipped_ace2_bfe
+   R346K         -0.013642               NaN
+   K417T         -0.354704               NaN
+   L452R          0.027285               NaN
+   L452Q          0.095497               NaN
+   E484Q          0.040927               NaN
+   E484K          0.081855               NaN
+   F490S          0.000000               NaN
+   G339D          0.081855            0.1117
+   S373P         -0.109140            0.0835
+   S375F         -0.750336            0.0609
+   K417N         -0.613911            0.1661
+   N440K          0.095497            0.6161
+   S477N          0.081855            0.0180
+   T478K          0.027285            0.9994
+   E484A         -0.095497           -0.0183
+   Q493R         -0.122782            0.1271
+   Q498R         -0.081855           -0.0969
+   N501Y          0.327419            0.5499
+   Y505H         -0.968615           -0.2060
+   S371L         -0.190995            0.1670
+   G446S         -0.272849            0.0046
+   G496S         -0.859476            0.0187
+   S371F         -0.259207               NaN
+   T376A         -0.354704               NaN
+   D405N         -0.136425               NaN
+   R408S         -0.081855               NaN
+  n=15  Pearson +0.51  Spearman +0.44
+  Do NOT use Starr values to fill the 11 missing rows: it would make the final table circular.

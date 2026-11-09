@@ -1,0 +1,4 @@
+wrote data/structures/antibody_rbd/complex_map_final.csv: 187 rows (1 extra), QC pass 187, fail 0
+rule counts: {'clean_copy': 157, 'override': 30}
+
+GATE G3: PASS

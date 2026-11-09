@@ -1,0 +1,18 @@
+entries 7085; with ddG 6798; single-point with ddG 4956; multi-point 1973
+parsed single-point measurements 4956; unique (pdb, chain, wt, resid, mut) 4187
+
+published: {'variants': 4169, 'complexes': 319, 'tighter': 901, 'weaker': 3268}
+
+combine  discordance_thr  variants  complexes  tighter  weaker_or_neutral  L1_gap
+   mean              2.0      4173        317      895               3278      22
+ median              2.0      4173        317      894               3279      24
+   mean              inf      4187        319      897               3290      44
+ median              inf      4187        319      896               3291      46
+   mean              1.0      4108        316      887               3221     125
+ median              1.0      4108        316      886               3222     125
+   none              inf      4956        319     1051               3905    1574
+
+closest option: combine=mean, discordance_thr=2.0, gap 22
+No exact match. Send this table back; the remaining gap indicates an undocumented complex- or row-level filter.
+
+complexes with the fewest single-point rows (candidates for an unreported minimum-size filter): {'2NU4': 1, '1Y33': 1, '1Y34': 1, '1Y3B': 1, '1Y3D': 1, '1Y48': 1, '1YCS': 1, '1Y1K': 1}

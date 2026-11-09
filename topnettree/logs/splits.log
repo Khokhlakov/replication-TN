@@ -1,0 +1,13 @@
+S1131 rows found in the SKEMPI singles: 1126 (scheme cleaned)
+reverse-mutation PDB pairs merged into shared groups: [('1AO7', '1QSE'), ('1EMV', '1FR2'), ('1EMV', '2GYK'), ('1EMV', '2VLN'), ('1EMV', '2VLP'), ('1EMV', '2VLQ'), ('1KAC', '1P69'), ('1KAC', '1P6A'), ('1LP9', '2J8U'), ('1LP9', '2JCC'), ('1LP9', '2UWE'), ('1OGA', '2VLR'), ('1TM1', '1TM3'), ('1TM1', '1TM4'), ('1TM1', '1TM5'), ('1TM1', '1TM7'), ('1TM1', '1TMG'), ('1TM1', '1Y33'), ('1TM1', '1Y3B'), ('1TM1', '1Y3C'), ('1XGP', '1XGQ'), ('1XGP', '1XGR'), ('1XGP', '1XGT'), ('1XGP', '1XGU'), ('1XGQ', '1XGR'), ('1XGQ', '1XGT'), ('1XGQ', '1XGU'), ('1XGR', '1XGT'), ('1XGR', '1XGU'), ('1XGT', '1XGU'), ('2BNQ', '2BNR'), ('2G2U', '3N4I'), ('2VIR', '2VIS'), ('3EQS', '3LNZ'), ('3MZG', '3N06'), ('3MZG', '3N0P'), ('4JFD', '4JFF'), ('4JFE', '4JFF'), ('5UFE', '5UFQ')]
+check passed: no leakage group straddles a fold for any seed
+
+fold sizes (seed 0):
+fold_group_s0    0    1    2    3    4    5    6    7    8    9
+dataset                                                        
+chan2020       228  228  228  228  228  228  228  209  209  209
+skempi2        418  418  418  417  417  417  417  417  417  417
+starr2020      380  376  375  372  361  361  361  361  361  361
+
+SKEMPI rows excluded when evaluating on AB-Bind S645: 623 of 4173
+wrote data/splits/labels_with_folds.csv (10065 rows, 23 columns)

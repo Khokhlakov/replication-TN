@@ -1,0 +1,13 @@
+wrote data/predict/rows_26x186.csv: 4836 rows = 186 complexes x 26 mutations
+modellable rows (wt_ok): 4782; unresolved sites: 54; wrong wild-type residue: 0
+rows to predict (missing 11 mutations, wt_ok): 2030
+QC-failed complexes still in the manifest: ['2B04', 'C002', 'C022', 'C104', 'C121', 'C144', 'COVOX-253H55L', 'CR3022/H11-D4', 'CV05-163/CR3022', 'CV07-270']
+
+consistency check 1 (known mutations): resolved site vs exact-zero shipped value
+shipped_bfe                 shipped value != 0  shipped value == 0
+wt_ok                                                             
+site resolved, wt ok                      2746                   6
+site unresolved / wrong wt                  17                  21
+  21/27 exact zeros fall on unresolved sites -> zeros are mostly NOT explained by missing residues: inspect before treating them as missing
+
+consistency check 2: no wrong-wild-type residues found

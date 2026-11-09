@@ -1,0 +1,28 @@
+24 rows failed with shared_partner_unresolved
+          label   id  copies rbd antibody                                                       scores ambiguous
+      LY-CoV016 7C01       2   B    C+L+D                                         {'A': 239, 'B': 498}          
+      LY-CoV555 7KMG       2   C      A+B                                         {'C': 244, 'F': 223}          
+           C144 7K90       3   A      M+N                               {'A': 251, 'B': 219, 'C': 248}          
+       CV07-270 6XKP       2   A      H+L                                         {'A': 291, 'B': 289}          
+  CR3022/H11-D4 6Z2M       2   A    D+B+C                                         {'A': 503, 'E': 451}         L
+           EY6Z 6ZER       3   D    C+F+G                               {'A': 145, 'D': 421, 'E': 271}         C
+      VH binder 7JWB       3   B        D                                   {'A': 0, 'B': 455, 'C': 0}         D
+          S2M11 7K43       3   A      H+L                               {'A': 208, 'B': 208, 'E': 208}          
+           C002 7K8T       3   A      O+P                               {'A': 262, 'B': 119, 'C': 231}         L
+           C104 7K8U       3   A      L+H                                    {'A': 42, 'B': 0, 'C': 0}         L
+           C121 7K8X       3   B        D                               {'A': 131, 'B': 195, 'C': 138}          
+        VHH E/U 7KN5       2   B      D+F                                         {'A': 577, 'B': 590}          
+  COVOX-253H55L 7NDA       3   C      H+L                                   {'A': 0, 'B': 0, 'C': 150}          
+CV05-163/CR3022 7LOP       2   Z  W+X+Y+V                                         {'A': 518, 'Z': 530}          
+   S2X259/S2H97 7M7W       2   R  H+E+L+F                                         {'R': 592, 'S': 555}          
+     LY-CoV1404 7MMO       2   C      A+B                                         {'C': 243, 'F': 210}          
+     Nanosota-1 7KM5       2   B        C                                         {'A': 250, 'B': 263}         D
+    Nanobody F2 7OAY       6   E        F {'A': 262, 'C': 274, 'E': 282, 'G': 263, 'I': 272, 'K': 262}          
+           S-B8 7KN3       2   A      H+L                                         {'A': 355, 'B': 271}          
+  WCSL129/PDI96 7MZK       2   B  D+N+C+M                                         {'A': 470, 'B': 477}         D
+  WCSL129/PDI93 7MZJ       2   B  D+M+N+C                                         {'A': 579, 'B': 592}          
+           2B04 7K9H       3   B        H                                {'A': 27, 'B': 262, 'C': 220}         L
+           C022 7RKU       4   B    J+L+K                       {'A': 458, 'B': 469, 'C': 31, 'D': 27}          
+        ION-360 7NP1       4   A    H+O+L                     {'A': 407, 'B': 263, 'C': 251, 'D': 225}          
+
+wrote data/raw/complex_overrides.csv: 24 new rows (3 kept). Review rows with ambiguous chains, then rerun 37 with --weak-pairs 1 --min-total 40

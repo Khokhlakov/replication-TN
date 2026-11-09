@@ -1,0 +1,31 @@
+wrote data/structures/antibody_rbd/complex_map_final.csv: 187 rows (1 extra), QC pass 163, fail 24
+rule counts: {'clean_copy': 157, 'max_contacts': 24, 'override': 6}
+
+QC failures (add rows to the overrides CSV, then rerun):
+ col_index           label resolved_id rbd_chain ab_chains  chosen_pairs                          flags
+         4       LY-CoV016        7C01         B     C+L+D           498   shared_partner_unresolved:DL
+         5       LY-CoV555        7KMG         F   D+E+B+A           285 shared_partner_unresolved:ABDE
+         8            C144        7K90         A     M+O+N           341   shared_partner_unresolved:MO
+        18        CV07-270        6XKP         B     M+H+N           386   shared_partner_unresolved:HM
+        21   CR3022/H11-D4        6Z2M         A   D+B+C+L           556   shared_partner_unresolved:CL
+        24            EY6Z        6ZER         D   C+F+G+B           428   shared_partner_unresolved:BC
+        51       VH binder        7JWB         B         D           455    shared_partner_unresolved:D
+        53           S2M11        7K43         A     H+F+L           275   shared_partner_unresolved:FH
+        56            C002        7K8T         A       O+P           262    shared_partner_unresolved:P
+        57            C104        7K8U         A       L+H            42    shared_partner_unresolved:L
+        60            C121        7K8X         B     D+F+E           225   shared_partner_unresolved:EF
+        68         VHH E/U        7KN5         A     C+E+D           655    shared_partner_unresolved:D
+       100   COVOX-253H55L        7NDA         C       H+L           150    shared_partner_unresolved:H
+       105 CV05-163/CR3022        7LOP         Z W+X+Y+V+B           567   shared_partner_unresolved:BW
+       109    S2X259/S2H97        7M7W         R   H+E+L+F           592    shared_partner_unresolved:E
+       117      LY-CoV1404        7MMO         C     A+B+E           270   shared_partner_unresolved:BE
+       133      Nanosota-1        7KM5         B       C+D           440    shared_partner_unresolved:D
+       138     Nanobody F2        7OAY         E   F+B+D+H           329 shared_partner_unresolved:BDFH
+       155            S-B8        7KN3         A       H+L           355    shared_partner_unresolved:H
+       161   WCSL129/PDI96        7MZK         A E+D+H+F+L           627    shared_partner_unresolved:D
+       162   WCSL129/PDI93        7MZJ         B D+M+N+C+E           669    shared_partner_unresolved:E
+       171            2B04        7K9H         B     H+L+M           288   shared_partner_unresolved:LM
+       175            C022        7RKU         B     J+L+K           469   shared_partner_unresolved:JK
+       183         ION-360        7NP1         A     H+O+L           407   shared_partner_unresolved:LO
+
+GATE G3: FAIL (24 rows)

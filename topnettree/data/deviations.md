@@ -25,3 +25,4 @@ Items marked [FILL] depend on a step that has not been run yet; delete the marke
 - Bridging antibodies (7K90 C144, 6XKP CV07-270, 7K43 S2M11, 7KM5 Nanosota-1) touch two RBD copies; only the chain set on the chosen copy is used, so the second contact is not represented.
 - 6Z2M (CR3022/H11-D4): the chosen RBD copy carries nanobody D4 (chain D) and one CR3022 Fab (B+C); the other CR3022 Fab (H+L) sits on the second RBD copy.
 - Five entries were converted from .cif to .pdb; 7B27 notes that the converted PDB has shifted residue numbering. [FILL: wild-type agreement at the 21 mutation sites for 6ZBP, 7B27, 7OAY, 7OAP, 7OAO]
+- 7RKU C022: RBD B carries Fab J+K; the light chain L of a second Fab (H+L) touches B with 157 pairs but its heavy chain touches only RBD C, so that Fab is not assigned to B. RBD A is the mirror case (G+I, with light chain F of E+F on A).

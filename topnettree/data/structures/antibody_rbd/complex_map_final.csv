@@ -1,0 +1,188 @@
+col_index,label,resolved_id,extra,file,rbd_chain,ab_chains,rule,chosen_pairs,n_rbd_copies,contacts_json,flags,qc_pass
+0,ACE2,6M0J,0,data/structures/antibody_rbd/6M0J.pdb,E,A,clean_copy,253,1,"{""A"": 253}",partner_over_400_residues:A(expected for ACE2),True
+1,REGN10933/10987,6XDG,0,data/structures/antibody_rbd/6XDG.pdb,E,B+C+D+A,override,339,1,"{""B"": 221, ""C"": 90, ""D"": 24, ""A"": 4}",source:override_csv,True
+2,REGN10933,6XDG,0,data/structures/antibody_rbd/6XDG.pdb,E,B+D,override,245,1,"{""B"": 221, ""D"": 24}",source:alias,True
+3,REGN10987,6XDG,0,data/structures/antibody_rbd/6XDG.pdb,E,C+A,override,94,1,"{""C"": 90, ""A"": 4}",source:alias,True
+4,LY-CoV016,7C01,0,data/structures/antibody_rbd/7C01.pdb,B,C+D,override,354,2,"{""C"": 275, ""D"": 79}",source:override_csv,True
+5,LY-CoV555,7KMG,0,data/structures/antibody_rbd/7KMG.pdb,C,A+B,override,244,2,"{""A"": 160, ""B"": 84}",source:override_csv,True
+6,CT-P59,7CM4,0,data/structures/antibody_rbd/7CM4.pdb,A,H+L,clean_copy,286,1,"{""H"": 260, ""L"": 26}",,True
+7,C135,7K8Z,0,data/structures/antibody_rbd/7K8Z.pdb,A,H+L,clean_copy,123,3,"{""H"": 67, ""L"": 56}",,True
+8,C144,7K90,0,data/structures/antibody_rbd/7K90.pdb,A,M+N,override,251,3,"{""M"": 227, ""N"": 24}",source:override_csv,True
+9,CR3022,6W41,0,data/structures/antibody_rbd/6W41.pdb,C,H+L,clean_copy,224,1,"{""H"": 154, ""L"": 70}",,True
+10,S309,6WPS,0,data/structures/antibody_rbd/6WPS.pdb,A,H+L,clean_copy,224,3,"{""H"": 197, ""L"": 27}",,True
+11,CC12.1,6XC2,0,data/structures/antibody_rbd/6XC2.pdb,Z,X+Y,clean_copy,478,2,"{""X"": 289, ""Y"": 189}",,True
+12,CC12.1/CR3022,6XC3,0,data/structures/antibody_rbd/6XC3.pdb,C,B+H+A+L,clean_copy,608,1,"{""B"": 220, ""H"": 176, ""A"": 160, ""L"": 52}",,True
+13,CC12.3,6XC4,0,data/structures/antibody_rbd/6XC4.pdb,Z,X+Y,clean_copy,271,2,"{""X"": 229, ""Y"": 42}",,True
+14,CC12.3/CR3022,6XC7,0,data/structures/antibody_rbd/6XC7.pdb,A,C+H+L+D,clean_copy,544,1,"{""C"": 233, ""H"": 171, ""L"": 72, ""D"": 68}",,True
+15,C105,6XCM,0,data/structures/antibody_rbd/6XCM.pdb,B,N+S,clean_copy,274,3,"{""N"": 145, ""S"": 129}",,True
+16,CV30,6XE1,0,data/structures/antibody_rbd/6XE1.pdb,E,H+L,clean_copy,286,1,"{""H"": 223, ""L"": 63}",,True
+17,Fab 2-4,6XEY,0,data/structures/antibody_rbd/6XEY.pdb,B,F+G,clean_copy,204,3,"{""F"": 144, ""G"": 60}",,True
+18,CV07-270,6XKP,0,data/structures/antibody_rbd/6XKP.pdb,A,H+L,override,291,2,"{""H"": 276, ""L"": 15}",source:override_csv,True
+19,CV07-250,6XKQ,0,data/structures/antibody_rbd/6XKQ.pdb,A,H+L,clean_copy,313,1,"{""H"": 187, ""L"": 126}",,True
+20,H11-D4,6YZ5,0,data/structures/antibody_rbd/6YZ5.pdb,E,F,clean_copy,236,1,"{""F"": 236}",,True
+21,CR3022/H11-D4,6Z2M,0,data/structures/antibody_rbd/6Z2M.pdb,A,D+B+C,override,503,2,"{""D"": 219, ""B"": 210, ""C"": 74}",source:override_csv,True
+22,H11-H4,6ZBP,0,data/structures/antibody_rbd_converted/6ZBP.pdb,A,B,clean_copy,224,1,"{""B"": 224}",,True
+23,EY6Z/Nb,6ZCZ,0,data/structures/antibody_rbd/6ZCZ.pdb,E,F+H+L,clean_copy,540,1,"{""F"": 240, ""H"": 165, ""L"": 135}",,True
+24,EY6Z,6ZER,0,data/structures/antibody_rbd/6ZER.pdb,D,F+G,override,273,3,"{""F"": 146, ""G"": 127}",source:override_csv,True
+25,Sb23,7A29,0,data/structures/antibody_rbd/7A29.pdb,B,E,clean_copy,133,3,"{""E"": 133}",,True
+26,STE90-C11,7B3O,0,data/structures/antibody_rbd/7B3O.pdb,E,H+L,clean_copy,346,1,"{""H"": 216, ""L"": 130}",,True
+27,P2B-2F6,7BWJ,0,data/structures/antibody_rbd/7BWJ.pdb,E,H+L,clean_copy,149,1,"{""H"": 112, ""L"": 37}",,True
+28,BD23,7BYR,0,data/structures/antibody_rbd/7BYR.pdb,B,H+L,override,180,3,"{""H"": 179, ""L"": 1}",source:override_csv,True
+29,B38,7BZ5,0,data/structures/antibody_rbd/7BZ5.pdb,A,H+L,clean_copy,377,1,"{""H"": 233, ""L"": 144}",,True
+30,SR4,7C8V,0,data/structures/antibody_rbd/7C8V.pdb,B,A,clean_copy,247,1,"{""A"": 247}",,True
+31,MR17,7C8W,0,data/structures/antibody_rbd/7C8W.pdb,B,A,clean_copy,348,1,"{""A"": 348}",,True
+32,H014,7CAH,0,data/structures/antibody_rbd/7CAH.pdb,A,E+D,clean_copy,225,1,"{""E"": 138, ""D"": 87}",,True
+33,MR17-K99Y,7CAN,0,data/structures/antibody_rbd/7CAN.pdb,B,A,clean_copy,323,1,"{""A"": 323}",,True
+34,P2C-1F11,7CDI,0,data/structures/antibody_rbd/7CDI.pdb,E,H+L,clean_copy,283,1,"{""H"": 246, ""L"": 37}",,True
+35,P2C-1A3,7CDJ,0,data/structures/antibody_rbd/7CDJ.pdb,E,H+L,clean_copy,293,1,"{""H"": 216, ""L"": 77}",,True
+36,BD-604,7CH4,0,data/structures/antibody_rbd/7CH4.pdb,R,H+L,clean_copy,291,1,"{""H"": 224, ""L"": 67}",,True
+37,BD-629,7CH5,0,data/structures/antibody_rbd/7CH5.pdb,R,H+L,clean_copy,323,1,"{""H"": 270, ""L"": 53}",,True
+38,BD-236,7CHB,0,data/structures/antibody_rbd/7CHB.pdb,R,H+L,clean_copy,332,1,"{""H"": 237, ""L"": 95}",,True
+39,BD-236/BD-368-2,7CHE,0,data/structures/antibody_rbd/7CHE.pdb,R,H+A+L+B,clean_copy,471,1,"{""H"": 186, ""A"": 178, ""L"": 86, ""B"": 21}",,True
+40,BD-604/BD-368-2,7CHF,0,data/structures/antibody_rbd/7CHF.pdb,R,H+A+L+B,clean_copy,516,1,"{""H"": 219, ""A"": 183, ""L"": 87, ""B"": 27}",,True
+41,BD-368-2,7CHH,0,data/structures/antibody_rbd/7CHH.pdb,C,J+K,clean_copy,183,3,"{""J"": 164, ""K"": 19}",,True
+42,A fab,7CJF,0,data/structures/antibody_rbd/7CJF.pdb,C,A+B,clean_copy,387,1,"{""A"": 255, ""B"": 132}",,True
+43,P17,7CWM,0,data/structures/antibody_rbd/7CWM.pdb,C,I+K,clean_copy,228,3,"{""I"": 147, ""K"": 81}",,True
+44,P17/H014,7CWN,0,data/structures/antibody_rbd/7CWN.pdb,A,O+M+G+F,clean_copy,589,3,"{""O"": 191, ""M"": 170, ""G"": 147, ""F"": 81}",,True
+45,COVA2-04,7JMO,0,data/structures/antibody_rbd/7JMO.pdb,A,H+L,clean_copy,338,1,"{""H"": 255, ""L"": 83}",,True
+46,COVA2-39,7JMP,0,data/structures/antibody_rbd/7JMP.pdb,A,H+L,clean_copy,261,1,"{""H"": 223, ""L"": 38}",,True
+47,COVA1-16,7JMW,0,data/structures/antibody_rbd/7JMW.pdb,A,H+L,clean_copy,272,1,"{""H"": 248, ""L"": 24}",,True
+48,S2H13,7JV6,0,data/structures/antibody_rbd/7JV6.pdb,A,L+H,clean_copy,86,3,"{""L"": 61, ""H"": 25}",,True
+49,S2A4,7JVA,0,data/structures/antibody_rbd/7JVA.pdb,A,H+L,clean_copy,214,1,"{""H"": 118, ""L"": 96}",,True
+50,S304,7JW0,0,data/structures/antibody_rbd/7JW0.pdb,A,L+H,clean_copy,44,3,"{""L"": 37, ""H"": 7}",,True
+51,VH binder,7JWB,0,data/structures/antibody_rbd/7JWB.pdb,B,D,override,455,3,"{""D"": 455}",source:override_csv,True
+52,S309/S2H14/S304,7JX3,0,data/structures/antibody_rbd/7JX3.pdb,R,A+C+H+L+D+B,clean_copy,776,1,"{""A"": 212, ""C"": 195, ""H"": 138, ""L"": 114, ""D"": 95, ""B"": 22}",,True
+53,S2M11,7K43,0,data/structures/antibody_rbd/7K43.pdb,A,H+L,override,208,3,"{""H"": 202, ""L"": 6}",source:override_csv,True
+54,S2E12,7K45,0,data/structures/antibody_rbd/7K45.pdb,B,H+L,clean_copy,138,1,"{""H"": 94, ""L"": 44}",,True
+55,C102,7K8M,0,data/structures/antibody_rbd/7K8M.pdb,E,A+B,clean_copy,337,1,"{""A"": 275, ""B"": 62}",,True
+56,C002,7K8T,0,data/structures/antibody_rbd/7K8T.pdb,A,O+P,override,262,3,"{""O"": 212, ""P"": 50}",source:override_csv,True
+57,C104,7K8U,0,data/structures/antibody_rbd/7K8U.pdb,A,L+H,override,42,3,"{""L"": 29, ""H"": 13}",source:override_csv,True
+58,C110,7K8V,0,data/structures/antibody_rbd/7K8V.pdb,A,L+H,clean_copy,95,3,"{""L"": 54, ""H"": 41}",,True
+59,C119,7K8W,0,data/structures/antibody_rbd/7K8W.pdb,G,N+S,clean_copy,235,3,"{""N"": 153, ""S"": 82}",,True
+60,C121,7K8X,0,data/structures/antibody_rbd/7K8X.pdb,B,D+F,override,211,3,"{""D"": 195, ""F"": 16}",source:override_csv,True
+61,Fabs 298/52,7K9Z,0,data/structures/antibody_rbd/7K9Z.pdb,E,H+B+A+L,clean_copy,408,1,"{""H"": 154, ""B"": 96, ""A"": 94, ""L"": 64}",,True
+62,C1A-B12,7KFV,0,data/structures/antibody_rbd/7KFV.pdb,B,C+D,clean_copy,374,3,"{""C"": 256, ""D"": 118}",,True
+63,C1A-B3,7KFW,0,data/structures/antibody_rbd/7KFW.pdb,E,F+G,clean_copy,324,3,"{""F"": 258, ""G"": 66}",,True
+64,C1A-C2,7KFX,0,data/structures/antibody_rbd/7KFX.pdb,A,H+L,clean_copy,347,1,"{""H"": 258, ""L"": 89}",,True
+65,C1A-F10,7KFY,0,data/structures/antibody_rbd/7KFY.pdb,A,H+L,clean_copy,358,1,"{""H"": 258, ""L"": 100}",,True
+66,LY-CoV488,7KMH,0,data/structures/antibody_rbd/7KMH.pdb,C,A+B,clean_copy,313,1,"{""A"": 241, ""B"": 72}",,True
+67,LY-CoV481,7KMI,0,data/structures/antibody_rbd/7KMI.pdb,C,A+B,clean_copy,336,1,"{""A"": 208, ""B"": 128}",,True
+68,VHH E/U,7KN5,0,data/structures/antibody_rbd/7KN5.pdb,B,D+F,override,590,2,"{""D"": 324, ""F"": 266}",source:override_csv,True
+69,VHH V/Fab CC12.3,7KN6,0,data/structures/antibody_rbd/7KN6.pdb,A,C+H+L,clean_copy,645,1,"{""C"": 361, ""H"": 230, ""L"": 54}",,True
+70,VHH W/Fab CC12.3,7KN7,0,data/structures/antibody_rbd/7KN7.pdb,A,B+H+L,clean_copy,512,1,"{""B"": 250, ""H"": 223, ""L"": 39}",,True
+71,CR3014-C8/CR3022,7KZB,0,data/structures/antibody_rbd/7KZB.pdb,C,L+B+H+A,clean_copy,416,1,"{""L"": 173, ""B"": 140, ""H"": 64, ""A"": 39}",,True
+72,DH1047,7LD1,0,data/structures/antibody_rbd/7LD1.pdb,A,P+O,clean_copy,215,3,"{""P"": 174, ""O"": 41}",,True
+73,7D6,7EAM,0,data/structures/antibody_rbd/7EAM.pdb,A,H+L,clean_copy,200,2,"{""H"": 154, ""L"": 46}",,True
+74,Fab 2-7,7LSS,0,data/structures/antibody_rbd/7LSS.pdb,B,H+L,override,187,1,"{""H"": 111, ""L"": 76}",source:override_csv,True
+75,DH1041,7LAA,0,data/structures/antibody_rbd/7LAA.pdb,A,H+L,override,239,1,"{""H"": 218, ""L"": 21}",source:override_csv,True
+76,1-57,7LS9,0,data/structures/antibody_rbd/7LS9.pdb,B,D+F,clean_copy,230,3,"{""D"": 185, ""F"": 45}",,True
+77,P5A-3C12_1B,7D0B,0,data/structures/antibody_rbd/7D0B.pdb,A,H+L,override,80,3,"{""H"": 78, ""L"": 2}",source:override_csv,True
+78,P5A-2G7,7CZW,0,data/structures/antibody_rbd/7CZW.pdb,A,H+L,clean_copy,239,3,"{""H"": 208, ""L"": 31}",,True
+79,P5A-1B8,7D00,0,data/structures/antibody_rbd/7D00.pdb,A,H+K,clean_copy,243,3,"{""H"": 169, ""K"": 74}",,True
+80,P5A-3A1,7D0C,0,data/structures/antibody_rbd/7D0C.pdb,A,H+L,clean_copy,209,3,"{""H"": 182, ""L"": 27}",,True
+81,P5A-3C12_2B,7D0D,0,data/structures/antibody_rbd/7D0D.pdb,A,H+L,override,80,3,"{""H"": 78, ""L"": 2}",source:override_csv,True
+82,P5A-1B9,7CZX,0,data/structures/antibody_rbd/7CZX.pdb,B,I+M,clean_copy,213,3,"{""I"": 161, ""M"": 52}",,True
+83,P5A-2F11_2B,7CZY,0,data/structures/antibody_rbd/7CZY.pdb,A,H+K,clean_copy,135,3,"{""H"": 111, ""K"": 24}",,True
+84,P5A-1B6_3B,7CZV,0,data/structures/antibody_rbd/7CZV.pdb,B,I+M,clean_copy,247,3,"{""I"": 184, ""M"": 63}",,True
+85,P5A-2F11_3B,7CZZ,0,data/structures/antibody_rbd/7CZZ.pdb,A,H+K,clean_copy,135,3,"{""H"": 111, ""K"": 24}",,True
+86,P2B-1A1,7CZP,0,data/structures/antibody_rbd/7CZP.pdb,C,N+J,clean_copy,259,3,"{""N"": 189, ""J"": 70}",,True
+87,P2B-1A10,7CZQ,0,data/structures/antibody_rbd/7CZQ.pdb,A,H+K,clean_copy,417,3,"{""H"": 266, ""K"": 151}",,True
+88,P5A-2G9,7CZT,0,data/structures/antibody_rbd/7CZT.pdb,A,L+H,clean_copy,256,3,"{""L"": 161, ""H"": 95}",,True
+89,P5A-1B6_2B,7CZU,0,data/structures/antibody_rbd/7CZU.pdb,A,H+K,clean_copy,246,3,"{""H"": 183, ""K"": 63}",,True
+90,P5A-1B8_2B,7CZR,0,data/structures/antibody_rbd/7CZR.pdb,A,H+K,clean_copy,243,3,"{""H"": 169, ""K"": 74}",,True
+91,P5A-1B8_3B,7CZS,0,data/structures/antibody_rbd/7CZS.pdb,A,H+K,clean_copy,243,3,"{""H"": 169, ""K"": 74}",,True
+92,COVOX-88/-45,7BEL,0,data/structures/antibody_rbd/7BEL.pdb,X,C+E+F+D,clean_copy,578,2,"{""C"": 227, ""E"": 159, ""F"": 100, ""D"": 92}",,True
+93,COVOX-269 scFV,7BEM,0,data/structures/antibody_rbd/7BEM.pdb,E,H+L,clean_copy,408,1,"{""H"": 265, ""L"": 143}",,True
+94,COVOX-158,7BEJ,0,data/structures/antibody_rbd/7BEJ.pdb,E,H+L,clean_copy,341,1,"{""H"": 209, ""L"": 132}",,True
+95,COVOX-384/S309,7BEP,0,data/structures/antibody_rbd/7BEP.pdb,C,G+D+F+I,clean_copy,441,2,"{""G"": 200, ""D"": 139, ""F"": 73, ""I"": 29}",,True
+96,COVOX-253/-75,7BEN,0,data/structures/antibody_rbd/7BEN.pdb,C,G+D+I+F,clean_copy,435,2,"{""G"": 155, ""D"": 138, ""I"": 108, ""F"": 34}",,True
+97,COVOX-253H55L/-75,7BEO,0,data/structures/antibody_rbd/7BEO.pdb,R,H+A+B+L,clean_copy,444,2,"{""H"": 158, ""A"": 148, ""B"": 107, ""L"": 31}",,True
+98,COVOX-316,7BEH,0,data/structures/antibody_rbd/7BEH.pdb,E,H+L,clean_copy,207,1,"{""H"": 147, ""L"": 60}",,True
+99,COVOX-150,7BEI,0,data/structures/antibody_rbd/7BEI.pdb,E,H+L,clean_copy,393,1,"{""H"": 234, ""L"": 159}",,True
+100,COVOX-253H55L,7NDA,0,data/structures/antibody_rbd/7NDA.pdb,C,H+L,override,150,3,"{""H"": 140, ""L"": 10}",source:override_csv,True
+101,COVOX-253H165L,7NDB,0,data/structures/antibody_rbd/7NDB.pdb,B,H+L,clean_copy,61,3,"{""H"": 48, ""L"": 13}",,True
+102,COVOX-384,7ND8,0,data/structures/antibody_rbd/7ND8.pdb,B,H+L,clean_copy,171,3,"{""H"": 133, ""L"": 38}",,True
+103,COVOX-40,7ND6,0,data/structures/antibody_rbd/7ND6.pdb,B,H+L,clean_copy,360,3,"{""H"": 210, ""L"": 150}",,True
+104,COVOX-88,7ND4,0,data/structures/antibody_rbd/7ND4.pdb,B,F+G,clean_copy,202,3,"{""F"": 137, ""G"": 65}",,True
+105,CV05-163/CR3022,7LOP,0,data/structures/antibody_rbd/7LOP.pdb,Z,W+X+Y+V,override,530,2,"{""W"": 197, ""X"": 149, ""Y"": 143, ""V"": 41}",source:override_csv,True
+106,MW06,7DPM,0,data/structures/antibody_rbd/7DPM.pdb,C,A+B,clean_copy,256,4,"{""A"": 211, ""B"": 45}",,True
+107,910-30,7KS9,0,data/structures/antibody_rbd/7KS9.pdb,B,H+L,clean_copy,346,3,"{""H"": 196, ""L"": 150}",,True
+108,2-51,7L5B,0,data/structures/antibody_rbd/7L5B.pdb,A,H+L,clean_copy,232,1,"{""H"": 158, ""L"": 74}",,True
+109,S2X259/S2H97,7M7W,0,data/structures/antibody_rbd/7M7W.pdb,R,H+E+L+F,override,592,2,"{""H"": 257, ""E"": 167, ""L"": 99, ""F"": 69}",source:override_csv,True
+110,6D6,7EAN,0,data/structures/antibody_rbd/7EAN.pdb,A,H+L,clean_copy,312,1,"{""H"": 200, ""L"": 112}",,True
+111,47D1,7MF1,0,data/structures/antibody_rbd/7MF1.pdb,A,H+L,override,250,1,"{""H"": 249, ""L"": 1}",source:override_csv,True
+112,CV2-75,7M3I,0,data/structures/antibody_rbd/7M3I.pdb,C,A+B,clean_copy,251,2,"{""A"": 132, ""B"": 119}",,True
+113,3D11,7M7B,0,data/structures/antibody_rbd/7M7B.pdb,A,L+H,clean_copy,219,1,"{""L"": 112, ""H"": 107}",,True
+114,CV38-142/COVA1-16,7LM8,0,data/structures/antibody_rbd/7LM8.pdb,A,H+M+L+N,clean_copy,474,1,"{""H"": 246, ""M"": 145, ""L"": 47, ""N"": 36}",,True
+115,BG4-25/CR3022,7M6D,0,data/structures/antibody_rbd/7M6D.pdb,C,H+A+B+L,clean_copy,508,1,"{""H"": 236, ""A"": 165, ""B"": 61, ""L"": 46}",,True
+116,MW05,7DK0,0,data/structures/antibody_rbd/7DK0.pdb,C,A+B,clean_copy,320,1,"{""A"": 266, ""B"": 54}",,True
+117,LY-CoV1404,7MMO,0,data/structures/antibody_rbd/7MMO.pdb,C,A+B,override,243,2,"{""A"": 133, ""B"": 110}",source:override_csv,True
+118,P5A-1D2,7CHO,0,data/structures/antibody_rbd/7CHO.pdb,A,B+C,clean_copy,334,2,"{""B"": 296, ""C"": 38}",,True
+119,P22A-1D1,7CHS,0,data/structures/antibody_rbd/7CHS.pdb,E,H+L,clean_copy,364,1,"{""H"": 251, ""L"": 113}",,True
+120,P5A-3C8,7CHP,0,data/structures/antibody_rbd/7CHP.pdb,E,H+L,clean_copy,412,1,"{""H"": 239, ""L"": 173}",,True
+121,MW01,7DJZ,0,data/structures/antibody_rbd/7DJZ.pdb,C,A+B,clean_copy,304,1,"{""A"": 197, ""B"": 107}",,True
+122,COVOX-222/EY6A,7NX6,0,data/structures/antibody_rbd/7NX6.pdb,E,A+H+L+B,clean_copy,633,1,"{""A"": 222, ""H"": 163, ""L"": 129, ""B"": 119}",,True
+123,BD-508,7E86,0,data/structures/antibody_rbd/7E86.pdb,C,A+B,clean_copy,391,1,"{""A"": 253, ""B"": 138}",,True
+124,BD-623,7E7Y,0,data/structures/antibody_rbd/7E7Y.pdb,R,A+B,clean_copy,239,2,"{""A"": 199, ""B"": 40}",,True
+125,FC08/hACE2,7DX4,0,data/structures/antibody_rbd/7DX4.pdb,E,A+H+L,clean_copy,507,1,"{""A"": 258, ""H"": 139, ""L"": 110}",partner_over_400_residues:A,True
+126,NM1230,7B27,0,data/structures/antibody_rbd_converted/7B27.pdb,A,C,override,272,1,"{""C"": 272}",source:override_csv,True
+127,S2E12/S309/S304,7R6X,0,data/structures/antibody_rbd/7R6X.pdb,R,A+C+L+H+D+B,clean_copy,669,1,"{""A"": 214, ""C"": 156, ""L"": 128, ""H"": 126, ""D"": 35, ""B"": 10}",,True
+128,REGN10985/0989,7M42,0,data/structures/antibody_rbd/7M42.pdb,E,B+D+C+A,clean_copy,332,1,"{""B"": 151, ""D"": 98, ""C"": 50, ""A"": 33}",,True
+129,A23-58.1,7LRS,0,data/structures/antibody_rbd/7LRS.pdb,C,D+E,clean_copy,64,1,"{""D"": 56, ""E"": 8}",,True
+130,S2X35/S309,7R6W,0,data/structures/antibody_rbd/7R6W.pdb,R,H+A+L+B,clean_copy,592,1,"{""H"": 295, ""A"": 200, ""L"": 78, ""B"": 19}",,True
+131,B1-182.1,7MLZ,0,data/structures/antibody_rbd/7MLZ.pdb,A,H+L,clean_copy,168,1,"{""H"": 111, ""L"": 57}",,True
+132,COVOX-222/-278,7OR9,0,data/structures/antibody_rbd/7OR9.pdb,E,A+L+B+H,clean_copy,597,1,"{""A"": 225, ""L"": 160, ""B"": 118, ""H"": 94}",,True
+133,Nanosota-1,7KM5,0,data/structures/antibody_rbd/7KM5.pdb,B,C,override,263,2,"{""C"": 263}",source:override_csv,True
+134,NB21,7N9A,0,data/structures/antibody_rbd/7N9A.pdb,E,A,clean_copy,196,1,"{""A"": 196}",,True
+135,C098,7N3I,0,data/structures/antibody_rbd/7N3I.pdb,C,H+L,clean_copy,347,1,"{""H"": 262, ""L"": 85}",,True
+136,ChAb-45,7F63,0,data/structures/antibody_rbd/7F63.pdb,A,H+L,clean_copy,179,1,"{""H"": 136, ""L"": 43}",,True
+137,ChAb-25,7F62,0,data/structures/antibody_rbd/7F62.pdb,A,L+H,clean_copy,216,1,"{""L"": 134, ""H"": 82}",,True
+138,Nanobody F2,7OAY,0,data/structures/antibody_rbd_converted/7OAY.pdb,E,F,override,282,6,"{""F"": 282}",source:override_csv,True
+139,Nb21 Nb105,7MDW,0,data/structures/antibody_rbd/7MDW.pdb,R,B+A,clean_copy,352,1,"{""B"": 195, ""A"": 157}",,True
+140,Nb17 Nb105,7ME7,0,data/structures/antibody_rbd/7ME7.pdb,R,A+B,clean_copy,285,1,"{""A"": 167, ""B"": 118}",,True
+141,Nb21 Nb36,7MEJ,0,data/structures/antibody_rbd/7MEJ.pdb,R,A+B,clean_copy,164,1,"{""A"": 85, ""B"": 79}",,True
+142,S2X259,7RAL,0,data/structures/antibody_rbd/7RAL.pdb,B,H+L,clean_copy,330,1,"{""H"": 229, ""L"": 101}",,True
+143,C099/CR3022,7R8L,0,data/structures/antibody_rbd/7R8L.pdb,E,H+C+L+D,clean_copy,582,1,"{""H"": 235, ""C"": 176, ""L"": 104, ""D"": 67}",,True
+144,NT-193,7E5O,0,data/structures/antibody_rbd/7E5O.pdb,A,L+H,clean_copy,343,1,"{""L"": 183, ""H"": 160}",,True
+145,AZD8895/AZD1061,7L7E,0,data/structures/antibody_rbd/7L7E.pdb,S,H+L+M+N,override,407,4,"{""H"": 140, ""L"": 41, ""M"": 136, ""N"": 90}",source:override_csv,True
+146,AZD8895,7L7D,0,data/structures/antibody_rbd/7L7D.pdb,E,H+L,clean_copy,191,1,"{""H"": 142, ""L"": 49}",,True
+147,AZD1061,7L7E,0,data/structures/antibody_rbd/7L7E.pdb,S,M+N,override,226,4,"{""M"": 136, ""N"": 90}",source:override_csv,True
+148,Ab4,7E39,0,data/structures/antibody_rbd/7E39.pdb,A,C+B,clean_copy,226,1,"{""C"": 153, ""B"": 73}",,True
+149,Ab5,7E3B,0,data/structures/antibody_rbd/7E3B.pdb,A,B+C,clean_copy,260,1,"{""B"": 236, ""C"": 24}",,True
+150,Ab1,7E3C,0,data/structures/antibody_rbd/7E3C.pdb,A,B+C,clean_copy,257,1,"{""B"": 169, ""C"": 88}",,True
+151,Re5D06/Re9F06,7OLZ,0,data/structures/antibody_rbd/7OLZ.pdb,A,C+B,clean_copy,630,1,"{""C"": 388, ""B"": 242}",,True
+152,Nanobody H3 C1,7OAP,0,data/structures/antibody_rbd_converted/7OAP.pdb,B,A+C,clean_copy,518,1,"{""A"": 290, ""C"": 228}",,True
+153,Nanobody C5,7OAO,0,data/structures/antibody_rbd_converted/7OAO.pdb,A,B,clean_copy,252,1,"{""B"": 252}",,True
+154,nCoV617,7E3O,0,data/structures/antibody_rbd/7E3O.pdb,R,H+L,clean_copy,328,1,"{""H"": 217, ""L"": 111}",,True
+155,S-B8,7KN3,0,data/structures/antibody_rbd/7KN3.pdb,A,H+L,override,355,2,"{""H"": 273, ""L"": 82}",source:override_csv,True
+156,S-E6,7KN4,0,data/structures/antibody_rbd/7KN4.pdb,A,L+H,clean_copy,258,2,"{""L"": 171, ""H"": 87}",,True
+157,CV503/COVA1-16,7LQ7,0,data/structures/antibody_rbd/7LQ7.pdb,A,P+H+L+Q,clean_copy,495,3,"{""P"": 235, ""H"": 133, ""L"": 74, ""Q"": 53}",,True
+158,FD20,7CYV,0,data/structures/antibody_rbd/7CYV.pdb,B,H,clean_copy,218,1,"{""H"": 218}",,True
+159,WCSL129,7MZI,0,data/structures/antibody_rbd/7MZI.pdb,A,L+H,clean_copy,294,1,"{""L"": 199, ""H"": 95}",,True
+160,WCSL119,7MZH,0,data/structures/antibody_rbd/7MZH.pdb,A,B+C,clean_copy,231,2,"{""B"": 128, ""C"": 103}",,True
+161,WCSL129/PDI96,7MZK,0,data/structures/antibody_rbd/7MZK.pdb,B,D+N+C+M,override,477,2,"{""D"": 183, ""N"": 130, ""C"": 107, ""M"": 57}",source:override_csv,True
+162,WCSL129/PDI93,7MZJ,0,data/structures/antibody_rbd/7MZJ.pdb,B,D+M+N+C,override,592,2,"{""D"": 201, ""M"": 144, ""N"": 140, ""C"": 107}",source:override_csv,True
+163,PDI42,7MZG,0,data/structures/antibody_rbd/7MZG.pdb,A,H+L,clean_copy,328,1,"{""H"": 243, ""L"": 85}",,True
+164,PDI37,7MZF,0,data/structures/antibody_rbd/7MZF.pdb,A,H+L,clean_copy,341,1,"{""H"": 252, ""L"": 89}",,True
+165,PDI215,7MZM,0,data/structures/antibody_rbd/7MZM.pdb,A,H,clean_copy,403,1,"{""H"": 403}",,True
+166,PDI210,7MZL,0,data/structures/antibody_rbd/7MZL.pdb,A,H+L,clean_copy,311,1,"{""H"": 232, ""L"": 79}",,True
+167,PDI231,7MZN,0,data/structures/antibody_rbd/7MZN.pdb,A,H+L,clean_copy,377,1,"{""H"": 274, ""L"": 103}",,True
+168,WRAIR-2173,7N4J,0,data/structures/antibody_rbd/7N4J.pdb,A,H+L,clean_copy,262,1,"{""H"": 197, ""L"": 65}",,True
+169,WRAIR-2057,7N4I,0,data/structures/antibody_rbd/7N4I.pdb,C,H+L,clean_copy,255,1,"{""H"": 189, ""L"": 66}",,True
+170,2H04,7K9K,0,data/structures/antibody_rbd/7K9K.pdb,A,H+L,clean_copy,183,1,"{""H"": 105, ""L"": 78}",,True
+171,2B04,7K9H,0,data/structures/antibody_rbd/7K9H.pdb,B,H+L,override,282,3,"{""H"": 262, ""L"": 20}",source:override_csv,True
+172,K-874,7FG3,0,data/structures/antibody_rbd/7FG3.pdb,A,D,clean_copy,142,1,"{""D"": 142}",,True
+173,K-874A,7FG2,0,data/structures/antibody_rbd/7FG2.pdb,A,D,clean_copy,123,1,"{""D"": 123}",,True
+174,CoV11,7S4S,0,data/structures/antibody_rbd/7S4S.pdb,A,H+L,clean_copy,364,1,"{""H"": 283, ""L"": 81}",,True
+175,C022,7RKU,0,data/structures/antibody_rbd/7RKU.pdb,B,J+K,override,312,4,"{""J"": 259, ""K"": 53}",source:override_csv,True
+176,N-612-056,7S0B,0,data/structures/antibody_rbd/7S0B.pdb,F,A+B,clean_copy,255,2,"{""A"": 174, ""B"": 81}",,True
+177,GH12-Fab,7D6I,0,data/structures/antibody_rbd/7D6I.pdb,A,C+B,clean_copy,185,1,"{""C"": 108, ""B"": 77}",,True
+178,PDI222,7RR0,0,data/structures/antibody_rbd/7RR0.pdb,A,B+C,clean_copy,160,1,"{""B"": 136, ""C"": 24}",,True
+179,P5C3,7PHG,0,data/structures/antibody_rbd/7PHG.pdb,A,H+L,clean_copy,271,1,"{""H"": 211, ""L"": 60}",,True
+180,WRAIR-2125,7N4L,0,data/structures/antibody_rbd/7N4L.pdb,A,H+L,clean_copy,123,1,"{""H"": 63, ""L"": 60}",,True
+181,WRAIR-2151,7N4M,0,data/structures/antibody_rbd/7N4M.pdb,A,L+H,clean_copy,194,1,"{""L"": 110, ""H"": 84}",,True
+182,scFv E4,7VMU,0,data/structures/antibody_rbd/7VMU.pdb,B,A,clean_copy,347,1,"{""A"": 347}",,True
+183,ION-360,7NP1,0,data/structures/antibody_rbd/7NP1.pdb,A,H+L,override,264,4,"{""H"": 226, ""L"": 38}",source:override_csv,True
+184,ION-300,7BNV,0,data/structures/antibody_rbd/7BNV.pdb,A,H,clean_copy,237,1,"{""H"": 237}",,True
+185,C1C-A3,7SN2,0,data/structures/antibody_rbd/7SN2.pdb,A,H+L,clean_copy,281,1,"{""H"": 188, ""L"": 93}",,True
+-1,CTC-445.2,7KL9,1,data/structures/ctc445/7KL9.pdb,A,F,override,141,3,"{""F"": 141}",source:extra_csv,True

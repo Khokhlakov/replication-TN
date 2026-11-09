@@ -1,0 +1,42 @@
+wrote data/structures/antibody_rbd/complex_chain_review.csv: 187 complexes, 40 with flags
+col_index           label   id rbd antibody_chains                                                                                                                        flags
+        1 REGN10933/10987 6XDG   E           B+C+D                                   heavy_light_mismatch:H=2,L=1 | omitted_in_contact:A(REGN10987 antibody Fab fragment lig,4)
+        2       REGN10933 6XDG   E             B+D   omitted_in_contact:C(REGN10987 antibody Fab fragment hea,90) | omitted_in_contact:A(REGN10987 antibody Fab fragment lig,4)
+        3       REGN10987 6XDG   E             C+A omitted_in_contact:D(REGN10933 antibody Fab fragment lig,24) | omitted_in_contact:B(REGN10933 antibody Fab fragment hea,221)
+        4       LY-CoV016 7C01   B           C+L+D                                                                                                 heavy_light_mismatch:H=1,L=2
+        5       LY-CoV555 7KMG   C             A+B                      omitted_in_contact:D(LY-CoV555 Fab heavy chain,10) | omitted_in_contact:E(LY-CoV555 Fab light chain,19)
+        8            C144 7K90   A             M+N                                                                                omitted_in_contact:O(C144 Fab Heavy Chain,90)
+       18        CV07-270 6XKP   A             H+L                                                                                omitted_in_contact:M(CV07-270 Heavy Chain,89)
+       21   CR3022/H11-D4 6Z2M   A           D+B+C                                                                                     omitted_in_contact:L(CR3022 antibody,53)
+       22          H11-H4 6ZBP   A               B                                                                                                             no_description:B
+       24            EY6Z 6ZER   D           C+F+G                                                      heavy_light_mismatch:H=1,L=2 | omitted_in_contact:B(EY6A heavy chain,7)
+       28            BD23 7BYR   B               H                                                  heavy_light_mismatch:H=1,L=0 | omitted_in_contact:L(Ab23-Fab-Light Chain,1)
+       50            S304 7JW0   A             L+H                                                                                 omitted_in_contact:D(S304 Fab heavy chain,1)
+       51       VH binder 7JWB   B               D                                                                                                 heavy_light_mismatch:H=1,L=0
+       53           S2M11 7K43   A             H+L         omitted_in_contact:F(S2M11 Fab fragment (heavy chain),67) | omitted_in_contact:G(S2M11 Fab fragment (light chain),2)
+       60            C121 7K8X   B               D heavy_light_mismatch:H=1,L=0 | omitted_in_contact:E(C121 Fab Heavy chain,14) | omitted_in_contact:F(C121 Fab Light chain,16)
+       74         Fab 2-7 7LSS   B         A+H+L+C                                    selected_not_antibody:A(Spike glycoprotein) | selected_not_antibody:C(Spike glycoprotein)
+       75          DH1041 7LAA   A         H+B+L+C                                    selected_not_antibody:B(Spike glycoprotein) | selected_not_antibody:C(Spike glycoprotein)
+       77     P5A-3C12_1B 7D0B   A               H                                               heavy_light_mismatch:H=1,L=0 | omitted_in_contact:L(Light chain of P5A-3C12,2)
+       81     P5A-3C12_2B 7D0D   A               H                                               heavy_light_mismatch:H=1,L=0 | omitted_in_contact:L(Light chain of P5A-3C12,2)
+      105 CV05-163/CR3022 7LOP   Z         W+X+Y+V                                                                              omitted_in_contact:B(CR3022 Fab heavy chain,37)
+      111            47D1 7MF1   A               H                                                  heavy_light_mismatch:H=1,L=0 | omitted_in_contact:L(47D1 Fab light chain,1)
+      117      LY-CoV1404 7MMO   C             A+B                                                                          omitted_in_contact:E(LY-CoV1404 Fab light chain,27)
+      125      FC08/hACE2 7DX4   E           A+H+L                                                                     selected_not_antibody:A(Angiotensin-converting enzyme 2)
+      126          NM1230 7B27   A               C                                                                                                             no_description:C
+      133      Nanosota-1 7KM5   B               C                                                                                           omitted_in_contact:D(nanobody,177)
+      138     Nanobody F2 7OAY   E               F                                                                                                             no_description:F
+      139      Nb21 Nb105 7MDW   R             B+A                                                                                       selected_not_antibody:A(nonobody Nb21)
+      145 AZD8895/AZD1061 7L7E   K             O+P omitted_in_contact:I(heavy chain of human monoclonal ant,128) | omitted_in_contact:J(light chain of human monoclonal ant,46)
+      147         AZD1061 7L7E   K             O+P omitted_in_contact:I(heavy chain of human monoclonal ant,128) | omitted_in_contact:J(light chain of human monoclonal ant,46)
+      152  Nanobody H3 C1 7OAP   B             A+C                                                                                          no_description:A | no_description:C
+      153     Nanobody C5 7OAO   A               B                                                                                                             no_description:B
+      154         nCoV617 7E3O   R             H+L                                                  heavy_light_mismatch:H=0,L=1 | selected_not_antibody:H(nCoV617 Heigh Chain)
+      160         WCSL119 7MZH   A             B+C                                                                                 omitted_in_contact:H(WCSL 119 heavy chain,1)
+      162   WCSL129/PDI93 7MZJ   B         D+M+N+C                                                                                omitted_in_contact:E(WCSL 129 light chain,77)
+      165          PDI215 7MZM   A               H                                                                                                 heavy_light_mismatch:H=1,L=0
+      171            2B04 7K9H   B             H+L                                                                                     omitted_in_contact:M(2B04 light chain,6)
+      175            C022 7RKU   B           J+L+K                                                                                                 heavy_light_mismatch:H=1,L=2
+      183         ION-360 7NP1   A           H+O+L                                                                                                 heavy_light_mismatch:H=1,L=2
+      184         ION-300 7BNV   A               H                                                                                                 heavy_light_mismatch:H=1,L=0
+       -1       CTC-445.2 7KL9   A               F                                                                                 selected_not_antibody:F(CTC-445.2 inhibitor)

@@ -1,0 +1,22 @@
+{
+  "mapping": {
+    "pdb": 0,
+    "chain": 1,
+    "wt": 2,
+    "resid": 3,
+    "mutaa": 4
+  },
+  "best_scheme": "cleaned",
+  "n_s1131": 1131,
+  "n_parsed": 1131,
+  "n_joined": 1126,
+  "join_rate": 0.995579133510168,
+  "pearson_y_ddg": 0.9947962589997124,
+  "pearson_negated": -0.9947962589997124,
+  "y_sign_vs_repo_ddg": "same (positive = weaker)",
+  "spearman_y_ddg": 0.992121396627547,
+  "abs_pearson": 0.9947962589997124,
+  "mean_abs_diff_after_sign": 0.06787880696939665,
+  "frac_abs_diff_lt_0.05_after_sign": 0.8134991119005328,
+  "gate_pass": true
+}

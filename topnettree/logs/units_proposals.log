@@ -1,0 +1,6 @@
+        label   id current  proposed                                       units
+    LY-CoV016 7C01 B:C+D+L     B:C+D                       C+D->B:354 H+L->A:321
+CR3022/H11-D4 6Z2M A:B+C+D A:D+B+C+L            B+C+H+L->A:337 D->A:219 F->E:208
+         EY6Z 6ZER D:C+F+G     D:F+G            B+C->A:272 F+G->D:273 H+L->E:271
+         C121 7K8X     B:D     B:D+F                       D+F->B:211 E+G->A:131
+      ION-360 7NP1 A:H+L+O     A:H+L H+L->A:264 I+M->B:263 J+N->C:251 K+O->D:275

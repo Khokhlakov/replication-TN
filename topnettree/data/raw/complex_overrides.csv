@@ -1,4 +1,35 @@
 resolved_id,label_contains,rbd_chain,antibody_chains,note
-7B27,,,C,"nanobody is chain C; chains B and D do not touch the RBD (contact analysis). RBD chain left to auto-detection on the converted (shifted) PDB"
-7L7E,AZD1061,K,O+P,"RBD copy K has no shared partners; AZD1061 = O+P (contact analysis)"
-7L7E,AZD8895,K,I+J,"RBD copy K; AZD8895 = I+J (contact analysis). Ignored if AZD8895 is listed under 7L7D instead"
+7B27,,,C,nanobody is chain C; chains B and D do not touch the RBD (contact analysis). RBD chain left to auto-detection on the converted (shifted) PDB
+7KMG,LY-CoV555,C,A+B,"auto: partners assigned to the RBD copy they touch most; copy scores {'C': 244, 'F': 223}; ambiguous chains none"
+7K90,C144,A,M+N,"auto: partners assigned to the RBD copy they touch most; copy scores {'A': 251, 'B': 219, 'C': 248}; ambiguous chains none"
+6XKP,CV07-270,A,H+L,"auto: partners assigned to the RBD copy they touch most; copy scores {'A': 291, 'B': 289}; ambiguous chains none"
+6Z2M,CR3022/H11-D4,A,D+B+C,"auto: partners assigned to the RBD copy they touch most; copy scores {'A': 503, 'E': 451}; ambiguous chains L"
+7JWB,VH binder,B,D,"auto: partners assigned to the RBD copy they touch most; copy scores {'A': 0, 'B': 455, 'C': 0}; ambiguous chains D"
+7K43,S2M11,A,H+L,"auto: partners assigned to the RBD copy they touch most; copy scores {'A': 208, 'B': 208, 'E': 208}; ambiguous chains none"
+7K8T,C002,A,O+P,"auto: partners assigned to the RBD copy they touch most; copy scores {'A': 262, 'B': 119, 'C': 231}; ambiguous chains L"
+7K8U,C104,A,L+H,"auto: partners assigned to the RBD copy they touch most; copy scores {'A': 42, 'B': 0, 'C': 0}; ambiguous chains L"
+7KN5,VHH E/U,B,D+F,"auto: partners assigned to the RBD copy they touch most; copy scores {'A': 577, 'B': 590}; ambiguous chains none"
+7NDA,COVOX-253H55L,C,H+L,"auto: partners assigned to the RBD copy they touch most; copy scores {'A': 0, 'B': 0, 'C': 150}; ambiguous chains none"
+7LOP,CV05-163/CR3022,Z,W+X+Y+V,"auto: partners assigned to the RBD copy they touch most; copy scores {'A': 518, 'Z': 530}; ambiguous chains none"
+7M7W,S2X259/S2H97,R,H+E+L+F,"auto: partners assigned to the RBD copy they touch most; copy scores {'R': 592, 'S': 555}; ambiguous chains none"
+7MMO,LY-CoV1404,C,A+B,"auto: partners assigned to the RBD copy they touch most; copy scores {'C': 243, 'F': 210}; ambiguous chains none"
+7KM5,Nanosota-1,B,C,"auto: partners assigned to the RBD copy they touch most; copy scores {'A': 250, 'B': 263}; ambiguous chains D"
+7OAY,Nanobody F2,E,F,"auto: partners assigned to the RBD copy they touch most; copy scores {'A': 262, 'C': 274, 'E': 282, 'G': 263, 'I': 272, 'K': 262}; ambiguous chains none"
+7KN3,S-B8,A,H+L,"auto: partners assigned to the RBD copy they touch most; copy scores {'A': 355, 'B': 271}; ambiguous chains none"
+7MZK,WCSL129/PDI96,B,D+N+C+M,"auto: partners assigned to the RBD copy they touch most; copy scores {'A': 470, 'B': 477}; ambiguous chains D"
+7MZJ,WCSL129/PDI93,B,D+M+N+C,"auto: partners assigned to the RBD copy they touch most; copy scores {'A': 579, 'B': 592}; ambiguous chains none"
+7K9H,2B04,B,H+L,"auto: partners assigned to the RBD copy they touch most; copy scores {'A': 27, 'B': 262, 'C': 220}; ambiguous chains L"
+6XDG,REGN10933/10987,E,B+C+D+A,hand: cocktail = REGN10933 heavy B light D + REGN10987 heavy C light A
+7L7E,AZD8895/AZD1061,S,H+L+M+N,hand: copy S has AZD8895 heavy H light L and AZD1061 heavy M light N
+7L7E,AZD1061,S,M+N,hand: copy S AZD1061 heavy M light N
+7LSS,Fab 2-7,B,H+L,hand: A and C are spike chains
+7LAA,DH1041,A,H+L,hand: B and C are spike chains
+7BYR,BD23,B,H+L,hand: light chain L touches the RBD with 1 pair
+7MF1,47D1,A,H+L,hand: light chain L touches the RBD with 1 pair
+7D0B,P5A-3C12_1B,A,H+L,hand: light chain L touches the RBD with 2 pairs
+7D0D,P5A-3C12_2B,A,H+L,hand: light chain L touches the RBD with 2 pairs
+7C01,LY-CoV016,B,C+D,auto-units: C+D->B:354 H+L->A:321
+6ZER,EY6Z,D,F+G,auto-units: H+L->E:271 B+C->A:272 F+G->D:273
+7K8X,C121,B,D+F,auto-units: E+G->A:131 D+F->B:211
+7NP1,ION-360,A,H+L,auto-units: H+L->A:264 I+M->B:263 J+N->C:251 K+O->D:275
+7RKU,C022,B,J+K,hand: Fab J+K (heavy J 259 pairs and light K 53 on RBD B). Light chain L touches B with 157 pairs but its heavy chain H touches only RBD C (31 pairs) so that Fab is not assigned to B

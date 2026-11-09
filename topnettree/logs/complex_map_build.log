@@ -1,0 +1,8 @@
+wrote data/structures/antibody_rbd/complex_map.csv: 186 rows; .cif entries in the manifest: 5; still pointing at a .cif (no converted PDB found): 0
+col_index          label resolved_id
+       22         H11-H4        6ZBP
+      126         NM1230        7B27
+      138    Nanobody F2        7OAY
+      152 Nanobody H3 C1        7OAP
+      153    Nanobody C5        7OAO
+rows whose file is missing: 0

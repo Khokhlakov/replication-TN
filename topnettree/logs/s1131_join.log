@@ -1,0 +1,44 @@
+s1131 table (1131, 6); Y (1131,); fraction y>0 = 0.745
+first rows:
+  0: ['1A22', 'A', 'C', '171', 'A', '1.01037276015']  y=1.01
+  1: ['1A22', 'B', 'C', '67', 'A', '0.0']  y=0.0
+  2: ['1A22', 'B', 'C', '81', 'A', '0.0']  y=0.0
+  3: ['1A22', 'A', 'D', '160', 'A', '0.790924030291']  y=0.791
+  4: ['1A22', 'B', 'D', '119', 'A', '1.48653365935']  y=1.543
+  5: ['1A22', 'B', 'D', '85', 'A', '0.993924796976']  y=0.992
+  6: ['1A22', 'A', 'E', '163', 'A', '-0.924608854391']  y=-0.925
+  7: ['1A22', 'A', 'E', '56', 'A', '0.410656422152']  y=0.411
+column profiles:
+  col 0: {'n_unique': 112, 'example': '1A22', 'pdb_like': 1.0, 'skempi_token': 0.0, 'plain_token': 0.0, 'single_char': 0.0, 'float_like': 0.0017683465959328027, 'int_like': 0.0, 'n': 1131}
+  col 1: {'n_unique': 9, 'example': 'A', 'pdb_like': 0.0, 'skempi_token': 0.0, 'plain_token': 0.0, 'single_char': 1.0, 'float_like': 0.0, 'int_like': 0.0, 'n': 1131}
+  col 2: {'n_unique': 20, 'example': 'C', 'pdb_like': 0.0, 'skempi_token': 0.0, 'plain_token': 0.0, 'single_char': 1.0, 'float_like': 0.0, 'int_like': 0.0, 'n': 1131}
+  col 3: {'n_unique': 164, 'example': '171', 'pdb_like': 0.0, 'skempi_token': 0.0, 'plain_token': 0.0, 'single_char': 0.1229000884173298, 'float_like': 1.0, 'int_like': 1.0, 'n': 1131}
+  col 4: {'n_unique': 20, 'example': 'A', 'pdb_like': 0.0, 'skempi_token': 0.0, 'plain_token': 0.0, 'single_char': 1.0, 'float_like': 0.0, 'int_like': 0.0, 'n': 1131}
+  col 5: {'n_unique': 947, 'example': '1.01037276015', 'pdb_like': 0.0, 'skempi_token': 0.0, 'plain_token': 0.0, 'single_char': 0.0, 'float_like': 1.0, 'int_like': 0.0, 'n': 1131}
+using mapping: {'pdb': 0, 'chain': 1, 'wt': 2, 'resid': 3, 'mutaa': 4}
+parsed 1131 of 1131 identifier rows
+  scheme cleaned       join rate 0.996 (1126/1131) on keys ['pdb', 'chain_s', 'wt', 'resid_s', 'mut']
+  scheme original_pdb  join rate 0.393 (444/1131) on keys ['pdb', 'chain_s', 'wt', 'resid_s', 'mut']
+{
+  "mapping": {
+    "pdb": 0,
+    "chain": 1,
+    "wt": 2,
+    "resid": 3,
+    "mutaa": 4
+  },
+  "best_scheme": "cleaned",
+  "n_s1131": 1131,
+  "n_parsed": 1131,
+  "n_joined": 1126,
+  "join_rate": 0.995579133510168,
+  "pearson_y_ddg": 0.9947962589997124,
+  "pearson_negated": -0.9947962589997124,
+  "y_sign_vs_repo_ddg": "same (positive = weaker)",
+  "spearman_y_ddg": 0.992121396627547,
+  "abs_pearson": 0.9947962589997124,
+  "mean_abs_diff_after_sign": 0.06787880696939665,
+  "frac_abs_diff_lt_0.05_after_sign": 0.8134991119005328,
+  "gate_pass": true
+}
+GATE G1: PASS
