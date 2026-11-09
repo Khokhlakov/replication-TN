@@ -1,4 +1,4 @@
 label,pdb,antibody_chains,rbd_chain,note
 REGN10933,6XDG,B+D,E,RN33 listed id; 6XDG REGN10933 heavy B light D; RBD chain E
-REGN10987,6XDG,C+A,E,RN87 listed id; 6XDG REGN10987 heavy C light A; RBD chain E
-AZD1061,7L7E,C+D,G,1061 listed id; 7L7E has four copies; C+D with RBD G is a provisional first copy to be checked by contacts
+REGN10987,6XDG,C+A,E,RN87 listed id; 6XDG REGN10987 heavy C light A; RBD chain E; light chain A barely touches the RBD (use --weak-pairs 1)
+AZD1061,7L7E,M+N,S,1061 listed id; 7L7E copy S: AZD1061 heavy M light N; clean copy with no partner shared with another RBD copy

@@ -106,6 +106,9 @@ def main() -> None:
     ap.add_argument("--out", default="data/structures/antibody_rbd/complex_map_final.csv")
     ap.add_argument("--min-pairs", type=int, default=5)
     ap.add_argument("--min-total", type=int, default=50)
+    ap.add_argument("--weak-pairs", type=int, default=5,
+                    help="a FORCED antibody chain (alias/override/extra) with fewer contact pairs than this is flagged weak_antibody_chain; "
+                         "use 1 to accept light chains that barely touch the RBD while still catching a wrong RBD copy (0 pairs)")
     args = ap.parse_args()
 
     cmap = pd.read_csv(args.map, dtype=str, keep_default_na=False)
@@ -152,7 +155,7 @@ def main() -> None:
             continue
         pairs = {c: pairs_between(atoms, chosen, c) for c in ab}
         total = sum(pairs.values())
-        weak = [c for c, p in pairs.items() if p < args.min_pairs]
+        weak = [c for c, p in pairs.items() if p < args.weak_pairs]
         if weak:
             flags.append("weak_antibody_chain:" + "".join(weak))
         big = [c for c in ab if len(res.get(c, {})) > 400]

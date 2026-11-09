@@ -13,8 +13,8 @@ Items marked [FILL] depend on a step that has not been run yet; delete the marke
 - The SI says the ACE2 and CTC-445.2 scans were held out as test sets for validation (1539 and 1500 samples). [FILL: held-out validation or part of the training mix]
 
 ## Structures and mutation sets
-- 186 complexes from data/raw/antibodies.csv. RN33 (REGN10933) and RN87 (REGN10987) resolved to 6XDG, 1061 (AZD1061) to 7L7E (provisional copy, confirm by contacts). [FILL: complex_map_final.csv QC result]
-- 5 entries were .cif-only (no legacy PDB file); the chain check found at least 10 of 21 RBD sites in every structure. [FILL: which five]
+- 186 complexes from data/raw/antibodies.csv. RN33 (REGN10933) and RN87 (REGN10987) resolved to 6XDG, 1061 (AZD1061) to 7L7E (provisional copy, confirm by contacts). Antibody chains are defined by contact: chains with >= 5 heavy-atom pairs within 4.5 A of the chosen RBD copy; a partner chain touching several RBD copies is assigned to the copy it touches most (37b_resolve_shared_partners.py, rows kept in data/raw/complex_overrides.csv). AZD1061 uses 7L7E RBD copy S with Fab chains M+N. QC thresholds relaxed to --weak-pairs 1 and --min-total 40. [FILL: final QC pass count and the rows with ambiguous chains]
+- 5 entries were .cif-only (no legacy PDB file); the chain check found at least 10 of 21 RBD sites in every structure. 6ZBP (H11-H4), 7B27 (NM1230), 7OAY (Nanobody F2), 7OAP (Nanobody H3 C1), 7OAO (Nanobody C5).
 - 11 of the 26 mutation rows (the 7 earlier-variant and the 4 BA.2-specific mutations) have no antibody or ACE2 BFE values: they need a trained model applied to the 185 antibody structures and the ACE2 complex.
 
 ## Features and model
