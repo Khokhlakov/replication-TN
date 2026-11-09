@@ -18,7 +18,7 @@ The residue number is resid_struct: the number in the structure file named by
 the ``structure`` column.
 """
 
-from __future__ import annotations
+from __future__ import annotations 
 
 import argparse
 import shutil
