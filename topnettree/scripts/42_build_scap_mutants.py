@@ -64,10 +64,17 @@ def write_jackal_dir(work: Path, library: Path) -> None:
     )
 
 
-def build_one(rec: dict, scap: Path, profix: Path | None, work_root: Path) -> dict:
+def usable_mutant(path: Path) -> bool:
+    if not path.is_file() or path.stat().st_size < 1000:
+        return False
+    with path.open("rb") as handle:
+        return b"ATOM" in handle.read(4000)
+
+
+def build_one(rec: dict, scap: Path, profix: Path | None, work_root: Path, force: bool) -> dict:
     dest = ROOT / rec["mutant"]
-    if dest.is_file():
-        return {"mutant": rec["mutant"], "status": "cached"}
+    if not force and usable_mutant(dest):
+        return {"mutant": str(dest), "status": "cached", "stderr": f"{dest.stat().st_size} bytes"}
     source = Path(rec["structure"])
     if not source.is_file():
         source = ROOT / rec["structure"]
@@ -121,6 +128,7 @@ def main() -> None:
     parser.add_argument("--scap", required=True)
     parser.add_argument("--profix")
     parser.add_argument("--limit", type=int)
+    parser.add_argument("--force", action="store_true", help="rebuild even when the mutant PDB already exists")
     parser.add_argument("--work", default="data/features/mutants/_work")
     args = parser.parse_args()
     scap = Path(args.scap)
@@ -134,11 +142,14 @@ def main() -> None:
         rows = rows.iloc[: args.limit]
     work = ROOT / args.work
     work.mkdir(parents=True, exist_ok=True)
-    log = [build_one(rec, scap, profix, work) for rec in rows.to_dict("records")]
+    log = [build_one(rec, scap, profix, work, args.force) for rec in rows.to_dict("records")]
     out = Path(args.rows).with_suffix(".scap_log.csv")
     pd.DataFrame(log).to_csv(out, index=False)
     counts = pd.Series([item["status"] for item in log]).value_counts().to_dict()
     print(counts)
+    for item in log:
+        if item["status"] == "cached":
+            print(f"cached {item['stderr']}: {item['mutant']}")
     failed = [item for item in log if item["status"] not in ("ok", "cached")]
     if failed:
         print(failed[0]["mutant"])
