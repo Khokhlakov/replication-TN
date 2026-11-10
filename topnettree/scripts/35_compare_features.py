@@ -9,6 +9,8 @@
 --rows gives s1131_row for each generated row (generated row k  <->  shipped row rows.s1131_row[k]). NaN rows in the
 generated matrix (failed generations) are skipped and counted.
 
+Arrays with more than 2 dimensions (for example the 645 x 48 x 108 H0 tensor) are flattened in C order. If the two matrices have a
+different number of columns the verdict is NOT_COMPARABLE_WIDTH unless the columns can still be paired one-to-one.
 Verdict ladder (first that holds): IDENTICAL (>=99.9% of entries equal within rtol 1e-5), SAME_UP_TO_PERMUTATION (>=95%
 of informative shipped columns have a generated column with r>=0.999, at a different index), SAME_UP_TO_SCALE
 (columns match with r>=0.999 at the same index but values differ), CORRELATED (median column r >= 0.9), DIFFERENT.
@@ -70,7 +72,11 @@ def compare(shipped: np.ndarray, gen: np.ndarray) -> tuple[dict, pd.DataFrame]:
     percol.loc[idx, "best_gen_r"] = best_r
     rep["frac_shipped_cols_with_match_r_ge_0.999"] = float(np.mean(best_r >= 0.999)) if len(best_r) else 0.0
     rep["frac_matches_at_other_index"] = float(np.mean((best_r >= 0.999) & (best_j != idx))) if len(best_r) else 0.0
-    if rep["entry_equal_frac"] >= 0.999:
+    if ds != dg and not (rep["frac_shipped_cols_with_match_r_ge_0.999"] >= 0.95 and rep["frac_matches_at_other_index"] >= 0.5):
+        verdict = "NOT_COMPARABLE_WIDTH"
+        rep["note"] = (f"shipped has {ds} columns and generated has {dg}: no column pairing exists, so this is not a parity test. "
+                       "It only shows that no single shipped column equals (up to scale) a single generated column.")
+    elif rep["entry_equal_frac"] >= 0.999:
         verdict = "IDENTICAL"
     elif rep["frac_shipped_cols_with_match_r_ge_0.999"] >= 0.95 and rep["frac_matches_at_other_index"] >= 0.5:
         verdict = "SAME_UP_TO_PERMUTATION"
@@ -90,12 +96,24 @@ def main() -> None:
     ap.add_argument("--generated", required=True)
     ap.add_argument("--rows", required=True)
     ap.add_argument("--name", default="features")
+    ap.add_argument("--rows-col", help="column of --rows holding the row index into the shipped array (default: s1131_row, shipped_row or row_idx)")
     ap.add_argument("--out-dir", default="data/features")
     args = ap.parse_args()
 
     shipped = np.load(args.shipped, allow_pickle=True).astype(float)
     gen = np.load(args.generated, allow_pickle=True).astype(float)
-    rows = pd.read_csv(args.rows)["s1131_row"].to_numpy()
+    if shipped.ndim > 2:
+        print(f"shipped array {shipped.shape} flattened (C order) to {(len(shipped), -1)}")
+        shipped = shipped.reshape(len(shipped), -1)
+    if gen.ndim > 2:
+        print(f"generated array {gen.shape} flattened (C order) to {(len(gen), -1)}")
+        gen = gen.reshape(len(gen), -1)
+    table = pd.read_csv(args.rows)
+    col = next((c for c in ([args.rows_col] if args.rows_col else []) + ["s1131_row", "shipped_row", "row_idx"] if c in table.columns), None)
+    if col is None:
+        raise SystemExit(f"--rows has none of the columns s1131_row, shipped_row, row_idx (pass --rows-col). Columns: {list(table.columns)}")
+    print(f"row index column: {col}")
+    rows = table[col].to_numpy().astype(int)
     if len(rows) != len(gen):
         raise SystemExit(f"--rows has {len(rows)} entries but the generated matrix has {len(gen)} rows.")
     ok = ~np.isnan(gen).any(1)
