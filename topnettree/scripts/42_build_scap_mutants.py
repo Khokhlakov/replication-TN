@@ -6,10 +6,11 @@ The list name has to contain ``_scap.list``; that is what scap.cpp accepts.
 profix runs only when --profix is passed. A missing binary or a failed row is
 recorded and no coordinate file is invented for that row.
 
-SCAP opens ``./jackal.dir`` and then the library path written in that file.
-The capsule copy names ``/home/phantom/Downloads/software/jackal_64bit``, which
+SCAP opens ``./jackal.dir`` and then ``<library>/tres``. ``tres`` lives in
+``jackal_64bit/library``, not in ``jackal_64bit`` itself. The capsule copy of
+``jackal.dir`` names ``/home/phantom/Downloads/software/jackal_64bit``, which
 is not this machine. Each job gets its own ``jackal.dir`` in the work
-directory, with ``library:`` set to the capsule's ``jackal_64bit`` directory.
+directory, with ``library:`` set to the absolute ``jackal_64bit/library`` path.
 The capsule file is not edited. The binary is copied into the work directory
 and marked executable, because the shipped file is often not executable and
 ``ldd`` only reports that it is statically linked.
@@ -48,11 +49,12 @@ def text_of(data: bytes | None) -> str:
     return (data or b"").decode("utf-8", "replace").replace("\n", " | ")[-500:]
 
 
-def jackal_root(scap: Path) -> Path:
-    root = scap.resolve().parent.parent
-    if not (root / "library" / "tres").is_file():
-        raise RuntimeError(f"{root} has no library/tres; scap is not inside jackal_64bit/bin")
-    return root
+def jackal_library(scap: Path) -> Path:
+    """Directory SCAP searches as ``<library>/tres``."""
+    library = scap.resolve().parent.parent / "library"
+    if not (library / "tres").is_file():
+        raise RuntimeError(f"{library} has no tres; scap is not inside jackal_64bit/bin")
+    return library
 
 
 def write_jackal_dir(work: Path, library: Path) -> None:
@@ -76,7 +78,7 @@ def build_one(rec: dict, scap: Path, profix: Path | None, work_root: Path) -> di
         shutil.rmtree(work)
     work.mkdir(parents=True)
     try:
-        library = jackal_root(scap)
+        library = jackal_library(scap)
         (work / "complex.pdb").write_text("".join(atom_lines(source)), encoding="utf-8")
         (work / "tmp_scap.list").write_text(
             f"{rec['chain']},{rec['resid_struct']},{AA1[rec['mut']]}\n", encoding="utf-8"
