@@ -2,9 +2,17 @@
 
 Within each part the distance is infinite, so the finite deaths are the edge
 lengths of a minimum spanning tree of the complete bipartite graph
-(``scipy.sparse.csgraph.minimum_spanning_tree``). Binning follows
-``gen_cnn_feature.py``: 0.25 A bins on [0, 12), boundary deaths assigned to the
-higher bin, bars shorter than 0.01 A dropped, deaths at or beyond 12 A dropped.
+(``scipy.sparse.csgraph.minimum_spanning_tree``). That is the degree-0
+homology of the Vietoris-Rips complex JavaPlex builds in
+``Construct_jplex_binding.m`` and ``Construct_jplex_mutation.m``.
+
+Binning follows ``gen_cnn_feature.py``: 0.25 A bins on [0, 12), a death that
+lands on a boundary assigned to the higher bin, bars shorter than 0.01 A
+dropped, deaths at or beyond 12 A dropped.
+
+``h0_tensor`` only splits a list you already prepared. The spatial 12 A cut
+and the JavaPlex division grid are applied by ``homology.homology_blocks``,
+which is the function to call on your own PDBs.
 """
 
 from __future__ import annotations
@@ -32,6 +40,44 @@ def mst_lengths(dist: np.ndarray) -> np.ndarray:
 
 def euclidean_mst_lengths(points: np.ndarray) -> np.ndarray:
     return np.sort(mst_lengths(pairwise_distances(points)))
+
+
+def quantize_filtration(
+    deaths: np.ndarray,
+    max_filtration: float = 15.0,
+    divisions: int = 200,
+    decimals: int = 4,
+) -> np.ndarray:
+    """Snap lengths onto the JavaPlex division grid.
+
+    ``createVietorisRipsStream(metric, 1, 15.0, 200)`` only has filtration
+    values ``k * 15/200``. An edge is added at the smallest division that is
+    at least its Euclidean length. The MATLAB scripts then write each death
+    with ``%4.4f``, and ``gen_cnn_feature.py`` reads that text, so the values
+    are rounded to 4 decimal places. Call this only with lengths that already
+    fit in the stream (``length <= max_filtration``).
+    """
+    step = float(max_filtration) / float(divisions)
+    values = np.asarray(deaths, dtype=np.float64)
+    if values.size == 0:
+        return values
+    index = np.ceil(values / step - 1e-12).astype(np.int64)
+    snapped = index.astype(np.float64) * step
+    return np.round(snapped, decimals)
+
+
+def capsule_h0_deaths(part_a: np.ndarray, part_b: np.ndarray, *, quantize: bool = True) -> np.ndarray:
+    """Finite H0 deaths of one element pair.
+
+    ``quantize=True`` follows the capsule: drop edges longer than 15 A, then
+    snap the rest onto 200 divisions. ``quantize=False`` returns the raw MST
+    lengths used by ``h0_tensor``.
+    """
+    deaths = bipartite_deaths(part_a, part_b)
+    if not quantize or deaths.size == 0:
+        return deaths
+    deaths = deaths[deaths <= 15.0]
+    return quantize_filtration(deaths)
 
 
 def bipartite_deaths(part_a: np.ndarray, part_b: np.ndarray) -> np.ndarray:
@@ -107,7 +153,13 @@ def _pack(wild: np.ndarray, mutant: np.ndarray) -> np.ndarray:
 
 
 def h0_tensor(wild: list[tuple], mutant: list[tuple], chain: str, resid: str) -> np.ndarray:
-    """(48, 108) tensor: binding death, binding persistence, mutation death, mutation persistence."""
+    """(48, 108) from atom lists that are already the atoms you want to use.
+
+    Binding is "this chain versus the other atoms in the list". Mutation is
+    "this residue versus the other atoms in the list". There is no distance
+    cutoff here, and deaths are not snapped to the JavaPlex grid. For a PDB,
+    use ``topnet.features.homology.homology_blocks``.
+    """
     resid = str(resid)
 
     def bind(atoms):

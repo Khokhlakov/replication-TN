@@ -1,10 +1,11 @@
 """Score one mutation from a saved bundle.
 
-``--option 0`` is topo+aux and ``--option 1`` is topo only. Both need X_h12.
-Until that array exists, pass ``--feature-set cnn_aux`` (or cnn, or aux) to score
-an ablation. The output line matches the legacy tool. A PDB path is refused when
-the bundle was fit on the shipped npy arrays, because this generator is not the
-code that built those arrays.
+``--option 0`` is topo+aux and ``--option 1`` is topo only. Aux is not ported,
+so a PDB path can score ``cnn`` and the regenerated H1/H2 sets (``topo``,
+``cnn_h12``, ``h12``) only. H0 and H1/H2 for that path come from
+``homology_blocks``. A PDB path is refused when the bundle was fit on the
+shipped npy arrays, because this generator is not the code that built those
+arrays. The output line matches the legacy tool.
 """
 
 from __future__ import annotations
@@ -20,10 +21,12 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
 import numpy as np
 
-from topnet.features.h0 import h0_tensor
+from topnet.features.homology import homology_blocks
 from topnet.features.manifest import GENERATOR_MANIFEST, manifest_hash
-from topnet.features.pdbio import read_pdb
 from topnet.pipeline import assert_manifest, load_bundle, predict_pipeline
+
+_NEEDS_AUX = {"topo_aux", "cnn_aux", "aux", "cnn_aux_h12"}
+_NEEDS_H12 = {"topo", "h12", "cnn_h12"}
 
 OPTION_SETS = {"0": "topo_aux", "1": "topo"}
 
@@ -91,17 +94,33 @@ def main(argv: list[str] | None = None) -> int:
         if not args.chain or args.resid is None:
             print("--chain and --resid are required with --pdb", file=sys.stderr)
             return 2
-        wild = read_pdb(args.pdb)
-        mutant = read_pdb(args.mut_pdb)
-        cnn = h0_tensor(wild, mutant, args.chain, str(args.resid))
-        print("H0 tensor built. H1/H2 and aux are not attached on the PDB path yet.", file=sys.stderr)
-        if feature_set != "cnn":
-            print(f"PDB path can only score feature set 'cnn'; bundle is {feature_set}.", file=sys.stderr)
+        if feature_set in _NEEDS_AUX or feature_set == "h12_original":
+            print(
+                "PDB scoring can build H0 and H1/H2. Auxiliary features are not ported, "
+                f"and '{feature_set}' needs a matrix this path does not have.",
+                file=sys.stderr,
+            )
             return 2
+        try:
+            blocks = homology_blocks(
+                args.pdb,
+                args.mut_pdb,
+                args.chain,
+                args.resid,
+                compute_h12=feature_set in _NEEDS_H12,
+            )
+        except (ValueError, ImportError) as exc:
+            print(exc, file=sys.stderr)
+            return 2
+        print(
+            f"H0 tensor {blocks.h0.shape}"
+            + (f", H1/H2 vector {blocks.h12.shape}" if blocks.h12 is not None else ", H1/H2 not requested"),
+            file=sys.stderr,
+        )
         assert_manifest(bundle, GENERATOR_MANIFEST)
-        x_cnn = cnn.reshape(1, 48, 108)
+        x_cnn = blocks.h0.reshape(1, 48, 108)
         x_aux = None
-        x_h12 = None
+        x_h12 = None if blocks.h12 is None else blocks.h12.reshape(1, -1)
     else:
         if not args.cnn_npy and feature_set != "aux":
             print("Provide --cnn-npy or --pdb.", file=sys.stderr)

@@ -1,6 +1,11 @@
 #!/usr/bin/env python3
 """Write one H0 vector for a mutation.
 
+The generator to use on your own structures is ``scripts/write_homology_blocks.py``
+(``topnet.features.homology.homology_blocks``). It builds the H0 tensor and the
+H1/H2 vector with the capsule's binding cut and mutation cut. This script is
+the older H0 pilot: its mutation cloud is taken from the binding neighborhood.
+
 Geometry is scripts/reproduce_h0.py: 12 A neighborhood, every alternate location,
 collapsed insertion codes, JavaPlex-style quantization, 48 bins. The wild-type
 PDB and a prebuilt mutant PDB are both required. A missing file, a missing

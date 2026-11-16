@@ -1,0 +1,173 @@
+--- a/src/topnet/features/homology.py
++++ b/src/topnet/features/homology.py
+@@ -75,6 +75,7 @@
+ 
+ from dataclasses import dataclass
+ from pathlib import Path
++from typing import Iterable, Optional, Sequence, Union
+ 
+ import numpy as np
+ from scipy.spatial import cKDTree
+@@ -109,6 +110,7 @@
+     icode: str
+     cutoff: float
+     quantized: bool
++    keep_chains: tuple = ()
+ 
+ 
+ def parse_site(resid: int | str, icode: str | None = None) -> tuple[int, str]:
+@@ -147,21 +149,17 @@
+     """Query atoms, plus every record within ``cutoff`` angstroms of one of them.
+ 
+     This is VMD's ``within <cutoff> of <selection>``, which includes the
+-    selection itself. Comparison is ``<= cutoff``.
++    selection itself. Comparison is ``<= cutoff``. One vectorised KD-tree
++    query for all records.
+     """
+-    if not query:
++    if not query or not records:
+         return []
+     query_ids = {id(rec) for rec in query}
+-    xyz = np.asarray([rec["xyz"] for rec in query], dtype=np.float64)
+-    tree = cKDTree(xyz)
+-    kept = []
+-    for rec in records:
+-        if id(rec) in query_ids:
+-            kept.append(rec)
+-            continue
+-        if float(tree.query(rec["xyz"], k=1)[0]) <= cutoff:
+-            kept.append(rec)
+-    return kept
++    tree = cKDTree(np.asarray([rec["xyz"] for rec in query], dtype=np.float64))
++    dist, _ = tree.query(np.asarray([rec["xyz"] for rec in records], dtype=np.float64), k=1)
++    return [
++        rec for rec, d in zip(records, dist) if id(rec) in query_ids or float(d) <= cutoff
++    ]
+ 
+ 
+ def _is_site(rec: dict, chain: str, resid: int, icode: str, legacy_resid: bool) -> bool:
+@@ -260,6 +258,57 @@
+     return tensor
+ 
+ 
++def parse_keep_chains(keep_chains: Union[None, str, Iterable[str]]) -> tuple:
++    """``"H+L+E"``, ``"HLE"`` (single-letter ids only), or an iterable of ids."""
++    if keep_chains is None:
++        return ()
++    if isinstance(keep_chains, str):
++        text = keep_chains.strip()
++        if not text:
++            return ()
++        parts = text.replace(",", "+").split("+") if ("+" in text or "," in text) else list(text)
++    else:
++        parts = list(keep_chains)
++    out = []
++    for part in parts:
++        part = str(part)
++        if len(part) != 1:
++            raise ValueError(f"PDB chain ids are one character, got {part!r} in {keep_chains!r}")
++        if part not in out:
++            out.append(part)
++    return tuple(out)
++
++
++def restrict_to_chains(records: list[dict], keep: tuple, chain: str, label: str) -> list[dict]:
++    """Drop every record whose chain is not in ``keep``.
++
++    The binding block is "this chain against everything within 12 A". When the
++    PDB holds more than the complex you mean (other spike protomers, a second
++    Fab, ACE2 next to an antibody), those atoms would count as partner. Call
++    this with the frozen chain set of the complex. ``keep`` must contain the
++    mutated chain, and every chain in it must exist in the file.
++    """
++    if not keep:
++        return records
++    if chain not in keep:
++        raise ValueError(f"{label}: mutated chain {chain!r} is not in keep_chains {keep}")
++    present = {rec["chain"] for rec in records}
++    missing = [c for c in keep if c not in present]
++    if missing:
++        raise ValueError(f"{label}: chains {missing} not in file (file has {sorted(present)})")
++    return [rec for rec in records if rec["chain"] in keep]
++
++
++def _as_records(source, altloc: str, label: str = "Wild") -> list[dict]:
++    """A path (parsed here) or a record list you already parsed with read_pdb_records."""
++    if isinstance(source, (str, Path)):
++        path = Path(source)
++        if not path.is_file():
++            raise ValueError(f"{label} structure not found: {path}")
++        return read_pdb_records(path, altloc=altloc)
++    return source
++
++
+ def _prepared_neighborhoods(
+     wild_pdb: str | Path,
+     mutant_pdb: str | Path,
+@@ -269,19 +318,16 @@
+     cutoff: float,
+     legacy_resid: bool,
+     altloc: str,
++    keep_chains: tuple = (),
+ ):
+     number, insertion = parse_site(resid, icode)
+     chain = str(chain)
+     if len(chain) != 1:
+         raise ValueError(f"chain must be one PDB chain id, got {chain!r}")
+-    wild_path = Path(wild_pdb)
+-    mutant_path = Path(mutant_pdb)
+-    if not wild_path.is_file():
+-        raise ValueError(f"Wild structure not found: {wild_path}")
+-    if not mutant_path.is_file():
+-        raise ValueError(f"Mutant structure not found: {mutant_path}")
+-    wild = read_pdb_records(wild_path, altloc=altloc)
+-    mutant = read_pdb_records(mutant_path, altloc=altloc)
++    wild = _as_records(wild_pdb, altloc, "Wild")
++    mutant = _as_records(mutant_pdb, altloc, "Mutant")
++    wild = restrict_to_chains(wild, keep_chains, chain, "wild")
++    mutant = restrict_to_chains(mutant, keep_chains, chain, "mutant")
+     sides = {}
+     for label, records in (("wild", wild), ("mutant", mutant)):
+         binding = binding_neighborhood(records, chain, cutoff)
+@@ -306,15 +352,22 @@
+     quantize: bool = True,
+     compute_h12: bool = True,
+     altloc: str = "all",
++    keep_chains: Union[None, str, Sequence[str]] = None,
+ ) -> HomologyBlocks:
+     """Build the H0 tensor and, unless turned off, the 756-d H1/H2 vector.
+ 
+     ``cutoff`` is the VMD neighborhood radius in angstroms. The capsule uses
+     12. ``quantize`` snaps H0 deaths to the JavaPlex grid. ``altloc`` is
+     ``"all"`` (capsule), ``"blank"`` or ``"first"``.
++
++    ``wild_pdb`` and ``mutant_pdb`` are paths or record lists from
++    ``read_pdb_records`` (parse a wild-type file once and reuse it across the
++    mutations of one complex). ``keep_chains`` (``"H+L+E"``) restricts both
++    structures to the chains of the complex before any neighborhood is cut.
+     """
++    keep = parse_keep_chains(keep_chains)
+     number, insertion, sides = _prepared_neighborhoods(
+-        wild_pdb, mutant_pdb, chain, resid, icode, cutoff, legacy_resid, altloc
++        wild_pdb, mutant_pdb, chain, resid, icode, cutoff, legacy_resid, altloc, keep
+     )
+     wild_b, wild_m = sides["wild"]
+     mut_b, mut_m = sides["mutant"]
+@@ -332,4 +385,5 @@
+         icode=insertion,
+         cutoff=float(cutoff),
+         quantized=bool(quantize),
++        keep_chains=keep,
+     )
+--- a/src/topnet/features/h12.py
++++ b/src/topnet/features/h12.py
+@@ -88,7 +88,8 @@
+     if len(pts) < 1:
+         return empty
+     simplex = gudhi.AlphaComplex(points=pts).create_simplex_tree()
+-    simplex.compute_persistence()
++    # Z/2 coefficients, as in the SI (Gudhi's default is Z/11).
++    simplex.compute_persistence(homology_coeff_field=2)
+     out = {}
+     for dim in (1, 2):
+         intervals = np.asarray(simplex.persistence_intervals_in_dimension(dim), dtype=np.float64)

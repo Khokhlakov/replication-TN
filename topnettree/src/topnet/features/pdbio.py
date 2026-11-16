@@ -12,6 +12,8 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import numpy as np
+
 ELEMENTS = ("C", "N", "O")
 AA1 = {
     "A": "ALA",
@@ -106,3 +108,23 @@ def read_pdb(path: str | Path, legacy_resid: bool = False) -> list[tuple]:
                 )
             )
     return atoms
+
+
+def coords_of(atoms: list, element: str) -> np.ndarray:
+    """Coordinates of one element letter.
+
+    Accepts records from ``read_pdb_records`` or tuples
+    ``(chain, resid, element, x, y, z)`` from ``read_pdb``. The letter is PDB
+    column 14, the same one ``Gen_pointclouds.py`` keeps.
+    """
+    rows = []
+    for atom in atoms:
+        if isinstance(atom, dict):
+            if atom.get("element") != element:
+                continue
+            rows.append(atom["xyz"])
+        elif atom[2] == element:
+            rows.append(atom[3:6])
+    if not rows:
+        return np.zeros((0, 3), dtype=np.float64)
+    return np.asarray(rows, dtype=np.float64)
