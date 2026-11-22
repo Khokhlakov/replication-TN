@@ -4,9 +4,13 @@
   panel   data/predict/rows_26x186.csv  (26 mutations x 186 complexes)
           chain       = rbd_chain (the RBD carries the mutation)
           keep_chains = rbd_chain + ab_chains, e.g. E+B+C+D+A
-          mutant_pdb  = --mutant-template filled from the row. The default follows the
-                        <id>_<chain>_<wt>_<resid>_<mut>.pdb names used by starr2020.csv.
-          Rows are dropped when qc_pass is not True, site_present is 0 or wt_ok is 0.
+          mutant_pdb  = --mutant-template filled from the row (default
+                        <id>_<chain>_<wt>_<resid>_<mut>.pdb), OR, with --panel-rows, the
+                        `mutant` path and `resid_struct` from data/features/rows/panel.csv.
+                        Use --panel-rows: 42_build_scap_mutants.py builds exactly the files
+                        that panel.csv names, and numbers residues by resid_struct.
+          Rows are dropped when qc_pass is not True (unless --include-qc-fail),
+          site_present is 0 or wt_ok is 0.
           row_id = pair_id, which already contains the complex column index.
 
   dms     data/features/rows/starr2020.csv (or chan2020.csv, same columns)
@@ -50,6 +54,31 @@ def finish(frame, out, label):
         print("  Missing mutants have to be built (42_build_scap_mutants.py) before `build` can run on those rows.")
 
 
+def join_panel_rows(keep, panel_path):
+    """Attach resid_struct and the mutant path from panel.csv; drop and report anything inconsistent."""
+    pr = pd.read_csv(panel_path, dtype=str, keep_default_na=False)
+    need = ["mutation", "label", "pdb", "chain", "wt", "resid_struct", "mut", "structure", "mutant"]
+    missing = [c for c in need if c not in pr.columns]
+    if missing:
+        raise SystemExit(f"{panel_path} lacks columns {missing}")
+    if pr.duplicated(["label", "mutation"]).any():
+        raise SystemExit(f"{panel_path} has several rows for the same (label, mutation); cannot join")
+    pr = pr[need].rename(columns={c: "p_" + c for c in need if c not in ("label", "mutation")})
+    merged = keep.merge(pr, on=["label", "mutation"], how="left")
+    unmatched = merged["p_mutant"].isna()
+    bad = (
+        (merged["p_pdb"] != merged["resolved_id"])
+        | (merged["p_chain"] != merged["rbd_chain"])
+        | (merged["p_wt"] != merged["wt"])
+        | (merged["p_mut"] != merged["mut"])
+        | (merged["p_structure"] != merged["file"])
+    ) & ~unmatched
+    print(f"join with {panel_path}: {int(unmatched.sum())} rows not in panel.csv, {int(bad.sum())} rows disagree on pdb/chain/wt/mut/structure")
+    for _, r in merged[bad].head(5).iterrows():
+        print(f"  disagree {r['pair_id']}: panel.csv says {r['p_pdb']}/{r['p_chain']}/{r['p_wt']}->{r['p_mut']} {r['p_structure']}")
+    return merged[~unmatched & ~bad].copy()
+
+
 def panel(args):
     raw = pd.read_csv(args.rows, dtype=str, keep_default_na=False)
     need = ["pair_id", "resolved_id", "file", "rbd_chain", "ab_chains", "qc_pass", "wt", "resid", "mut", "site_present", "wt_ok"]
@@ -61,24 +90,32 @@ def panel(args):
     present = raw["site_present"] == "1"
     wt_ok = raw["wt_ok"] == "1"
     print(f"panel rows {n0}: qc_pass false {int((~qc).sum())}, site absent {int((~present).sum())}, wild-type letter mismatch {int((~wt_ok).sum())}")
-    keep = raw[qc & present & wt_ok].copy()
+    keep = raw[(qc | args.include_qc_fail) & present & wt_ok].copy()
     print(f"kept {len(keep)}, dropped {n0 - len(keep)} (a row can fail more than one test)")
     keep["keep_chains"] = keep["rbd_chain"] + "+" + keep["ab_chains"]
     # The mutated chain must be one character, and keep_chains must contain it once.
     bad = keep[keep["rbd_chain"].str.len() != 1]
     if len(bad):
         raise SystemExit(f"rbd_chain is not one character in rows {bad['pair_id'].tolist()[:5]}")
-    keep["mutant_pdb"] = [
-        args.mutant_template.format(resolved_id=r.resolved_id, rbd_chain=r.rbd_chain, wt=r.wt, resid=r.resid, mut=r.mut)
-        for r in keep.itertuples()
-    ]
+    if args.panel_rows:
+        keep = join_panel_rows(keep, args.panel_rows)
+        keep["mutant_pdb"] = keep["p_mutant"]
+        keep["resid_out"] = keep["p_resid_struct"]
+        differ = int((keep["p_resid_struct"] != keep["resid"]).sum())
+        print(f"resid_struct differs from the paper resid in {differ} kept rows (the structure number is used)")
+    else:
+        keep["mutant_pdb"] = [
+            args.mutant_template.format(resolved_id=r.resolved_id, rbd_chain=r.rbd_chain, wt=r.wt, resid=r.resid, mut=r.mut)
+            for r in keep.itertuples()
+        ]
+        keep["resid_out"] = keep["resid"]
     frame = pd.DataFrame(
         {
             "row_id": keep["pair_id"],
             "wild_pdb": keep["file"],
             "mutant_pdb": keep["mutant_pdb"],
             "chain": keep["rbd_chain"],
-            "resid": keep["resid"],
+            "resid": keep["resid_out"],
             "wt": keep["wt"],
             "mut": keep["mut"],
             "keep_chains": keep["keep_chains"],
@@ -122,6 +159,8 @@ def main():
     p.add_argument("--rows", required=True)
     p.add_argument("--out", required=True)
     p.add_argument("--mutant-template", default=DEFAULT_TEMPLATE)
+    p.add_argument("--panel-rows", help="data/features/rows/panel.csv; recommended")
+    p.add_argument("--include-qc-fail", action="store_true", help="keep complexes with qc_pass False (for diagnosis)")
     p.set_defaults(func=panel)
     p = sub.add_parser("dms")
     p.add_argument("--rows", required=True)

@@ -71,9 +71,19 @@ def read_pdb_records(path: str | Path, altloc: str = "all") -> list[dict]:
                     "element": element,
                     "xyz": np_xyz(line),
                     "legacy_resid": line[23:26].strip(),
+                    "name": line[12:16],
+                    "element_col": line[76:78].strip().upper(),
                 }
             )
     return records
+
+
+def is_hydrogen(rec: dict) -> bool:
+    """True for H or D atoms. Uses the element columns (77-78) when filled, else the atom name."""
+    col = rec.get("element_col", "")
+    if col:
+        return col in ("H", "D")
+    return rec.get("name", "").strip().lstrip("0123456789").startswith(("H", "D"))
 
 
 def np_xyz(line: str):
