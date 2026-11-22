@@ -87,6 +87,47 @@ def audit(before_path: Path, after_path: Path):
     }
 
 
+def describe_changes(before_path: Path, after_path: Path, limit: int = 8):
+    """Human-readable account of how a Profix output differs from its input."""
+    b = read_atoms(before_path, ALL_CHAINS, "all")
+    a = read_atoms(after_path, ALL_CHAINS, "all")
+
+    def order(atoms):
+        seq, seen = {}, set()
+        for x in atoms:
+            if x["res"] in seen:
+                continue
+            seen.add(x["res"])
+            seq.setdefault(x["chain"], []).append((x["res"], x["resname"]))
+        return seq
+
+    ob, oa = order(b), order(a)
+    out = []
+    for chain in sorted(set(ob) | set(oa)):
+        rb, ra = ob.get(chain, []), oa.get(chain, [])
+        names_equal = [n for _, n in rb] == [n for _, n in ra]
+        moved = [(k1, k2) for (k1, n1), (k2, n2) in zip(rb, ra) if k1 != k2]
+        out.append(f"chain {chain}: {len(rb)} residues in, {len(ra)} out, residue names in the same order: {names_equal}, "
+                   f"{len(moved)} with a different number")
+        if moved:
+            shown = ", ".join(f"{k1[1]}{k1[2]}->{k2[1]}{k2[2]}" for k1, k2 in moved[:limit])
+            out.append(f"    renumbered, first {min(limit, len(moved))}: {shown}")
+    by_res_b = {}
+    for x in b:
+        if not is_h(x["name"]):
+            by_res_b.setdefault(x["res"], set()).add(x["name"])
+    by_res_a = {}
+    for x in a:
+        if not is_h(x["name"]):
+            by_res_a.setdefault(x["res"], set()).add(x["name"])
+    renamed = [(k, sorted(v - by_res_a[k])[:4], sorted(by_res_a[k] - v)[:4]) for k, v in by_res_b.items()
+               if k in by_res_a and (v - by_res_a[k])]
+    out.append(f"{len(renamed)} residues keep their number but lose or rename heavy atoms")
+    for k, lost, new in renamed[:limit]:
+        out.append(f"    {k[0]}:{k[1]}{k[2]} lost {' '.join(lost)}; output has {' '.join(new) or '-'}")
+    return out
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--rows", required=True, help="rows file with a `structure` and a `mutant` column")
@@ -120,6 +161,8 @@ def main():
         try:
             with tempfile.TemporaryDirectory(prefix="profix_") as tmp:
                 fixed = run_profix(profix, src, Path(tmp))
+                raw_copy = out_dir / f"{src.stem}.profix_raw.pdb"
+                shutil.copyfile(fixed, raw_copy)
                 info = audit(src, fixed)
                 problems = []
                 if info["residues_lost"] or info["residues_new"]:
@@ -127,6 +170,9 @@ def main():
                 if info["heavy_lost"]:
                     problems.append(f"{info['heavy_lost']} input heavy atoms lost")
                 if problems and not args.allow_residue_change:
+                    print(f"  {src.name}: REJECTED, {'; '.join(problems)}. Raw Profix output kept at {raw_copy}")
+                    for line in describe_changes(src, fixed):
+                        print(f"      {line}")
                     raise RuntimeError("; ".join(problems))
                 lines = [ln for ln in fixed.read_text(encoding="utf-8", errors="replace").splitlines() if ln.startswith("ATOM")]
                 dest.write_text("\n".join(lines) + "\nEND\n", encoding="utf-8")
