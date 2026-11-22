@@ -13,6 +13,9 @@
 
     python scripts/run_scap_sharded.py --rows data/features/rows/starr2020.csv \
         --scap $CAP/data/software/jackal_64bit/bin/scap --shards 16
+
+For panel.csv add --where wt_ok=1: rows with wt_ok=0 name a residue that is absent or has the wrong
+letter, and 42 would still run SCAP on them.
 """
 
 from __future__ import annotations
@@ -44,6 +47,8 @@ def main():
     ap.add_argument("--shards", type=int, default=8)
     ap.add_argument("--limit", type=int, default=0, help="only the first N missing mutants (for a trial)")
     ap.add_argument("--force", action="store_true")
+    ap.add_argument("--where", action="append", default=[], metavar="COL=VAL",
+                    help="keep only rows whose column equals the value (repeatable), e.g. --where wt_ok=1")
     ap.add_argument("--script", default=str(ROOT / "scripts" / "42_build_scap_mutants.py"))
     ap.add_argument("--work-root", default="/tmp/scap_work", help="one subdirectory per shard is made here")
     ap.add_argument("--shard-dir", help="default: <rows folder>/<rows stem>_shards")
@@ -55,13 +60,22 @@ def main():
     if "mutant" not in rows.columns:
         raise SystemExit(f"{rows_path} has no `mutant` column")
     n_all = len(rows)
+    for cond in args.where:
+        if "=" not in cond:
+            raise SystemExit(f"--where wants COL=VAL, got {cond!r}")
+        col, val = cond.split("=", 1)
+        if col not in rows.columns:
+            raise SystemExit(f"--where: {rows_path} has no column {col!r}")
+        before = len(rows)
+        rows = rows[rows[col] == val]
+        print(f"--where {cond}: kept {len(rows)} of {before} rows")
     rows = rows.drop_duplicates("mutant")
     n_unique = len(rows)
     if not args.force:
         rows = rows[[not usable(ROOT / m) for m in rows["mutant"]]]
     if args.limit:
         rows = rows.head(args.limit)
-    print(f"{n_all} rows, {n_unique} distinct mutants, {len(rows)} to build")
+    print(f"{n_all} rows in the file, {n_unique} distinct mutants after filters, {len(rows)} to build")
     if rows.empty:
         print("nothing to do")
         return 0
