@@ -29,7 +29,7 @@ def _line(serial, name, resname, chain, resseq, icode, xyz, element):
     )
 
 
-def make_structure(path, chains, mutate=None, seed=0):
+def make_structure(path, chains, mutate=None, seed=0, hydrogens=False):
     """chains: {chain_id: (center, n_residues)}. mutate: (chain, resseq, icode, new_resname).
 
     Coordinates are drawn per residue from their own generator, so a mutant differs
@@ -41,6 +41,7 @@ def make_structure(path, chains, mutate=None, seed=0):
             rng = np.random.default_rng([seed, ord(chain), r])
             base = np.asarray(center) + rng.normal(scale=6.0, size=3)
             offsets = rng.normal(scale=1.3, size=(7, 3))
+            h_offsets = rng.normal(scale=1.6, size=(2, 3))  # always drawn, so heavy atoms never move
             resname = "ALA"
             icode = ""
             if mutate and (chain, r) == (mutate[0], mutate[1]):
@@ -50,6 +51,10 @@ def make_structure(path, chains, mutate=None, seed=0):
             for k, name in enumerate(names):
                 lines.append(_line(serial, name, resname, chain, r, icode, base + offsets[k], name[0]))
                 serial += 1
+            if hydrogens:
+                for k, name in enumerate(("HA", "HB1")):
+                    lines.append(_line(serial, name, resname, chain, r, icode, base + h_offsets[k], "H"))
+                    serial += 1
     path.write_text("".join(lines) + "END\n")
     return path
 
@@ -186,3 +191,35 @@ def test_invariants_catch_a_corrupted_tensor(tmp_path):
     assert sum(drv.h12_invariants(blocks.h12[None]).values()) == 0
     h0[0, 5, 3] += 1.0  # break a persistence column
     assert drv.h0_invariants(h0)["persistence_not_tail_sum_of_deaths"] == 1
+
+
+def test_hydrogen_option(tmp_path, capsys):
+    from topnet.features.pdbio import is_hydrogen, read_pdb_records
+
+    drv = _driver()
+    wild = make_structure(tmp_path / "w.pdb", COMPLEX, seed=3)
+    clean_mut = make_structure(tmp_path / "m_clean.pdb", COMPLEX, mutate=("E", 7, "", "ASP"), seed=3)
+    h_mut = make_structure(tmp_path / "m_h.pdb", COMPLEX, mutate=("E", 7, "", "ASP"), seed=3, hydrogens=True)
+    recs = read_pdb_records(h_mut)
+    assert sum(is_hydrogen(r) for r in recs) == 2 * 105
+    assert not any(is_hydrogen(r) for r in read_pdb_records(wild))
+
+    table = pd.DataFrame(
+        {"row_id": ["a"], "wild_pdb": [str(wild)], "mutant_pdb": [str(h_mut)], "chain": ["E"], "resid": ["7"],
+         "wt": ["A"], "mut": ["D"], "keep_chains": ["E+H+L"]}
+    )
+    csv = tmp_path / "m.csv"
+    table.to_csv(csv, index=False)
+    drv.main(["check", "--manifest", str(csv), "--out-dir", str(tmp_path / "keep")])
+    rep = pd.read_csv(tmp_path / "keep" / "check_report.csv").iloc[0]
+    assert rep["status"] == "warn" and "hydrogens only in one file" in rep["messages"]
+    assert rep["h_wild"] == 0 and rep["h_mutant"] == 2 * 105
+
+    drv.main(["check", "--manifest", str(csv), "--out-dir", str(tmp_path / "drop"), "--hydrogens", "drop"])
+    rep = pd.read_csv(tmp_path / "drop" / "check_report.csv").iloc[0]
+    assert rep["status"] == "ok"
+
+    drv.main(["build", "--manifest", str(csv), "--out-dir", str(tmp_path / "drop"), "--hydrogens", "drop", "--h0-only"])
+    dropped = np.load(tmp_path / "drop" / "h0.npy")[0]
+    clean = hom.homology_blocks(wild, clean_mut, "E", 7, compute_h12=False, keep_chains="E+H+L").h0
+    assert np.array_equal(dropped, clean)

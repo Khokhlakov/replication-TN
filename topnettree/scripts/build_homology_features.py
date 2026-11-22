@@ -65,7 +65,7 @@ import pandas as pd
 
 from topnet.features import homology as hom
 from topnet.features.manifest import GENERATOR_MANIFEST, manifest_hash
-from topnet.features.pdbio import AA1, read_pdb_records
+from topnet.features.pdbio import AA1, is_hydrogen, read_pdb_records
 
 H0_SHAPE = (48, 108)
 H12_DIM = 756
@@ -114,8 +114,8 @@ class RecordCache:
         self.size = size
         self.items = OrderedDict()
 
-    def get(self, path, altloc):
-        key = (str(path), altloc)
+    def get(self, path, altloc, hydrogens="keep"):
+        key = (str(path), altloc, hydrogens)
         if key in self.items:
             self.items.move_to_end(key)
             return self.items[key]
@@ -125,6 +125,8 @@ class RecordCache:
         records = read_pdb_records(path, altloc=altloc)
         if not records:
             raise ValueError(f"no ATOM records in {path}")
+        if hydrogens == "drop":
+            records = [r for r in records if not is_hydrogen(r)]
         self.items[key] = records
         while len(self.items) > self.size:
             self.items.popitem(last=False)
@@ -150,9 +152,19 @@ def audit_row(row, opts):
         if len(chain) != 1:
             return "fail", [f"chain {chain!r} is not one character"], stats
         keep = hom.parse_keep_chains(row["keep_chains"])
-        wild = _CACHE.get(row["wild_pdb"], opts["altloc"])
-        mutant = _CACHE.get(row["mutant_pdb"], opts["altloc"])
+        raw_wild = _CACHE.get(row["wild_pdb"], opts["altloc"], "keep")
+        raw_mutant = _CACHE.get(row["mutant_pdb"], opts["altloc"], "keep")
+        stats["h_wild"] = sum(is_hydrogen(r) for r in raw_wild)
+        stats["h_mutant"] = sum(is_hydrogen(r) for r in raw_mutant)
+        wild = _CACHE.get(row["wild_pdb"], opts["altloc"], opts["hydrogens"])
+        mutant = _CACHE.get(row["mutant_pdb"], opts["altloc"], opts["hydrogens"])
         stats["chains_in_file"] = "".join(sorted({r["chain"] for r in wild}))
+        if opts["hydrogens"] == "keep" and (stats["h_wild"] > 0) != (stats["h_mutant"] > 0):
+            warns.append(
+                f"hydrogens only in one file (wild {stats['h_wild']}, mutant {stats['h_mutant']}): "
+                "neighborhoods differ at the 12 A boundary and every wild-minus-mutant channel carries it. "
+                "See --hydrogens."
+            )
         wild = hom.restrict_to_chains(wild, keep, chain, "wild")
         mutant = hom.restrict_to_chains(mutant, keep, chain, "mutant")
     except ValueError as exc:
@@ -185,7 +197,10 @@ def audit_row(row, opts):
         m_rest = [r for r in mutant if not hom._is_site(r, chain, number, icode, legacy)]
         stats["outside_atoms_wild"], stats["outside_atoms_mutant"] = len(w_rest), len(m_rest)
         if len(w_rest) != len(m_rest):
-            warns.append(f"atoms outside the site differ: wild {len(w_rest)}, mutant {len(m_rest)} (hydrogens added or lost?)")
+            if opts["hydrogens"] == "keep" and stats["h_wild"] != stats["h_mutant"]:
+                pass  # already reported as a hydrogen difference
+            else:
+                warns.append(f"atoms outside the site differ: wild {len(w_rest)}, mutant {len(m_rest)}")
         else:
             same_keys = all(
                 a["chain"] == b["chain"] and a["resseq"] == b["resseq"] and a["icode"] == b["icode"] and a["element"] == b["element"]
@@ -268,8 +283,8 @@ def _build_worker(args):
         return rid, "ok", "", 0.0
     t0 = time.time()
     try:
-        wild = _CACHE.get(row["wild_pdb"], opts["altloc"])
-        mutant = _CACHE.get(row["mutant_pdb"], opts["altloc"])
+        wild = _CACHE.get(row["wild_pdb"], opts["altloc"], opts["hydrogens"])
+        mutant = _CACHE.get(row["mutant_pdb"], opts["altloc"], opts["hydrogens"])
         blocks = hom.homology_blocks(
             wild,
             mutant,
@@ -501,6 +516,7 @@ def options_from(args):
         "legacy_resid": args.legacy_resid,
         "no_quantize": args.no_quantize,
         "altloc": args.altloc,
+        "hydrogens": args.hydrogens,
         "h0_only": getattr(args, "h0_only", False),
         "force": getattr(args, "force", False),
     }
@@ -538,6 +554,13 @@ def common(parser, needs_manifest=True):
         parser.add_argument("--cutoff", type=float, default=12.0)
         parser.add_argument("--legacy-resid", action="store_true")
         parser.add_argument("--altloc", choices=["all", "blank", "first"], default="all")
+        parser.add_argument(
+            "--hydrogens",
+            choices=["keep", "drop"],
+            default="keep",
+            help="keep: use every ATOM record as given (VMD sees the whole file). drop: remove H/D atoms from "
+            "both structures before anything else, so wild and mutant are compared on heavy atoms only.",
+        )
     parser.add_argument("--out-dir", required=True)
 
 
