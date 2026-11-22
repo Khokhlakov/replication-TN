@@ -11,6 +11,11 @@ For each structure in the rows file (normally the trimmed, pruned files from mak
   2. check the result: no residue added or lost, no chain changed, no input heavy atom lost, and
      report how many incomplete residues remain (a residue that is still incomplete is listed);
   3. write the repaired ATOM records to <out-dir>/<name>.pdb.
+Profix renumbers antibody chains that carry insertion codes (Kabat 82A, 82B, 82C -> 83, 84, 85 and all
+residues after them). The residue NAMES stay in the same order, so by default the original chain, number
+and insertion code are written back by position (--no-restore-numbering turns that off). Restoration is
+refused, and the structure rejected, unless every chain has the same number of residues with the same
+names in the same order. The audit then compares atoms residue by residue under the original numbers.
 Then it writes a rows file whose `structure` is the repaired file (feed it to run_scap_sharded.py) and,
 with --manifest, a manifest whose wild_pdb is the repaired file, so wild and mutant are cut from the
 same atoms.
@@ -87,6 +92,47 @@ def audit(before_path: Path, after_path: Path):
     }
 
 
+def restore_numbering(before_path: Path, fixed_path: Path, dest_path: Path):
+    """Write Profix's ATOM records with the input's chain, residue number and insertion code, matched by position.
+
+    Returns (True, message) or (False, reason). Nothing is written unless every chain has the same
+    residue names in the same order as the input.
+    """
+    b = read_atoms(before_path, ALL_CHAINS, "all")
+    a_lines = [ln for ln in fixed_path.read_text(encoding="utf-8", errors="replace").splitlines()
+               if ln.startswith("ATOM") and len(ln) > 26]
+
+    def order(items):
+        seq, seen = {}, set()
+        for res, resname in items:
+            if res in seen:
+                continue
+            seen.add(res)
+            seq.setdefault(res[0], []).append((res, resname))
+        return seq
+
+    in_order = order((x["res"], x["resname"]) for x in b)
+    out_items = [((ln[21], ln[22:26].strip(), ln[26].strip()), ln[17:20].strip()) for ln in a_lines]
+    out_order = order(out_items)
+    mapping = {}
+    for chain in sorted(set(in_order) | set(out_order)):
+        ri, ro = in_order.get(chain, []), out_order.get(chain, [])
+        if [n for _, n in ri] != [n for _, n in ro]:
+            return False, f"chain {chain}: {len(ri)} residues in, {len(ro)} out, or the names differ in order; cannot restore numbering"
+        for (k_in, _), (k_out, _) in zip(ri, ro):
+            mapping[k_out] = k_in
+    rewritten = []
+    changed = 0
+    for ln in a_lines:
+        k_out = (ln[21], ln[22:26].strip(), ln[26].strip())
+        c, num, ic = mapping[k_out]
+        if (c, num, ic) != k_out:
+            changed += 1
+        rewritten.append(ln[:21] + c + f"{num:>4}" + (ic or " ") + ln[27:])
+    dest_path.write_text("\n".join(rewritten) + "\nEND\n", encoding="utf-8")
+    return True, f"{len(set(k for k in mapping if mapping[k] != k))} residues renumbered back to the input numbers"
+
+
 def describe_changes(before_path: Path, after_path: Path, limit: int = 8):
     """Human-readable account of how a Profix output differs from its input."""
     b = read_atoms(before_path, ALL_CHAINS, "all")
@@ -138,6 +184,7 @@ def main():
     ap.add_argument("--out-manifest")
     ap.add_argument("--out-dir", default="data/structures/antibody_rbd_repaired")
     ap.add_argument("--allow-residue-change", action="store_true")
+    ap.add_argument("--no-restore-numbering", action="store_true")
     args = ap.parse_args()
 
     profix = Path(args.profix)
@@ -163,6 +210,12 @@ def main():
                 fixed = run_profix(profix, src, Path(tmp))
                 raw_copy = out_dir / f"{src.stem}.profix_raw.pdb"
                 shutil.copyfile(fixed, raw_copy)
+                if not args.no_restore_numbering:
+                    restored = Path(tmp) / "restored.pdb"
+                    ok, msg = restore_numbering(src, fixed, restored)
+                    print(f"  {src.name}: {msg}")
+                    if ok:
+                        fixed = restored
                 info = audit(src, fixed)
                 problems = []
                 if info["residues_lost"] or info["residues_new"]:
