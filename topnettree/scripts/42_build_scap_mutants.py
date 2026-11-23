@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Build mutant PDBs with the capsule SCAP binary.
 
-One list line, ``chain,resid,three-letter``, then ``scap -ini 20 -min 4``.
+One list line, ``chain,resid,one-letter-code``, then ``scap -ini 20 -min 4``.
 The list name has to contain ``_scap.list``; that is what scap.cpp accepts.
 profix runs only when --profix is passed. A missing binary or a failed row is
 recorded and no coordinate file is invented for that row.
@@ -71,6 +71,14 @@ def usable_mutant(path: Path) -> bool:
         return b"ATOM" in handle.read(4000)
 
 
+def site_resname(path: Path, chain: str, resid: str) -> str:
+    names = set()
+    for line in path.read_text(encoding="utf-8", errors="replace").splitlines():
+        if line.startswith("ATOM") and len(line) > 26 and line[21] == chain and line[22:27].strip() == str(resid).strip().upper():
+            names.add(line[17:20].strip())
+    return ",".join(sorted(names))
+
+
 def build_one(rec: dict, scap: Path, profix: Path | None, work_root: Path, force: bool) -> dict:
     dest = ROOT / rec["mutant"]
     if not force and usable_mutant(dest):
@@ -87,8 +95,11 @@ def build_one(rec: dict, scap: Path, profix: Path | None, work_root: Path, force
     try:
         library = jackal_library(scap)
         (work / "complex.pdb").write_text("".join(atom_lines(source)), encoding="utf-8")
+        target = rec["mut"].strip().upper()
+        if target not in AA1:
+            raise ValueError(f"mut {rec['mut']!r} is not a one-letter amino acid")
         (work / "tmp_scap.list").write_text(
-            f"{rec['chain']},{rec['resid_struct']},{AA1[rec['mut']]}\n", encoding="utf-8"
+            f"{rec['chain']},{rec['resid_struct']},{target}\n", encoding="utf-8"
         )
         write_jackal_dir(work, library)
         local_scap = work / "scap"
@@ -100,8 +111,13 @@ def build_one(rec: dict, scap: Path, profix: Path | None, work_root: Path, force
         )
         produced = next(iter(sorted(work.glob("*_scap.pdb"))), None)
         detail = text_of(proc.stderr) or text_of(proc.stdout)
+
+
         if proc.returncode != 0 or produced is None:
             return {"mutant": rec["mutant"], "status": f"scap_exit_{proc.returncode}", "stderr": detail}
+        got = site_resname(produced, rec["chain"], rec["resid_struct"])
+        if got != AA1[target]:
+            return {"mutant": rec["mutant"], "status": "wrong_residue", "stderr": f"built {got}, wanted {AA1[target]}"}
         if profix is not None:
             shutil.copyfile(produced, work / "complex.pdb")
             local_profix = work / "profix"
