@@ -99,7 +99,7 @@ def build_one(rec: dict, scap: Path, profix: Path | None, work_root: Path, force
         if target not in AA1:
             raise ValueError(f"mut {rec['mut']!r} is not a one-letter amino acid")
         (work / "tmp_scap.list").write_text(
-            f"{rec['chain']},{rec['resid_struct']},{target}\n", encoding="utf-8"
+            f"{rec['chain']},{str(rec['resid_struct']).strip().upper()},{target}\n", encoding="utf-8"
         )
         write_jackal_dir(work, library)
         local_scap = work / "scap"

@@ -35,7 +35,7 @@ miss = lab[~lab["structure"].map(lambda f: Path(f).is_file())]
 if len(miss):
     print(miss[["row_idx", "pdb", "structure"]].drop_duplicates("pdb").head(20).to_string(index=False))
     sys.exit(f"{len(miss)} rows have no structure file under {args.structures}; fix the file names first")
-lab["resid_struct"] = lab["resid"]
+lab["resid_struct"] = lab["resid"].str.upper()
 lab["mutant"] = [f"{args.mutants}/S645_{r.pdb}_{r.chain}_{r.wt}_{r.resid}_{r.mut}.pdb" for r in lab.itertuples()]
 
 _cache = {}
