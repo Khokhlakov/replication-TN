@@ -25,6 +25,7 @@ import argparse
 import shutil
 import subprocess
 import sys
+import re
 from pathlib import Path
 
 import pandas as pd
@@ -71,12 +72,99 @@ def usable_mutant(path: Path) -> bool:
         return b"ATOM" in handle.read(4000)
 
 
-def site_resname(path: Path, chain: str, resid: str) -> str:
-    names = set()
-    for line in path.read_text(encoding="utf-8", errors="replace").splitlines():
-        if line.startswith("ATOM") and len(line) > 26 and line[21] == chain and line[22:27].strip().upper() == str(resid).strip().upper():
-            names.add(line[17:20].strip())
-    return ",".join(sorted(names))
+_RESID = re.compile(r"^(-?\d+)([A-Za-z]?)$")
+
+
+def _residue_key(line):
+    return (line[21], line[22:26].strip(), line[26].strip().upper())
+
+
+def renumber_for_scap(lines, chain, resid):
+    """SCAP renumbers chains that carry insertion codes and then reads the site number in its own numbering.
+    Give such chains plain consecutive numbers here. Returns (lines, site_number, back); back lists the
+    original (number, icode) per residue, by position, for the renumbered chains."""
+    m = _RESID.match(str(resid).strip())
+    if not m:
+        raise ValueError(f"cannot parse residue number {resid!r}")
+    want = (m.group(1), m.group(2).upper())
+    order, last = {}, None
+    for ln in lines:
+        k = _residue_key(ln)
+        if k != last:
+            order.setdefault(k[0], []).append((k[1], k[2]))
+            last = k
+    renum = {c for c, res in order.items() if any(ic for _, ic in res)}
+    out, idx, last, site_no = [], {}, None, None
+    for ln in lines:
+        k = _residue_key(ln)
+        c = k[0]
+        if k != last:
+            idx[c] = idx.get(c, -1) + 1
+            last = k
+        if c in renum:
+            n = int(order[c][0][0]) + idx[c]
+            if not -999 <= n <= 9999:
+                raise ValueError(f"renumbered residue {n} does not fit the PDB column")
+            ln = ln[:22] + f"{n:>4}" + " " + ln[27:]
+            if c == chain and (k[1], k[2]) == want and site_no is None:
+                site_no = n
+        out.append(ln)
+    if chain in renum:
+        if site_no is None:
+            raise ValueError(f"site {resid} not found in chain {chain}")
+    elif want in order.get(chain, []):
+        site_no = int(want[0])
+    else:
+        raise ValueError(f"site {resid} not found in chain {chain}")
+    return out, site_no, {c: order[c] for c in renum}
+
+
+def restore_numbering(text, back):
+    """Put the original residue numbers and insertion codes back by position (SCAP keeps residue order)."""
+    if not back:
+        return text
+    out, idx, last = [], {}, None
+    for ln in text.splitlines(keepends=True):
+        if ln.startswith("ATOM") and len(ln) > 26 and ln[21] in back:
+            k = _residue_key(ln)
+            if k != last:
+                idx[k[0]] = idx.get(k[0], -1) + 1
+                last = k
+            if idx[k[0]] >= len(back[k[0]]):
+                raise ValueError(f"chain {k[0]} has more residues than the input")
+            n, ic = back[k[0]][idx[k[0]]]
+            ln = ln[:22] + f"{int(n):>4}" + (ic or " ") + ln[27:]
+        out.append(ln)
+    return "".join(out)
+
+
+def residue_order(lines):
+    out, last = {}, None
+    for ln in lines:
+        if ln.startswith("ATOM") and len(ln) > 26:
+            k = _residue_key(ln)
+            if k != last:
+                out.setdefault(k[0], []).append((k[1], k[2], ln[17:20].strip()))
+                last = k
+    return out
+
+
+def check_site(src_lines, out_text, chain, resid, want3):
+    """'' if the output differs from the input at exactly the requested residue (matched by position)."""
+    a, b = residue_order(src_lines), residue_order(out_text.splitlines())
+    if set(a) != set(b) or any(len(a[c]) != len(b[c]) for c in a):
+        return "chain or residue counts differ between input and SCAP output"
+    m = _RESID.match(str(resid).strip())
+    want = (m.group(1), m.group(2).upper())
+    pos = next((i for i, (n, ic, _) in enumerate(a.get(chain, [])) if (n, ic) == want), None)
+    if pos is None:
+        return f"site {resid} not in input chain {chain}"
+    diff = [(c, i) for c in a for i, (x, y) in enumerate(zip(a[c], b[c])) if x[2] != y[2]]
+    if not diff:
+        return "" if a[chain][pos][2] == want3 else "no residue changed"
+    if diff != [(chain, pos)]:
+        return "changed " + ", ".join(f"{c}:{a[c][i][0]}{a[c][i][1]} {a[c][i][2]}->{b[c][i][2]}" for c, i in diff[:4])
+    return "" if b[chain][pos][2] == want3 else f"built {b[chain][pos][2]}, wanted {want3}"
 
 
 def build_one(rec: dict, scap: Path, profix: Path | None, work_root: Path, force: bool) -> dict:
@@ -94,13 +182,15 @@ def build_one(rec: dict, scap: Path, profix: Path | None, work_root: Path, force
     work.mkdir(parents=True)
     try:
         library = jackal_library(scap)
-        (work / "complex.pdb").write_text("".join(atom_lines(source)), encoding="utf-8")
+        
         target = rec["mut"].strip().upper()
         if target not in AA1:
             raise ValueError(f"mut {rec['mut']!r} is not a one-letter amino acid")
-        (work / "tmp_scap.list").write_text(
-            f"{rec['chain']},{str(rec['resid_struct']).strip().upper()},{target}\n", encoding="utf-8"
-        )
+        
+        src_lines = atom_lines(source)
+        lines, site_no, back = renumber_for_scap(src_lines, rec["chain"], rec["resid_struct"])
+        (work / "complex.pdb").write_text("".join(lines), encoding="utf-8")
+        (work / "tmp_scap.list").write_text(f"{rec['chain']},{site_no},{target}\n", encoding="utf-8")
         write_jackal_dir(work, library)
         local_scap = work / "scap"
         shutil.copyfile(scap, local_scap)
@@ -115,10 +205,12 @@ def build_one(rec: dict, scap: Path, profix: Path | None, work_root: Path, force
 
         if proc.returncode != 0 or produced is None:
             return {"mutant": rec["mutant"], "status": f"scap_exit_{proc.returncode}", "stderr": detail}
-        got = site_resname(produced, rec["chain"], rec["resid_struct"])
-        if got != AA1[target]:
-            return {"mutant": rec["mutant"], "status": "wrong_residue",
-                    "stderr": f"built {got or 'nothing (site not found in SCAP output)'}, wanted {AA1[target]}"}
+        
+        text = restore_numbering(produced.read_text(encoding="utf-8", errors="replace"), back)
+        problem = check_site(src_lines, text, rec["chain"], rec["resid_struct"], AA1[target])
+        if problem:
+            return {"mutant": rec["mutant"], "status": "wrong_site", "stderr": problem[:300]}
+        produced.write_text(text, encoding="utf-8")
         
         if profix is not None:
             shutil.copyfile(produced, work / "complex.pdb")
