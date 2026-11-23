@@ -74,7 +74,7 @@ def usable_mutant(path: Path) -> bool:
 def site_resname(path: Path, chain: str, resid: str) -> str:
     names = set()
     for line in path.read_text(encoding="utf-8", errors="replace").splitlines():
-        if line.startswith("ATOM") and len(line) > 26 and line[21] == chain and line[22:27].strip() == str(resid).strip().upper():
+        if line.startswith("ATOM") and len(line) > 26 and line[21] == chain and line[22:27].strip().upper() == str(resid).strip().upper():
             names.add(line[17:20].strip())
     return ",".join(sorted(names))
 
@@ -117,7 +117,9 @@ def build_one(rec: dict, scap: Path, profix: Path | None, work_root: Path, force
             return {"mutant": rec["mutant"], "status": f"scap_exit_{proc.returncode}", "stderr": detail}
         got = site_resname(produced, rec["chain"], rec["resid_struct"])
         if got != AA1[target]:
-            return {"mutant": rec["mutant"], "status": "wrong_residue", "stderr": f"built {got}, wanted {AA1[target]}"}
+            return {"mutant": rec["mutant"], "status": "wrong_residue",
+                    "stderr": f"built {got or 'nothing (site not found in SCAP output)'}, wanted {AA1[target]}"}
+        
         if profix is not None:
             shutil.copyfile(produced, work / "complex.pdb")
             local_profix = work / "profix"
