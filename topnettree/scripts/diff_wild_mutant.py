@@ -66,7 +66,20 @@ def first_keys(atoms):
 ap = argparse.ArgumentParser()
 ap.add_argument("--manifest", required=True)
 ap.add_argument("--row", required=True)
+ap.add_argument("--atom-only", action="store_true", help="ignore HETATM, as the check does")
+ap.add_argument("--first-altloc", action="store_true", help="keep only the first copy of each atom name in a residue")
 args = ap.parse_args()
+def prep(atoms):
+    if args.atom_only:
+        atoms = [a for a in atoms if a["rec"] == "ATOM"]
+    if args.first_altloc:
+        seen, out = set(), []
+        for a in atoms:
+            if key(a) not in seen:
+                seen.add(key(a))
+                out.append(a)
+        atoms = out
+    return atoms
 man = pd.read_csv(args.manifest, dtype=str, keep_default_na=False)
 sel = man[man["row_id"] == args.row]
 if sel.empty:
@@ -76,8 +89,8 @@ wild, mut = read(row["wild_pdb"]), read(row["mutant_pdb"])
 for lab, lst in (("wild", wild), ("mutant", mut)):
     print(f"{lab}: {len(lst)} atoms, {sum(1 for a in lst if HYD.match(a['name']))} hydrogen-like, records "
           f"{dict(Counter(a['rec'] for a in lst))}, altloc labels {dict(Counter(a['alt'] or '-' for a in lst))}")
-wild = [a for a in wild if not HYD.match(a["name"])]
-mut = [a for a in mut if not HYD.match(a["name"])]
+wild = prep([a for a in wild if not HYD.match(a["name"])])
+mut = prep([a for a in mut if not HYD.match(a["name"])])
 site = (row["chain"], row["resid"] + (row.get("icode", "") or ""))
 site_xyz = np.asarray([a["xyz"] for a in wild if (a["chain"], a["res"]) == site])
 report("only in wild", only_in(wild, mut), site_xyz, site)
