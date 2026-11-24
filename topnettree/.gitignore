@@ -5,3 +5,6 @@ runs/
 *.egg-info/
 .venv/
 topnettree/src/topnet/features/aux.py
+topnettree/data/features/mutants/*.pdb
+capsule-2202829
+topnettree/data/structures/antibody_rbd/*.pdb
